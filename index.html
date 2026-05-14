@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Emwani Coffee — Cinematic Brand System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Manrope:wght@300;400;500;600;700&family=Syne:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/system.css">
+</head>
+<body>
+
+<!-- ============ REUSABLE SVG DEFINITIONS ============ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- ========= EMWANI CREST — faithful to uploaded reference =========
+         Green shield with crown peaks, faceted body, central coffee bean.
+         Use #crest for the shield-only mark; #logo-primary for crest +
+         EMWANÍ wordmark; #logo-cafe for the café lockup with green CAFE. -->
+    <symbol id="crest" viewBox="0 0 240 280">
+      <!-- shield body (dark green) -->
+      <path d="M120 8
+               L112 30 L96 14 L88 36 L72 28 L66 60 L48 70 L40 110
+               L46 154 L120 262 L194 154 L200 110 L192 70 L174 60
+               L168 28 L152 36 L144 14 L128 30 Z" fill="#1F5A3E"/>
+      <!-- crown finial dot -->
+      <circle cx="120" cy="0" r="3.6" fill="#1F5A3E"/>
+      <!-- internal facets (lighter green seams) -->
+      <g fill="none" stroke="#2D7A52" stroke-width="2" stroke-linecap="round">
+        <path d="M62 78 Q120 50 178 78"/>
+        <path d="M56 102 Q120 78 184 102"/>
+        <path d="M70 158 L120 260"/>
+        <path d="M170 158 L120 260"/>
+        <path d="M94 184 L120 260"/>
+        <path d="M146 184 L120 260"/>
+        <path d="M120 138 L120 252"/>
+      </g>
+      <!-- coffee bean (center) -->
+      <g transform="translate(120 124)">
+        <ellipse cx="0" cy="0" rx="22" ry="38" fill="#2D7A52"/>
+        <path d="M0 -32 C -9 -14 -9 14 0 32" stroke="#1F5A3E" stroke-width="3.4" fill="none"/>
+        <path d="M0 -32 C 9 -14 9 14 0 32" stroke="#1F5A3E" stroke-width="0.8" fill="none" opacity="0.5"/>
+      </g>
+    </symbol>
+
+    <!-- ========= EMWANÍ WORDMARK (red serif, accent on I) ========= -->
+    <symbol id="emwani-word" viewBox="0 0 320 64">
+      <text x="160" y="48" text-anchor="middle"
+            font-family="'Cormorant Garamond', Georgia, serif"
+            font-weight="700" font-size="56" letter-spacing="3"
+            fill="#B43A2B">EMWAN<tspan dy="-2">Í</tspan></text>
+    </symbol>
+
+    <!-- ========= PRIMARY LOGO LOCKUP ========= -->
+    <symbol id="logo-primary" viewBox="0 0 240 360">
+      <g><use href="#crest" x="0" y="0"/></g>
+      <g transform="translate(0 296)"><use href="#emwani-word" width="240" height="48"/></g>
+    </symbol>
+
+    <!-- ========= CAFÉ LOGO LOCKUP ========= -->
+    <symbol id="logo-cafe" viewBox="0 0 240 400">
+      <g><use href="#crest" x="0" y="0"/></g>
+      <g transform="translate(0 296)"><use href="#emwani-word" width="240" height="48"/></g>
+      <text x="120" y="368" text-anchor="middle"
+            font-family="'Manrope', sans-serif"
+            font-weight="600" font-size="22" letter-spacing="8"
+            fill="#1F5A3E">CAFE</text>
+    </symbol>
+
+    <!-- ========= MOTIFS ========= -->
+    <pattern id="mushonge-grid" x="0" y="0" width="180" height="160" patternUnits="userSpaceOnUse">
+      <g fill="none" stroke="currentColor" stroke-width="0.9" stroke-linecap="round" opacity="0.9">
+        <path d="M30 130 Q90 10 150 130"/>
+        <path d="M40 130 Q90 30 140 130"/>
+        <path d="M52 130 Q90 50 128 130"/>
+        <path d="M64 130 Q90 70 116 130"/>
+        <path d="M76 130 Q90 90 104 130"/>
+        <line x1="20" y1="132" x2="160" y2="132"/>
+      </g>
+    </pattern>
+    <pattern id="mushonge-dots" x="0" y="0" width="44" height="44" patternUnits="userSpaceOnUse">
+      <circle cx="22" cy="22" r="1.2" fill="currentColor" opacity="0.55"/>
+      <path d="M6 38 Q22 14 38 38" stroke="currentColor" stroke-width="0.7" fill="none" opacity="0.28"/>
+    </pattern>
+    <symbol id="leaf" viewBox="0 0 100 200">
+      <path d="M50 6 C 20 60 14 130 50 196 C 86 130 80 60 50 6 Z" fill="currentColor"/>
+      <path d="M50 14 L50 188" stroke="rgba(0,0,0,0.22)" stroke-width="1.4" fill="none"/>
+      <g stroke="rgba(0,0,0,0.22)" stroke-width="1" fill="none">
+        <path d="M50 40 Q66 56 70 78"/><path d="M50 40 Q34 56 30 78"/>
+        <path d="M50 72 Q70 90 74 116"/><path d="M50 72 Q30 90 26 116"/>
+        <path d="M50 108 Q68 124 70 148"/><path d="M50 108 Q32 124 30 148"/>
+      </g>
+    </symbol>
+    <symbol id="cherry" viewBox="0 0 60 60">
+      <circle cx="30" cy="34" r="22" fill="currentColor"/>
+      <path d="M30 14 Q26 4 14 4" stroke="currentColor" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+      <circle cx="22" cy="28" r="3" fill="rgba(255,255,255,0.32)"/>
+    </symbol>
+    <symbol id="bean" viewBox="0 0 80 120">
+      <ellipse cx="40" cy="60" rx="32" ry="56" fill="currentColor"/>
+      <path d="M40 8 C 32 40 32 80 40 112" stroke="rgba(0,0,0,0.32)" stroke-width="3" fill="none"/>
+    </symbol>
+    <symbol id="ribbon" viewBox="0 0 1440 120" preserveAspectRatio="none">
+      <path d="M0 60 C 240 0, 480 120, 720 60 S 1200 0, 1440 60 L 1440 120 L 0 120 Z" fill="currentColor"/>
+    </symbol>
+    <symbol id="wave-soft" viewBox="0 0 1440 80" preserveAspectRatio="none">
+      <path d="M0 40 C 240 80, 480 0, 720 40 S 1200 80, 1440 40 L 1440 80 L 0 80 Z" fill="currentColor"/>
+    </symbol>
+    <symbol id="steam" viewBox="0 0 100 160">
+      <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.85">
+        <path d="M30 150 C 22 120 50 100 42 70 C 36 48 56 36 50 12"/>
+        <path d="M58 150 C 66 122 42 102 52 76 C 60 56 44 40 56 18"/>
+        <path d="M44 150 C 48 130 40 116 46 96"/>
+      </g>
+    </symbol>
+
+    <!-- ========= PACK SHAPES (recreated, not copied) ========= -->
+    <symbol id="pack-pouch" viewBox="0 0 200 280">
+      <!-- coffee pouch silhouette -->
+      <path d="M30 26 Q30 18 38 18 L162 18 Q170 18 170 26 L172 248 Q172 264 158 264 L42 264 Q28 264 28 248 Z" fill="currentColor"/>
+      <!-- top seal -->
+      <path d="M28 24 L172 24 L168 38 L32 38 Z" fill="rgba(0,0,0,0.18)"/>
+      <!-- bottom shadow -->
+      <ellipse cx="100" cy="266" rx="68" ry="6" fill="rgba(0,0,0,0.25)"/>
+    </symbol>
+
+    <symbol id="pack-drip" viewBox="0 0 220 280">
+      <!-- drip bag silhouette -->
+      <path d="M40 30 L180 30 L180 230 Q180 250 160 254 L60 254 Q40 250 40 230 Z" fill="currentColor"/>
+      <path d="M40 30 L180 30 L175 44 L45 44 Z" fill="rgba(0,0,0,0.18)"/>
+      <!-- perforation -->
+      <path d="M48 70 L172 70" stroke="rgba(0,0,0,0.15)" stroke-width="0.8" stroke-dasharray="3 3"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <span class="brand">EMWANI</span>
+  <a href="#brand">Brand</a>
+  <a href="#logo">Logo</a>
+  <a href="#color">Color</a>
+  <a href="#type">Type</a>
+  <a href="#motifs">Motifs</a>
+  <a href="#products">Products</a>
+  <a href="#components">Components</a>
+  <a href="#motion">Motion</a>
+  <a href="#prototype" class="cta">Prototype</a>
+</nav>
+
+<!-- ============ COVER ============ -->
+<section class="cover" id="cover">
+  <div class="cover-inner">
+    <div style="background: var(--bone-100); padding: 36px 56px; border-radius: 12px; display: inline-block; box-shadow: 0 30px 80px rgba(0,0,0,0.4);">
+      <svg viewBox="0 0 240 360" style="width: 180px; display: block;"><use href="#logo-primary"/></svg>
+    </div>
+    <div class="wordmark" style="margin-top: var(--space-6);">— TANZANIAN COFFEE HERITAGE —</div>
+    <h1>The cinematic brand<br>system for a <em>Tanzanian<br>coffee heritage</em>.</h1>
+    <p class="lede">A reusable design language for Emwani Coffee Ltd — rooted in Haya / Karagwe identity, ethical sourcing, and modern café culture. Built to power websites, decks, packaging, and storytelling at the standard of the world's leading coffee houses.</p>
+  </div>
+  <div class="meta">
+    <span>Vol. 01 · Cinematic Brand System</span>
+    <span>Dar es Salaam · Mbinga · Mbozi · Karagwe</span>
+  </div>
+</section>
+
+<!-- ============ 01 BRAND ESSENCE ============ -->
+<section class="section bg-dark" id="brand">
+  <div class="container">
+    <header class="section-head">
+      <span class="num">01 — Brand Essence</span>
+      <h2>Coffee, in the language of the <em>Haya</em>.<br>Heritage, in the grammar of the world.</h2>
+      <p>Emwani means "coffee" in the Haya language of Karagwe. The brand is a cultural resurrection — reclaiming African ownership of Tanzanian coffee and translating ceremony, lineage, and farmer craft into a globally competitive house.</p>
+    </header>
+
+    <div class="pillars">
+      <div class="pillar"><span class="n">P · 01</span><div><h3>Tanzanian coffee heritage</h3><p>Origin-led storytelling. Mbinga, Mbozi, Karagwe — named, mapped, and credited.</p></div></div>
+      <div class="pillar"><span class="n">P · 02</span><div><h3>Haya / Karagwe identity</h3><p>The Mushonge hut, the Chioda and Ingoma dances, the language itself — used as structural design vocabulary.</p></div></div>
+      <div class="pillar"><span class="n">P · 03</span><div><h3>African cultural pride</h3><p>Black-and-white heritage portraiture, ceremonial color, royal motifs — never tourist-coded.</p></div></div>
+      <div class="pillar"><span class="n">P · 04</span><div><h3>Farmer empowerment</h3><p>Direct sourcing, training, agronomic support, long-term relationship — visible in every credit line.</p></div></div>
+      <div class="pillar"><span class="n">P · 05</span><div><h3>Ethical sourcing</h3><p>Biodegradable packaging, eco-conscious farming, traceable cherries.</p></div></div>
+      <div class="pillar"><span class="n">P · 06</span><div><h3>Premium coffee</h3><p>Highland Arabica from Mbinga and Mbozi; high-altitude, small-batch, slow-roasted.</p></div></div>
+      <div class="pillar"><span class="n">P · 07</span><div><h3>Modern café culture</h3><p>The café as a culture hub: youth empowerment, business incubation, showroom.</p></div></div>
+      <div class="pillar"><span class="n">P · 08</span><div><h3>Cultural resurrection</h3><p>Reclaiming value. Tanzanian coffee, owned by Tanzanians, on the world's tables.</p></div></div>
+      <div class="pillar"><span class="n">P · 09</span><div><h3>Bean-to-cup storytelling</h3><p>Each touchpoint — cherry, mill, roast, pour — is a chapter, not a footnote.</p></div></div>
+    </div>
+
+    <div class="quote-block" style="margin-top: var(--space-9); max-width: 760px;">
+      <p class="quote">"Coffee, for our people, has always been a ritual of welcome. We are simply returning that ritual to its rightful place — at the centre of how the world drinks Tanzanian coffee."</p>
+      <div class="attrib">Leodger Leonard Kachebonaho — Founder &amp; CEO, Emwani Coffee Ltd</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 LOGO SYSTEM ============ -->
+<section class="section bg-cream" id="logo">
+  <div class="container">
+    <header class="section-head">
+      <span class="num">02 — Logo System</span>
+      <h2>The crest is a map.<br>Five symbols, one lineage.</h2>
+      <p>The Emwani crest reads top-to-bottom as a single sentence: <em>royalty, identity, life, shelter, seed</em>. Every variant — full crest, simplified, monochrome, app icon — preserves that vertical reading.</p>
+    </header>
+
+    <div class="logo-system">
+      <div class="logo-stage cream">
+        <svg viewBox="0 0 240 360" style="width: 280px;"><use href="#logo-primary"/></svg>
+      </div>
+      <div class="logo-callouts">
+        <div class="callout"><span class="marker">①</span><div><h4>Green crest shield</h4><p>The official Emwani crest is rendered in deep green (#1F5A3E). Crown peaks at the top, faceted body, and a pointed base — drawn from the uploaded reference. Never re-tint to gold; the official mark is always green.</p></div></div>
+        <div class="callout"><span class="marker">②</span><div><h4>Central coffee bean</h4><p>A vertical coffee bean sits at the optical centre of the shield, in a slightly lighter green with a curved seam. The seed is the heart of the mark and never altered.</p></div></div>
+        <div class="callout"><span class="marker">③</span><div><h4>Faceted interior seams</h4><p>Light-green seams radiate from the bottom point and arc across the top, evoking shelter, weave, and the Mushonge silhouette without illustrating it literally.</p></div></div>
+        <div class="callout"><span class="marker">④</span><div><h4>EMWANÍ wordmark — red serif</h4><p>Set in a sharp red serif (#B43A2B) directly below the crest. The acute accent on the Í is part of the mark — preserve it. Never substitute another typeface.</p></div></div>
+        <div class="callout"><span class="marker">⑤</span><div><h4>Café variant</h4><p>For café touchpoints only: add the word <strong>CAFE</strong> in green sans-serif, tracked, below the wordmark. Never use the café lockup on bean / wholesale / corporate surfaces.</p></div></div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-editorial); font-weight: 400; font-size: 2rem; margin-top: var(--space-9);">Lockup variants</h3>
+    <div class="logo-variants">
+      <div class="variant">
+        <div class="stage" style="background: var(--bone-50)">
+          <svg viewBox="0 0 240 360" style="width: 130px;"><use href="#logo-primary"/></svg>
+        </div>
+        <div class="label"><div class="name">Primary — full lockup</div><div class="sub">Green crest + red EMWANÍ wordmark on cream</div></div>
+      </div>
+      <div class="variant">
+        <div class="stage" style="background: var(--bone-50)">
+          <svg viewBox="0 0 240 400" style="width: 130px;"><use href="#logo-cafe"/></svg>
+        </div>
+        <div class="label"><div class="name">Café — full lockup</div><div class="sub">Adds green CAFE — café touchpoints only</div></div>
+      </div>
+      <div class="variant">
+        <div class="stage" style="background: var(--char-1000); padding: 18px;">
+          <div style="background: var(--bone-100); padding: 18px 22px; border-radius: 8px;">
+            <svg viewBox="0 0 240 360" style="width: 110px;"><use href="#logo-primary"/></svg>
+          </div>
+        </div>
+        <div class="label"><div class="name">On dark — cream card</div><div class="sub">Always card the logo on dark surfaces</div></div>
+      </div>
+      <div class="variant">
+        <div class="stage" style="background: var(--bone-50)">
+          <svg viewBox="0 0 240 280" style="width: 130px;"><use href="#crest"/></svg>
+        </div>
+        <div class="label"><div class="name">Crest only</div><div class="sub">When the wordmark won't fit · social avatar</div></div>
+      </div>
+
+      <div class="variant">
+        <div class="stage" style="background: var(--bone-50)">
+          <svg viewBox="0 0 320 64" style="width: 200px;"><use href="#emwani-word"/></svg>
+        </div>
+        <div class="label"><div class="name">Wordmark — standalone</div><div class="sub">When the crest is too tight to read</div></div>
+      </div>
+      <div class="variant">
+        <div class="stage" style="background: var(--bone-50)">
+          <svg viewBox="0 0 240 280" style="width: 110px; filter: grayscale(1) contrast(1.4) brightness(0.4);"><use href="#crest"/></svg>
+        </div>
+        <div class="label"><div class="name">Monochrome — ink</div><div class="sub">Print, embossing, single-colour merch</div></div>
+      </div>
+      <div class="variant">
+        <div class="stage" style="background: var(--bone-100); border-radius: 22%;">
+          <svg viewBox="0 0 240 280" style="width: 100px;"><use href="#crest"/></svg>
+        </div>
+        <div class="label"><div class="name">App icon — squircle</div><div class="sub">iOS / Android · crest-only · 22% radius</div></div>
+      </div>
+      <div class="variant">
+        <div class="stage" style="background: var(--bone-100)">
+          <svg viewBox="0 0 240 280" style="width: 60px;"><use href="#crest"/></svg>
+        </div>
+        <div class="label"><div class="name">Favicon — 32px crest</div><div class="sub">Preserves the shield silhouette at any size</div></div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-editorial); font-weight: 400; font-size: 2rem; margin-top: var(--space-9);">Spacing &amp; placement</h3>
+    <div class="split-2" style="margin-top: var(--space-6);">
+      <div style="border: 1px dashed var(--border-cream); border-radius: var(--r-md); padding: var(--space-7); position: relative;">
+        <div style="position: absolute; inset: var(--space-5); border: 1px dashed rgba(165,42,30,0.3);"></div>
+        <div style="display: grid; place-items: center; aspect-ratio: 16/9;">
+          <svg viewBox="0 0 240 360" style="width: 150px;"><use href="#logo-primary"/></svg>
+        </div>
+      </div>
+      <div>
+        <h4 style="font-family: var(--font-editorial); font-size: 1.75rem; font-weight: 500; line-height: 1.15;">Minimum clear-space = the bean</h4>
+        <p style="margin-top: var(--space-4); color: var(--ink-on-cream-muted); line-height: 1.7;">Around every crest, reserve a margin equal to the height of the central coffee bean. Nothing — type, photograph, edge, ribbon — may enter that area.</p>
+        <ul style="margin-top: var(--space-5); list-style: none; display: flex; flex-direction: column; gap: var(--space-3);">
+          <li>• Minimum size — crest: <strong>32px / 8mm</strong></li>
+          <li>• Minimum size — wordmark: <strong>96px / 22mm</strong></li>
+          <li>• Never tilt, never gradient-fill, never outline-only the bean</li>
+          <li>• Never place on photography without a ≥40% solid overlay</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 03 COLOR ============ -->
+<section class="section bg-dark" id="color">
+  <div class="container">
+    <header class="section-head">
+      <span class="num">03 — Color Palette</span>
+      <h2>A palette pulled from <em>red soil, green leaf,</em><br>and the gold of roasted seed.</h2>
+      <p>Six anchored hues, each with a job. Use Emwani green and charcoal as primary stages; heritage red as the signature; gold-cream as the soul; coffee brown and bone as the grounding.</p>
+    </header>
+
+    <div class="palette">
+      <div class="swatch"><div class="chip" style="background: var(--emwani-green-900)"></div><div class="meta"><div class="name" style="color: var(--emwani-green-300)">Emwani Green</div><div class="hex">#0C2A1C · #1A4A30</div><div class="role">Primary dark stage. Heritage, leaf, royalty.</div></div></div>
+      <div class="swatch"><div class="chip" style="background: var(--heritage-red-500)"></div><div class="meta"><div class="name" style="color: var(--heritage-red-300)">Heritage Red</div><div class="hex">#A52A1E · #8A211A</div><div class="role">Primary CTA, ribbon, ceremonial accent.</div></div></div>
+      <div class="swatch"><div class="chip" style="background: var(--gold-500)"></div><div class="meta"><div class="name" style="color: var(--gold-500)">Gold Cream</div><div class="hex">#C9A86A · #E6D2A8</div><div class="role">Soul accent, line work, crest in dark mode.</div></div></div>
+      <div class="swatch"><div class="chip" style="background: var(--coffee-500)"></div><div class="meta"><div class="name" style="color: var(--coffee-300)">Coffee Brown</div><div class="hex">#5A3621 · #4A2D1B</div><div class="role">Earth grounding, packaging neutral.</div></div></div>
+      <div class="swatch"><div class="chip" style="background: var(--char-1000)"></div><div class="meta"><div class="name" style="color: var(--bone-100)">Charcoal Black</div><div class="hex">#0A0807 · #14110E</div><div class="role">Cinematic film bed, headline ink.</div></div></div>
+      <div class="swatch"><div class="chip" style="background: var(--bone-100)"></div><div class="meta"><div class="name" style="color: var(--bone-100)">Bone Cream</div><div class="hex">#F6EFDD · #FBF7EC</div><div class="role">Editorial canvas, body text on dark.</div></div></div>
+    </div>
+
+    <h3 style="font-family: var(--font-editorial); font-weight: 400; font-size: 2rem; margin-top: var(--space-9);">Roles in interface</h3>
+    <div class="role-grid">
+      <div class="role"><span class="dot" style="background: var(--char-1000)"></span><div class="text"><strong>Primary BG · dark</strong><span>Cinematic homepage, hero, video frames.</span></div></div>
+      <div class="role"><span class="dot" style="background: var(--bone-100)"></span><div class="text"><strong>Primary BG · light</strong><span>Editorial layouts, blog, café menu.</span></div></div>
+      <div class="role"><span class="dot" style="background: var(--emwani-green-800)"></span><div class="text"><strong>Secondary BG</strong><span>Origin / heritage / farmer sections.</span></div></div>
+      <div class="role"><span class="dot" style="background: var(--bone-50)"></span><div class="text"><strong>Cards on cream</strong><span>Product cards, journey steps, FAQ.</span></div></div>
+      <div class="role"><span class="dot" style="background: var(--bone-100)"></span><div class="text"><strong>Headline ink · dark</strong><span>Hero headlines, section heads on dark.</span></div></div>
+      <div class="role"><span class="dot" style="background: var(--char-1000)"></span><div class="text"><strong>Headline ink · light</strong><span>Editorial headlines on bone cream.</span></div></div>
+      <div class="role"><span class="dot" style="background: var(--heritage-red-500)"></span><div class="text"><strong>Primary CTA</strong><span>"Shop", "Find a café", "Order beans".</span></div></div>
+      <div class="role"><span class="dot" style="background: var(--gold-500)"></span><div class="text"><strong>Secondary CTA</strong><span>"Learn the story", "Watch the harvest".</span></div></div>
+      <div class="role"><span class="dot" style="background: var(--gold-500)"></span><div class="text"><strong>Accent &amp; eyebrows</strong><span>Section labels, capsule pills, ornaments.</span></div></div>
+      <div class="role"><span class="dot" style="background: var(--coffee-700)"></span><div class="text"><strong>Pattern overlays</strong><span>Mushonge motif on photo backgrounds.</span></div></div>
+      <div class="role"><span class="dot" style="background: rgba(246,239,221,0.14); box-shadow: inset 0 0 0 1px var(--bone-100)"></span><div class="text"><strong>Borders · dark</strong><span>Hairlines on cinematic surfaces.</span></div></div>
+      <div class="role"><span class="dot" style="background: rgba(20,17,14,0.1); box-shadow: inset 0 0 0 1px var(--char-1000)"></span><div class="text"><strong>Borders · light</strong><span>Card edges on cream layouts.</span></div></div>
+    </div>
+  </div>
+</section>
+<!-- ============ 04 TYPOGRAPHY ============ -->
+<section class="section bg-cream2" id="type">
+  <div class="container">
+    <header class="section-head">
+      <span class="num">04 — Typography</span>
+      <h2>Three voices.<br>One <em>cinematic register</em>.</h2>
+      <p>An editorial serif for heritage and headlines. A modern geometric display for product names and signage. A humanist sans for body, UI, and mobile readability. Together they read like the opening titles of a film.</p>
+    </header>
+
+    <div class="type-specimen">
+      <aside class="type-meta">
+        <div class="family">Cormorant Garamond</div>
+        <span class="label">Editorial · cinematic</span>
+        <span class="label">300 / 400 / 500 · italic</span>
+        <hr style="border: 0; border-top: 1px solid var(--border-cream); margin: var(--space-5) 0;">
+        <div class="family">Syne</div>
+        <span class="label">Display · product</span>
+        <span class="label">700 / 800 · uppercase</span>
+        <hr style="border: 0; border-top: 1px solid var(--border-cream); margin: var(--space-5) 0;">
+        <div class="family">Manrope</div>
+        <span class="label">Body · UI · captions</span>
+        <span class="label">300 / 400 / 500 / 600</span>
+      </aside>
+
+      <div class="specimen">
+        <div class="specimen-row">
+          <span class="tag">H1 · Cinematic Hero</span>
+          <div class="editorial-hero">The seed remembers<br>every <em>hand</em> it has known.</div>
+        </div>
+        <div class="specimen-row">
+          <span class="tag">H2 · Section Title</span>
+          <div style="font-family: var(--font-editorial); font-weight: 400; font-size: clamp(2.25rem, 4.4vw, 3.6rem); line-height: 1.02; letter-spacing: -0.01em;">From the slopes of Mbinga,<br>to the cup in your hand.</div>
+        </div>
+        <div class="specimen-row">
+          <span class="tag">Product Display · Syne</span>
+          <div class="display-name">Chioda Gold · Ingoma · Dark Roast · Drip</div>
+        </div>
+        <div class="specimen-row">
+          <span class="tag">Eyebrow · Manrope 600 / tracked</span>
+          <div class="ui-label" style="color: var(--heritage-red-500)">— Origin · Mbinga, Tanzania</div>
+        </div>
+        <div class="specimen-row">
+          <span class="tag">Body · Manrope 400 · 17/28</span>
+          <div class="body-prose">Emwani Coffee Roasters sources directly from farmer groups in Mbinga, Mbozi, and Karagwe. Engagement is not transactional; it includes training, agronomic support, and long-term relationships rooted in shared value — bean by bean, season by season.</div>
+        </div>
+        <div class="specimen-row">
+          <span class="tag">Pull Quote · Cormorant italic</span>
+          <p style="font-family: var(--font-editorial); font-style: italic; font-size: clamp(1.5rem, 2.4vw, 2rem); line-height: 1.3; max-width: 28ch;">"Coffee in the Haya language is <em>Emwani</em>. We are giving the word back its weight."</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="role-grid" style="margin-top: var(--space-9);">
+      <div class="role"><span class="dot" style="background: var(--char-1000)"></span><div class="text"><strong>H1 · 92px / 0.98</strong><span>Cormorant Garamond 300 · -1% tracking</span></div></div>
+      <div class="role"><span class="dot" style="background: var(--char-1000)"></span><div class="text"><strong>H2 · 68px / 1.02</strong><span>Cormorant Garamond 400</span></div></div>
+      <div class="role"><span class="dot" style="background: var(--char-1000)"></span><div class="text"><strong>H3 · 48px / 1.12</strong><span>Cormorant Garamond 500</span></div></div>
+      <div class="role"><span class="dot" style="background: var(--char-1000)"></span><div class="text"><strong>H4 · 36px / 1.15</strong><span>Manrope 600 · subhead</span></div></div>
+      <div class="role"><span class="dot" style="background: var(--heritage-red-500)"></span><div class="text"><strong>Eyebrow · 12px / 18% LS</strong><span>Manrope 600 · uppercase</span></div></div>
+      <div class="role"><span class="dot" style="background: var(--gold-500)"></span><div class="text"><strong>Product · Syne 800</strong><span>Uppercase · 4–6% tracking</span></div></div>
+      <div class="role"><span class="dot" style="background: var(--char-1000)"></span><div class="text"><strong>Body · 17px / 1.55</strong><span>Manrope 400 · 60ch max</span></div></div>
+      <div class="role"><span class="dot" style="background: var(--char-1000)"></span><div class="text"><strong>Caption · 14px / 1.55</strong><span>Manrope 400 · 70% opacity</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 05 MOTIFS ============ -->
+<section class="section bg-green" id="motifs">
+  <div class="container">
+    <header class="section-head">
+      <span class="num">05 — Visual Motifs</span>
+      <h2>The language of <em>shelter</em>,<br><em>leaf</em>, and <em>ceremony</em>.</h2>
+      <p>Six reusable motifs distilled from the profile. Use them as backgrounds, dividers, ornaments — never as decoration alone. Each motif has a meaning; deploy it where the meaning fits.</p>
+    </header>
+
+    <div class="motif-grid">
+      <div class="motif-card">
+        <div class="canvas" style="background: var(--emwani-green-900);">
+          <svg width="100%" height="100%" viewBox="0 0 400 360" style="color: var(--gold-500)">
+            <rect width="100%" height="100%" fill="url(#mushonge-grid)"/>
+          </svg>
+        </div>
+        <div class="meta"><h4>Mushonge — hut arcs</h4><p>Background pattern at 8–14% opacity for heritage sections. Symbol of home, shelter, lineage.</p></div>
+      </div>
+      <div class="motif-card">
+        <div class="canvas" style="background: var(--char-900);">
+          <svg width="100%" height="100%" viewBox="0 0 400 360" style="color: var(--gold-500)">
+            <rect width="100%" height="100%" fill="url(#mushonge-dots)"/>
+          </svg>
+        </div>
+        <div class="meta"><h4>Mushonge — dot weave</h4><p>Lighter alternate. Excellent for cards, side panels, packaging belly bands.</p></div>
+      </div>
+      <div class="motif-card">
+        <div class="canvas" style="background: var(--emwani-green-700); display:flex; gap:14px;">
+          <svg viewBox="0 0 100 200" style="width: 50px; height: 70%; color: var(--gold-300)"><use href="#leaf"/></svg>
+          <svg viewBox="0 0 100 200" style="width: 60px; height: 80%; color: var(--bone-100)"><use href="#leaf"/></svg>
+          <svg viewBox="0 0 100 200" style="width: 50px; height: 70%; color: var(--gold-300)"><use href="#leaf"/></svg>
+        </div>
+        <div class="meta"><h4>Coffee leaves</h4><p>Life, fertility, ethical cultivation. Use as frame ornament around portraits or in section dividers.</p></div>
+      </div>
+      <div class="motif-card">
+        <div class="canvas" style="background: var(--coffee-900); display:flex; gap:12px; align-items:end; padding-bottom: 30px;">
+          <svg viewBox="0 0 60 60" style="width: 40px; color: var(--heritage-red-500)"><use href="#cherry"/></svg>
+          <svg viewBox="0 0 60 60" style="width: 56px; color: var(--heritage-red-700)"><use href="#cherry"/></svg>
+          <svg viewBox="0 0 60 60" style="width: 44px; color: var(--heritage-red-300)"><use href="#cherry"/></svg>
+        </div>
+        <div class="meta"><h4>Coffee cherries</h4><p>Harvest moments, "from the cherry" copy, seasonal campaigns.</p></div>
+      </div>
+      <div class="motif-card">
+        <div class="canvas" style="background: var(--bone-100); display:grid; place-items:center; padding: 20px;">
+          <div style="filter: grayscale(1) contrast(1.1); display: flex; gap: 8px; color: var(--char-900);">
+            <svg viewBox="0 0 80 120" style="width: 60px;"><use href="#bean"/></svg>
+            <svg viewBox="0 0 80 120" style="width: 70px;"><use href="#bean"/></svg>
+            <svg viewBox="0 0 80 120" style="width: 60px;"><use href="#bean"/></svg>
+          </div>
+        </div>
+        <div class="meta"><h4>Heritage B&amp;W</h4><p>Black-and-white treatment for portraits, archive imagery, founder story.</p></div>
+      </div>
+      <div class="motif-card">
+        <div class="canvas" style="background: var(--char-900); display:flex; flex-direction: column; justify-content: flex-end; padding: 0;">
+          <svg viewBox="0 0 1440 80" style="width: 100%; height: 30%; color: var(--gold-500)" preserveAspectRatio="none"><use href="#wave-soft"/></svg>
+          <svg viewBox="0 0 1440 120" style="width: 100%; height: 30%; color: var(--heritage-red-500)" preserveAspectRatio="none"><use href="#ribbon"/></svg>
+        </div>
+        <div class="meta"><h4>Red ribbon · gold wave</h4><p>Section transitions. Red for ceremony, gold for warmth. Stack them or use solo.</p></div>
+      </div>
+      <div class="motif-card">
+        <div class="canvas" style="background: var(--emwani-green-800); display: grid; place-items: center;">
+          <div class="steam-demo">
+            <svg viewBox="0 0 100 160" style="width: 60px; color: var(--bone-100); position: absolute; left: 50%; bottom: 60px; transform: translateX(-50%);" class="steam"><use href="#steam"/></svg>
+            <div class="cup"></div>
+          </div>
+        </div>
+        <div class="meta"><h4>Steam / pour</h4><p>Hero footers, café sections, the "cup" moment of the bean-to-cup arc.</p></div>
+      </div>
+      <div class="motif-card">
+        <div class="canvas" style="background: var(--bone-50); padding: 20px; display: grid; place-items: center;">
+          <svg viewBox="0 0 240 160" style="width: 220px; color: var(--coffee-700)">
+            <ellipse cx="120" cy="140" rx="100" ry="14" fill="rgba(0,0,0,0.12)"/>
+            <path d="M40 60 Q120 30 200 60 L210 130 Q120 150 30 130 Z" fill="currentColor"/>
+            <path d="M40 60 Q120 30 200 60 L196 70 Q120 42 44 70 Z" fill="rgba(0,0,0,0.18)"/>
+            <g fill="var(--heritage-red-500)">
+              <circle cx="80" cy="80" r="5"/><circle cx="100" cy="74" r="5"/><circle cx="120" cy="72" r="5"/>
+              <circle cx="140" cy="74" r="5"/><circle cx="160" cy="80" r="5"/><circle cx="90" cy="92" r="5"/>
+              <circle cx="110" cy="88" r="5"/><circle cx="130" cy="86" r="5"/><circle cx="150" cy="90" r="5"/>
+            </g>
+          </svg>
+        </div>
+        <div class="meta"><h4>Farmer basket</h4><p>Sustainability and sourcing sections. Always paired with named regions (Mbinga, Mbozi, Karagwe).</p></div>
+      </div>
+      <div class="motif-card">
+        <div class="canvas" style="background: var(--gold-500); position: relative;">
+          <div style="position:absolute; inset:0; background: repeating-linear-gradient(45deg, transparent 0 14px, rgba(0,0,0,0.06) 14px 15px);"></div>
+          <div style="position: relative; font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; color: var(--char-1000); letter-spacing: 0.08em; text-align: center; line-height: 1.1;">EMWANI<br><span style="font-family: var(--font-editorial); font-style: italic; font-weight: 400; font-size: 0.9rem; letter-spacing: 0.2em;">PACK BLOCK</span></div>
+        </div>
+        <div class="meta"><h4>Packaging block</h4><p>The label rectangle — solid colour + crest + product name. Used on every pouch front.</p></div>
+      </div>
+    </div>
+  </div>
+  <svg viewBox="0 0 1440 80" class="divider-wave" style="color: var(--bone-50); margin-top: var(--space-9);" preserveAspectRatio="none"><use href="#wave-soft"/></svg>
+</section>
+
+<!-- ============ 06 PRODUCT SYSTEM ============ -->
+<section class="section bg-cream" id="products">
+  <div class="container">
+    <header class="section-head">
+      <span class="num">06 — Product System</span>
+      <h2>Four products.<br>One <em>vocabulary of pack</em>.</h2>
+      <p>Every Emwani product card and pouch follows the same grid: heritage colour field, crest top-left, product display in Syne, origin line in italic serif, size pill, biodegradable note. Differentiation comes from colour and ceremony — never from inventing new layouts.</p>
+    </header>
+
+    <div class="products">
+      <!-- CHIODA GOLD -->
+      <article class="product-card chioda">
+        <svg viewBox="0 0 200 280" style="width: 100%; color: var(--gold-300);"><use href="#pack-pouch"/></svg>
+        <div class="copy">
+          <div class="tag">Arabica · Mbinga</div>
+          <div class="name">Chioda Gold</div>
+          <p class="blurb">Inspired by the Chioda dance of the Matengo people — graceful, circular, grounded. A medium-roast Arabica from the Mbinga highlands, harvested in gratitude and renewal.</p>
+          <div class="sizes"><span class="size">1 KG</span><span class="size">500 G</span><span class="size">250 G</span></div>
+        </div>
+      </article>
+
+      <!-- INGOMA -->
+      <article class="product-card ingoma">
+        <svg viewBox="0 0 200 280" style="width: 100%; color: var(--heritage-red-900);"><use href="#pack-pouch"/></svg>
+        <div class="copy">
+          <div class="tag">Arabica · Mbozi</div>
+          <div class="name">Ingoma <em style="font-family: var(--font-editorial); font-style: italic; font-weight: 400; letter-spacing: 0; text-transform: none; font-size: 0.7em;">— The Warrior</em></div>
+          <p class="blurb">Rooted in the ceremonial Ingoma dance of the Nyiha people. Bold, deep, masculine. High-altitude small-batch roast, packed with reverence.</p>
+          <div class="sizes"><span class="size">1 KG</span><span class="size">500 G</span><span class="size">250 G</span></div>
+        </div>
+      </article>
+
+      <!-- DARK ROAST -->
+      <article class="product-card dark">
+        <svg viewBox="0 0 200 280" style="width: 100%; color: var(--char-700);"><use href="#pack-pouch"/></svg>
+        <div class="copy">
+          <div class="tag">Variety 01 · Highland Arabica</div>
+          <div class="name">Dark Roasted Beans</div>
+          <p class="blurb">A bold, slow roast — heavy body, dark cocoa, smoky finish. The shop standard for espresso and stovetop.</p>
+          <div class="sizes"><span class="size">1 KG</span><span class="size">500 G</span><span class="size">250 G</span></div>
+        </div>
+      </article>
+
+      <!-- DRIP -->
+      <article class="product-card drip">
+        <svg viewBox="0 0 220 280" style="width: 100%; color: var(--bone-100);"><use href="#pack-drip"/></svg>
+        <div class="copy">
+          <div class="tag">Variety 02 · Pre-portioned</div>
+          <div class="name">Drip Coffee</div>
+          <p class="blurb">Clean medium-bodied cup, ready in two minutes. Built for travel, gifting, and the busiest mornings — without leaving the heritage behind.</p>
+          <div class="sizes"><span class="size">10 PACK</span><span class="size">5 PACK</span></div>
+        </div>
+      </article>
+    </div>
+
+    <h3 style="font-family: var(--font-editorial); font-weight: 400; font-size: 2rem; margin-top: var(--space-9);">Pack anatomy</h3>
+    <p style="max-width: 640px; margin-top: var(--space-4); color: var(--ink-on-cream-muted);">Every pouch front shares the same six elements, stacked top to bottom. Variations live in colour, region line, and ceremony name — never in layout.</p>
+    <ol style="list-style: none; counter-reset: pack; margin-top: var(--space-6); display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4) var(--space-7); max-width: 760px;">
+      <li style="counter-increment: pack; display: grid; grid-template-columns: 36px 1fr; gap: var(--space-3);"><span style="font-family: var(--font-display); font-weight: 700; color: var(--heritage-red-500);">01</span><span><strong>Crest</strong> — gold or bone, top-left, 18% of pack width.</span></li>
+      <li style="counter-increment: pack; display: grid; grid-template-columns: 36px 1fr; gap: var(--space-3);"><span style="font-family: var(--font-display); font-weight: 700; color: var(--heritage-red-500);">02</span><span><strong>Origin line</strong> — italic Cormorant, e.g. <em>Mbinga · Tanzania</em>.</span></li>
+      <li style="counter-increment: pack; display: grid; grid-template-columns: 36px 1fr; gap: var(--space-3);"><span style="font-family: var(--font-display); font-weight: 700; color: var(--heritage-red-500);">03</span><span><strong>Product name</strong> — Syne 800 uppercase, centred axis.</span></li>
+      <li style="counter-increment: pack; display: grid; grid-template-columns: 36px 1fr; gap: var(--space-3);"><span style="font-family: var(--font-display); font-weight: 700; color: var(--heritage-red-500);">04</span><span><strong>Ceremony line</strong> — single sentence in italic serif.</span></li>
+      <li style="counter-increment: pack; display: grid; grid-template-columns: 36px 1fr; gap: var(--space-3);"><span style="font-family: var(--font-display); font-weight: 700; color: var(--heritage-red-500);">05</span><span><strong>Net weight</strong> — Manrope 600, 12% LS, near base.</span></li>
+      <li style="counter-increment: pack; display: grid; grid-template-columns: 36px 1fr; gap: var(--space-3);"><span style="font-family: var(--font-display); font-weight: 700; color: var(--heritage-red-500);">06</span><span><strong>Biodegradable note</strong> — bottom-right caption.</span></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ 07 COMPONENTS ============ -->
+<section class="section bg-dark" id="components">
+  <div class="container">
+    <header class="section-head">
+      <span class="num">07 — Component Library</span>
+      <h2>The building blocks<br>of every <em>Emwani</em> surface.</h2>
+      <p>Each component below maps directly to a section in the website prototype foundation. Compose them in the order shown for the canonical home page; remix them for product, café, and story pages.</p>
+    </header>
+
+    <div class="comp-grid">
+
+      <!-- CINEMATIC HERO -->
+      <div class="comp">
+        <div class="frame dark" style="background: radial-gradient(ellipse at 20% 90%, var(--emwani-green-800), var(--char-1000));">
+          <div>
+            <div class="eyebrow">— Vol. 01 · Bean-to-cup</div>
+            <h3 style="font-family: var(--font-editorial); font-weight: 300; font-size: 3rem; line-height: 0.98; margin-top: 16px;">The seed remembers<br>every <em style="color: var(--gold-300);">hand</em> it has known.</h3>
+            <div style="display: flex; gap: 12px; margin-top: 24px;">
+              <button class="btn btn-primary">Order beans</button>
+              <button class="btn btn-ghost">Watch the harvest</button>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="tag">Cinematic Hero</span><span>HOME · STORY · CAFÉ</span></div>
+      </div>
+
+      <!-- SECTION TITLE BLOCK -->
+      <div class="comp">
+        <div class="frame cream">
+          <div>
+            <div class="eyebrow on-cream">— Origin</div>
+            <h3 style="font-family: var(--font-editorial); font-weight: 400; font-size: 2.5rem; line-height: 1.05; margin-top: 12px; max-width: 18ch;">From the slopes of Mbinga, to the cup in your hand.</h3>
+          </div>
+        </div>
+        <div class="footer"><span class="tag">Section Title</span><span>Every page header</span></div>
+      </div>
+
+      <!-- ORIGIN STORY CARD -->
+      <div class="comp">
+        <div class="frame cream" style="padding: 0;">
+          <div style="display: grid; grid-template-columns: 1fr 1.2fr; height: 100%;">
+            <div style="background: var(--coffee-700); position: relative;">
+              <svg width="100%" height="100%" viewBox="0 0 200 280" style="color: var(--gold-500); opacity: 0.4; position: absolute; inset: 0;"><rect width="100%" height="100%" fill="url(#mushonge-grid)"/></svg>
+            </div>
+            <div style="padding: 28px;">
+              <div class="eyebrow on-cream">— Karagwe, Kagera</div>
+              <h4 style="font-family: var(--font-editorial); font-weight: 500; font-size: 1.6rem; margin-top: 8px; line-height: 1.15;">The Kachebonaho mill</h4>
+              <p style="font-size: 0.9rem; line-height: 1.65; margin-top: 12px; color: var(--ink-on-cream-muted);">Leonard Kachebonaho built mills and founded KPD to uplift smallholder farmers. Emwani is that lineage, scaled.</p>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="tag">Origin Story</span><span>Heritage / About</span></div>
+      </div>
+
+      <!-- FOUNDER QUOTE -->
+      <div class="comp">
+        <div class="frame green">
+          <div class="quote-block">
+            <p class="quote" style="color: var(--bone-100);">"We are not selling coffee. We are returning a word — <em style="color: var(--gold-300);">Emwani</em> — to the world's table."</p>
+            <div class="attrib">Leodger Kachebonaho · Founder &amp; CEO</div>
+          </div>
+        </div>
+        <div class="footer"><span class="tag">Founder Quote</span><span>About / Investor decks</span></div>
+      </div>
+
+      <!-- COFFEE JOURNEY STEP -->
+      <div class="comp">
+        <div class="frame cream">
+          <div style="display: grid; gap: 24px;">
+            <div class="journey-step"><div class="num">01</div><div><h5>Cherry — Mbinga</h5><p>Hand-picked at peak ripeness from cooperative farms.</p></div></div>
+            <div class="journey-step"><div class="num">02</div><div><h5>Mill — Karagwe</h5><p>Wet-processed, sun-dried, sorted by hand for export grade.</p></div></div>
+            <div class="journey-step"><div class="num">03</div><div><h5>Roast — Dar es Salaam</h5><p>Small batches, slow profiles, ceremony-specific roast curves.</p></div></div>
+          </div>
+        </div>
+        <div class="footer"><span class="tag">Bean-to-cup Journey</span><span>Story / Product page</span></div>
+      </div>
+
+      <!-- PRODUCT SHOWCASE -->
+      <div class="comp">
+        <div class="frame dark" style="background: linear-gradient(180deg, var(--gold-700), var(--coffee-900));">
+          <div style="display: grid; grid-template-columns: 120px 1fr; gap: 24px; align-items: end;">
+            <svg viewBox="0 0 200 280" style="width: 100%; color: var(--gold-300); filter: drop-shadow(0 16px 24px rgba(0,0,0,.4))"><use href="#pack-pouch"/></svg>
+            <div>
+              <div class="eyebrow">— Mbinga · Arabica</div>
+              <div class="display-name" style="font-size: 1.8rem; color: var(--bone-50); margin-top: 8px;">Chioda Gold</div>
+              <div style="display:flex; gap:8px; margin-top:14px;"><span class="size" style="font-family:var(--font-display); font-weight:700; font-size:0.7rem; letter-spacing:0.1em; padding:6px 12px; border-radius:999px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2);">1KG</span><span class="size" style="font-family:var(--font-display); font-weight:700; font-size:0.7rem; letter-spacing:0.1em; padding:6px 12px; border-radius:999px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2);">500G</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="tag">Product Showcase</span><span>Catalog / Home</span></div>
+      </div>
+
+      <!-- CAFÉ EXPERIENCE -->
+      <div class="comp">
+        <div class="frame" style="background: var(--coffee-900); color: var(--bone-100); padding: 0; position: relative;">
+          <svg width="100%" height="100%" viewBox="0 0 400 320" style="position:absolute; inset:0; color: var(--gold-500); opacity: 0.12;"><rect width="100%" height="100%" fill="url(#mushonge-dots)"/></svg>
+          <div style="position: relative; padding: 28px;">
+            <div class="eyebrow">— Café · Mission St, Dar es Salaam</div>
+            <h4 style="font-family: var(--font-editorial); font-weight: 500; font-size: 1.75rem; margin-top: 10px;">A culture hub, not a coffee shop.</h4>
+            <p style="font-size: 0.9rem; line-height: 1.65; margin-top: 12px; max-width: 36ch; opacity: 0.78;">Youth empowerment space, business incubator, showroom for beans and blends.</p>
+            <button class="btn btn-secondary" style="margin-top: 18px;">Find a café</button>
+          </div>
+        </div>
+        <div class="footer"><span class="tag">Café Experience</span><span>Locations / Hub</span></div>
+      </div>
+
+      <!-- FARMER / SUSTAINABILITY -->
+      <div class="comp">
+        <div class="frame cream">
+          <div>
+            <div class="eyebrow on-cream">— Farmer-first</div>
+            <h4 style="font-family: var(--font-editorial); font-weight: 500; font-size: 1.75rem; margin-top: 8px;">Direct from 2,400 smallholders.</h4>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 20px;">
+              <div><div style="font-family: var(--font-editorial); font-size: 2.4rem; font-weight: 400; color: var(--heritage-red-500); line-height: 1;">2.4k</div><div style="font-size: 0.8rem; margin-top: 4px; color: var(--ink-on-cream-muted);">Smallholder farms</div></div>
+              <div><div style="font-family: var(--font-editorial); font-size: 2.4rem; font-weight: 400; color: var(--heritage-red-500); line-height: 1;">3</div><div style="font-size: 0.8rem; margin-top: 4px; color: var(--ink-on-cream-muted);">Sourcing regions</div></div>
+              <div><div style="font-family: var(--font-editorial); font-size: 2.4rem; font-weight: 400; color: var(--heritage-red-500); line-height: 1;">100%</div><div style="font-size: 0.8rem; margin-top: 4px; color: var(--ink-on-cream-muted);">Biodegradable pack</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="tag">Farmer · Sustainability</span><span>Impact / About</span></div>
+      </div>
+
+      <!-- CTA BUTTONS -->
+      <div class="comp">
+        <div class="frame dark">
+          <div style="display: flex; flex-direction: column; gap: 18px; align-items: flex-start;">
+            <button class="btn btn-primary">Order Beans →</button>
+            <button class="btn btn-secondary">Watch the harvest</button>
+            <button class="btn btn-ghost">Find a café near you</button>
+            <button class="btn btn-ink" style="background: var(--bone-100); color: var(--char-1000);">Subscribe — monthly roast</button>
+          </div>
+        </div>
+        <div class="footer"><span class="tag">Premium CTAs</span><span>Primary · Secondary · Ghost · Inverse</span></div>
+      </div>
+
+      <!-- CONTACT / LOCATION -->
+      <div class="comp">
+        <div class="frame cream">
+          <div>
+            <div class="eyebrow on-cream">— Contact</div>
+            <h4 style="font-family: var(--font-editorial); font-weight: 500; font-size: 1.6rem; margin-top: 8px;">Emwani Coffee Ltd</h4>
+            <div style="margin-top: 14px; font-size: 0.95rem; line-height: 1.7; color: var(--ink-on-cream-muted);">
+              22nd Floor, PSPF Tower<br>Mission St, Ilala CBD<br>Dar es Salaam, Tanzania<br><br>
+              +255 748 787 981<br>leodger@emwanicoffee.co.tz
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="tag">Contact / Location</span><span>Footer / Contact page</span></div>
+      </div>
+
+      <!-- MOBILE STICKY CTA -->
+      <div class="comp">
+        <div class="frame cream" style="background: var(--bone-200); display:grid; place-items:center; padding: 40px;">
+          <div style="width: 240px; height: 460px; background: var(--char-1000); border-radius: 32px; border: 4px solid #333; padding: 14px; position: relative; box-shadow: var(--shadow-cinema);">
+            <div style="background: var(--bone-100); height: 100%; border-radius: 22px; padding: 18px 14px; display: flex; flex-direction: column; gap: 8px; overflow: hidden;">
+              <div style="height: 8px; background: var(--char-1000); border-radius: 2px; width: 60%;"></div>
+              <div style="height: 8px; background: rgba(0,0,0,0.12); border-radius: 2px; width: 80%;"></div>
+              <div style="height: 8px; background: rgba(0,0,0,0.12); border-radius: 2px; width: 50%;"></div>
+              <div style="flex: 1;"></div>
+              <div style="background: var(--heritage-red-500); color: var(--bone-50); padding: 12px; border-radius: 999px; text-align: center; font-family: var(--font-display); font-size: 0.7rem; letter-spacing: 0.16em; font-weight: 700;">ORDER BEANS</div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="tag">Mobile Sticky CTA</span><span>Persistent across product pages</span></div>
+      </div>
+
+      <!-- FOOTER DISCLAIMER -->
+      <div class="comp">
+        <div class="frame" style="background: var(--char-1000); color: var(--bone-100); padding: 28px;">
+          <div>
+            <div style="background: var(--bone-100); display: inline-block; padding: 10px 14px; border-radius: 6px; margin-bottom: 16px;"><svg viewBox="0 0 240 360" style="width: 60px; display:block;"><use href="#logo-primary"/></svg></div>
+            <div style="font-family: var(--font-display); font-weight: 800; letter-spacing: 0.24em; font-size: 0.9rem;">EMWANI COFFEE LTD</div>
+            <div style="font-size: 0.8rem; margin-top: 12px; color: var(--ink-on-dark-muted); line-height: 1.6;">© 2026 Emwani Coffee Ltd. All cultural motifs are presented with the consent of the Haya, Matengo, and Nyiha communities. Photography appearing on this site requires written permission for redistribution.</div>
+          </div>
+        </div>
+        <div class="footer"><span class="tag">Footer Disclaimer</span><span>Every page · last block</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ 08 MOTION ============ -->
+<section class="section bg-coffee" id="motion">
+  <div class="container">
+    <header class="section-head">
+      <span class="num">08 — Motion Style</span>
+      <h2>Slow. Cinematic.<br>Like <em>steam</em>, never like a spring.</h2>
+      <p>Motion at Emwani should feel like an opening credit sequence. No bounce, no overshoot, no spring physics. Long durations (800–1400ms), gentle easings, and a deep respect for mobile performance.</p>
+    </header>
+
+    <div class="motion-grid">
+      <div class="motion-card">
+        <div class="demo">
+          <div style="width: 240px;">
+            <div class="reveal in" style="font-family: var(--font-editorial); font-size: 2rem; color: var(--bone-100); line-height: 1.05;">The seed<br>remembers.</div>
+          </div>
+        </div>
+        <div>
+          <h4>Cinematic reveals</h4>
+          <p>Headlines fade up over 1200ms · cubic-bezier(.22,.61,.36,1). One element at a time, never staggered like a chorus line.</p>
+        </div>
+      </div>
+
+      <div class="motion-card">
+        <div class="demo">
+          <div class="steam-demo" style="height: 120px;">
+            <svg viewBox="0 0 100 160" style="width: 60px; color: var(--bone-100); position: absolute; left: 50%; bottom: 50px; transform: translateX(-50%);" class="steam"><use href="#steam"/></svg>
+            <div class="cup" style="height: 48px;"></div>
+          </div>
+        </div>
+        <div>
+          <h4>Steam-like fades</h4>
+          <p>Section-to-section transitions fade through a 30% black veil for 480ms. Like a film cut, not a slide.</p>
+        </div>
+      </div>
+
+      <div class="motion-card">
+        <div class="demo">
+          <div class="orbit-stage">
+            <div class="core">
+              <div style="background: var(--bone-100); padding: 12px 16px; border-radius: 8px;"><svg viewBox="0 0 240 360" style="width: 72px; display:block;"><use href="#logo-primary"/></svg></div>
+            </div>
+            <div class="bean"></div>
+            <div class="bean b2"></div>
+            <div class="bean b3"></div>
+          </div>
+        </div>
+        <div>
+          <h4>Bean orbit</h4>
+          <p>Hero loading state: three beans orbit the crest at 9 / 12 / 14 second cycles. Linear easing — the rhythm of a wheel, not a spring.</p>
+        </div>
+      </div>
+
+      <div class="motion-card">
+        <div class="demo">
+          <svg viewBox="0 0 200 280" style="width: 120px; color: var(--gold-700); transition: transform 600ms var(--ease-cinema); animation: packRot 6s var(--ease-cinema) infinite alternate;"><use href="#pack-pouch"/></svg>
+          <style>@keyframes packRot { from { transform: rotateY(-8deg); } to { transform: rotateY(8deg); } }</style>
+        </div>
+        <div>
+          <h4>Packaging tilt</h4>
+          <p>On hover, product pouches rotate ±8° on the Y-axis over 600ms. Never a flip. Never a spin. The product is sacred.</p>
+        </div>
+      </div>
+
+      <div class="motion-card">
+        <div class="demo">
+          <div style="position: relative; width: 220px; height: 4px; background: var(--char-700); border-radius: 999px; overflow: hidden;">
+            <div style="position: absolute; left: 0; top: 0; height: 100%; width: 60%; background: var(--gold-500); animation: scrollGrow 2.4s var(--ease-steam) infinite;"></div>
+          </div>
+          <div style="font-family: var(--font-display); font-size: 0.7rem; letter-spacing: 0.2em; color: var(--ink-on-dark-muted); margin-top: 18px;">SCROLL · CHAPTER 03 / 05</div>
+          <style>@keyframes scrollGrow { 0% { width: 10%; } 50% { width: 80%; } 100% { width: 10%; }}</style>
+        </div>
+        <div>
+          <h4>Scroll-driven origin journey</h4>
+          <p>The bean-to-cup arc unfolds with scroll position. A thin gold progress line in the margin marks the chapter.</p>
+        </div>
+      </div>
+
+      <div class="motion-card">
+        <div class="demo">
+          <div style="text-align: center;">
+            <div style="font-family: var(--font-display); font-weight: 800; font-size: 0.7rem; letter-spacing: 0.22em; color: var(--heritage-red-300);">DO NOT</div>
+            <div style="margin-top: 12px; font-family: var(--font-editorial); font-size: 1.4rem; color: var(--bone-100); line-height: 1.2;">Bounce. Overshoot.<br>Wobble. Auto-play loud video.</div>
+            <div style="margin-top: 18px; font-family: var(--font-display); font-weight: 800; font-size: 0.7rem; letter-spacing: 0.22em; color: var(--emwani-green-300);">DO</div>
+            <div style="margin-top: 12px; font-family: var(--font-editorial); font-size: 1.4rem; color: var(--bone-100); line-height: 1.2;">Fade. Reveal.<br>Settle. Respect reduced-motion.</div>
+          </div>
+        </div>
+        <div>
+          <h4>Mobile performance</h4>
+          <p>No more than 2 simultaneous animations on mobile. Honour <code style="font-family: var(--font-mono); font-size: 0.8em; opacity: 0.8;">prefers-reduced-motion</code>. Lazy-load every hero video below 720p.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 09 ASSET RULES ============ -->
+<section class="section bg-dark" id="rules">
+  <div class="container">
+    <header class="section-head">
+      <span class="num">09 — Asset Usage Rules</span>
+      <h2>What is sacred,<br>what is shareable,<br>what is to be <em>recreated</em>.</h2>
+      <p>This system is generated for private concept development. Real founder photography, farmer portraits, and exact packaging artwork require written consent before any public deployment.</p>
+    </header>
+
+    <div style="overflow-x: auto;">
+      <table class="rules-table">
+        <thead>
+          <tr><th>Asset</th><th>Internal demo</th><th>Public deployment</th><th>Treatment</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Founder photography</strong><br><span style="color: var(--ink-on-dark-muted); font-size: 0.85rem;">Leodger Kachebonaho, family archive</span></td>
+            <td><span class="pill amber">Reference only</span></td>
+            <td><span class="pill red">Permission required</span></td>
+            <td>Replace with placeholder portraits for public concept. Use heritage B&amp;W treatment only.</td>
+          </tr>
+          <tr>
+            <td><strong>Farmer / field portraits</strong><br><span style="color: var(--ink-on-dark-muted); font-size: 0.85rem;">Mbinga · Mbozi · Karagwe</span></td>
+            <td><span class="pill amber">Reference only</span></td>
+            <td><span class="pill red">Permission required</span></td>
+            <td>Always credit the farmer cooperative. Never use generic stock as a substitute.</td>
+          </tr>
+          <tr>
+            <td><strong>Exact packaging artwork</strong><br><span style="color: var(--ink-on-dark-muted); font-size: 0.85rem;">Chioda Gold, Ingoma, Dark Roast, Drip</span></td>
+            <td><span class="pill amber">Reference only</span></td>
+            <td><span class="pill red">Permission required</span></td>
+            <td>Use the recreated pack silhouettes in this system for public demos.</td>
+          </tr>
+          <tr>
+            <td><strong>Emwani crest &amp; wordmark</strong><br><span style="color: var(--ink-on-dark-muted); font-size: 0.85rem;">Green crest + red EMWANÍ · Café lockup</span></td>
+            <td><span class="pill green">Use as supplied</span></td>
+            <td><span class="pill amber">Use master artwork only</span></td>
+            <td>Use the supplied <code>#logo-primary</code> / <code>#logo-cafe</code> / <code>#crest</code> symbols only. Never redraw, restyle, or re-tint the official mark — it is always green crest + red wordmark. Café lockup only on café surfaces. On dark, place on a cream card.</td>
+          </tr>
+          <tr>
+            <td><strong>Mushonge pattern · leaves · cherries</strong></td>
+            <td><span class="pill green">Use freely</span></td>
+            <td><span class="pill green">Vector — recreate as SVG</span></td>
+            <td>Always vector. Never trace a photograph of cultural objects.</td>
+          </tr>
+          <tr>
+            <td><strong>Ceremony names — Chioda, Ingoma</strong></td>
+            <td><span class="pill green">Use as named</span></td>
+            <td><span class="pill amber">Honour the source culture</span></td>
+            <td>Credit Matengo (Chioda) and Nyiha (Ingoma) peoples. Do not use as decorative typography alone.</td>
+          </tr>
+          <tr>
+            <td><strong>Café interior photography</strong></td>
+            <td><span class="pill amber">Reference only</span></td>
+            <td><span class="pill red">Permission required</span></td>
+            <td>For public demo, use placeholder café imagery with consistent treatment.</td>
+          </tr>
+          <tr>
+            <td><strong>Decorative “gold badge” marks</strong><br><span style="color: var(--ink-on-dark-muted); font-size: 0.85rem;">Any non-official emblem</span></td>
+            <td><span class="pill red">Do not use</span></td>
+            <td><span class="pill red">Do not use</span></td>
+            <td>Do not invent gold badge logos, generic African emblems, line-art crests, or simplified re-interpretations. The official mark stays green + red.</td>
+          </tr>
+          <tr>
+            <td><strong>Stock / placeholder imagery</strong></td>
+            <td><span class="pill green">Use freely</span></td>
+            <td><span class="pill gray">Replace at launch</span></td>
+            <td>Mark every placeholder. Replace 1:1 with commissioned photography before launch.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 10 PROTOTYPE FOUNDATION ============ -->
+<section class="section bg-cream" id="prototype">
+  <div class="container">
+    <header class="section-head">
+      <span class="num">10 — Website Prototype Foundation</span>
+      <h2>One canonical home page,<br>built entirely from <em>this system</em>.</h2>
+      <p>The companion file <code>prototype.html</code> assembles the cinematic hero, origin journey, product showcase, café block, founder quote, farmer impact, and footer using only the tokens, motifs, and components defined here. Use it as the start of every future Emwani site.</p>
+    </header>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-7); align-items: center;">
+      <div>
+        <ol class="index-list" style="border-top: 1px solid var(--border-cream);">
+          <li><span class="t">Cinematic hero</span><span class="s">Crest · headline · CTA pair</span></li>
+          <li><span class="t">Origin chapter</span><span class="s">Mbinga · scroll-driven</span></li>
+          <li><span class="t">Product showcase</span><span class="s">Chioda · Ingoma · Dark · Drip</span></li>
+          <li><span class="t">Founder quote</span><span class="s">Green stage · italic serif</span></li>
+          <li><span class="t">Farmer impact</span><span class="s">Numbers · sourcing regions</span></li>
+          <li><span class="t">Café experience</span><span class="s">Locations · culture hub</span></li>
+          <li><span class="t">Contact &amp; footer</span><span class="s">Mission St · disclaimer</span></li>
+        </ol>
+        <div style="display: flex; gap: 12px; margin-top: var(--space-6);">
+          <a href="prototype.html" class="btn btn-primary">Open prototype →</a>
+          <a href="prototype.html" target="_blank" class="btn" style="background: transparent; border: 1px solid var(--border-cream); color: var(--char-1000);">Open in new tab</a>
+        </div>
+      </div>
+      <div class="proto-frame">
+        <iframe src="prototype.html" title="Emwani prototype preview" loading="lazy"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="system-footer">
+  <div class="container">
+    <div class="row">
+      <div>
+        <div style="background: var(--bone-100); display: inline-block; padding: 14px 20px; border-radius: 8px; margin-bottom: var(--space-5);"><svg viewBox="0 0 240 360" style="width: 80px; display:block;"><use href="#logo-primary"/></svg></div>
+        <div style="font-family: var(--font-display); font-weight: 800; letter-spacing: 0.2em;">EMWANI COFFEE LTD</div>
+        <p style="font-size: 0.85rem; margin-top: var(--space-4); color: var(--ink-on-dark-muted); line-height: 1.65; max-width: 36ch;">Cinematic Brand System, Volume 01. A reusable design language for websites, decks, packaging, and storytelling.</p>
+      </div>
+      <div>
+        <h5>The system</h5>
+        <ul>
+          <li><a href="#brand">01 — Brand essence</a></li>
+          <li><a href="#logo">02 — Logo system</a></li>
+          <li><a href="#color">03 — Color palette</a></li>
+          <li><a href="#type">04 — Typography</a></li>
+          <li><a href="#motifs">05 — Visual motifs</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Applications</h5>
+        <ul>
+          <li><a href="#products">06 — Product system</a></li>
+          <li><a href="#components">07 — Component library</a></li>
+          <li><a href="#motion">08 — Motion style</a></li>
+          <li><a href="#rules">09 — Asset usage</a></li>
+          <li><a href="#prototype">10 — Prototype foundation</a></li>
+        </ul>
+      </div>
+    </div>
+    <div style="margin-top: var(--space-9); padding-top: var(--space-6); border-top: 1px solid var(--border-dark); display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--ink-on-dark-muted);">
+      <span>© 2026 Emwani Coffee Ltd — Cinematic Brand System v01</span>
+      <span>22nd Floor, PSPF Tower · Mission St · Ilala CBD · Dar es Salaam</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

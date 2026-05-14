@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Emwani Coffee — Cinematic Brand System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Manrope:wght@300;400;500;600;700&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/tokens.css">
+    <link rel="stylesheet" href="assets/system.css">
+    <link rel="stylesheet" href="assets/css/cinematic.css">
+    <style>
+        /* Critical Hero Styles */
+        #hero { 
+            background: radial-gradient(ellipse at 30% 110%, var(--emwani-green-900) 0%, var(--char-1000) 70%);
+            display: flex;
+            align-items: center;
+        }
+        .hero-inner { width: var(--container); margin-inline: auto; position: relative; z-index: 5; }
+        .reveal { opacity: 0; transform: translateY(30px); transition: opacity 1.2s var(--ease-cinema), transform 1.2s var(--ease-cinema); }
+        .reveal.in { opacity: 1; transform: translateY(0); }
+        
+        /* Layout overrides */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-9); align-items: center; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-6); }
+        @media (max-width: 980px) { .grid-2, .grid-4 { grid-template-columns: 1fr; } }
+        
+        .align-center { align-items: center; }
+        .text-center { text-align: center; }
+        
+        /* Logo Card for Dark Sections */
+        .logo-card { 
+            background: var(--bone-100); 
+            padding: 12px 16px; 
+            display: inline-block; 
+            border-radius: var(--r-sm);
+        }
+    </style>
+</head>
+<body class="bg-dark">
+
+    <!-- ============ NAVIGATION ============ -->
+    <nav class="nav">
+        <a href="#" class="brand" aria-label="Emwani Coffee Home">
+            <img src="assets/logos/real-emwani-logo.jpg" alt="Emwani Logo" height="22">
+        </a>
+        <a href="#origin">The Journey</a>
+        <a href="#products">The Beans</a>
+        <a href="#cafe">The Café</a>
+        <a href="#contact" class="cta">Shop Now</a>
+    </nav>
+
+    <main>
+        <!-- ============ HERO ============ -->
+        <section id="hero">
+            <div class="hero-inner">
+                <div class="reveal">
+                    <span class="chapter-label">Vol. 01 · Tanzanian Coffee Heritage</span>
+                    <h1 class="cinematic-headline">The seed remembers<br>every <em>hand</em><br>it has known.</h1>
+                    <p class="cinematic-body">From the slopes of Mbinga to the world stage. Emwani celebrates coffee as a ritual of welcome, a labor of craft, and a bridge to Karagwe soul.</p>
+                </div>
+            </div>
+            <!-- Hero Visual Layer -->
+            <div style="position:absolute; inset:0; z-index:1;">
+                <img src="assets/story/hero-cinematic-wide.webp" alt="" style="width:100%; height:100%; object-fit:cover; opacity:0.4; filter:brightness(0.7) contrast(1.1);">
+            </div>
+            <!-- Heritage Background -->
+            <div style="position:absolute; inset:0; background:url('assets/story/heritage-line-art-premium.webp') center/cover; opacity:0.1; mix-blend-mode:overlay; pointer-events:none; z-index:2;"></div>
+        </section>
+
+        <!-- ============ CHAPTER 01: ORIGIN ============ -->
+        <section id="origin" class="bg-dark">
+            <div class="container">
+                <div class="reveal">
+                    <span class="chapter-label">Chapter 01 · The Source</span>
+                    <h2 class="cinematic-headline">From the volcanic slopes,<br>to the cup in your <em>hand</em>.</h2>
+                    <p class="cinematic-body">Rooted in the highlands of Mbinga, Mbozi, and Karagwe. A Tanzanian house, returning African coffee to its rightful place.</p>
+                </div>
+            </div>
+            <!-- Texture overlay -->
+            <div style="position:absolute; inset:0; background:url('assets/story/heritage-line-art-premium.webp') center/cover; opacity:0.04; pointer-events:none; mix-blend-mode:screen;"></div>
+        </section>
+
+        <!-- ============ CHAPTER 02: HARVEST ============ -->
+        <section id="harvest" class="bg-coffee">
+            <div class="container grid-2">
+                <div class="reveal">
+                    <span class="chapter-label">Chapter 02 · The Harvest</span>
+                    <h2 class="cinematic-headline">The <em>Chioda</em> Rhythm.</h2>
+                    <p class="cinematic-body">Hand-picked at peak ripeness. Smallholder cooperatives in Mbinga harvest only the deep red cherries. Traceable, ethical, and honored at every step.</p>
+                </div>
+                <div class="reveal">
+                    <img src="assets/story/farmer-cherries-portrait-premium.webp" alt="Farmer with fresh coffee cherries" width="600" height="800" style="border-radius:var(--r-lg); box-shadow:var(--shadow-cinema); object-fit:cover;" loading="lazy">
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ CHAPTER 03: CHERRY SELECTION ============ -->
+        <section id="cherry-selection" class="bg-dark">
+            <div class="container text-center">
+                <div class="reveal">
+                    <span class="chapter-label">Chapter 03 · Selection</span>
+                    <h2 class="cinematic-headline">Only the <em>ripest</em> survive.</h2>
+                    <p class="cinematic-body">Sorted by sight, by touch, by patience.</p>
+                    <div class="crop-watermark reveal" style="margin-top:var(--space-8); max-width:1000px; margin-inline:auto;">
+                        <img src="assets/story/cherry-selection-closeup.webp" alt="Deep red coffee cherries being sorted" width="1000" height="562" style="border-radius:var(--r-lg); width:100%;" loading="lazy">
+                    </div>
+                </div>
+            </div>
+            <!-- Texture overlay -->
+            <div style="position:absolute; inset:0; background:url('assets/story/heritage-line-art-premium.webp') center/cover; opacity:0.03; pointer-events:none; mix-blend-mode:screen;"></div>
+        </section>
+
+        <!-- ============ CHAPTER 04: PROCESSING ============ -->
+        <section id="processing" class="bg-cream">
+            <div class="container">
+                <div class="reveal">
+                    <span class="chapter-label" style="color:var(--heritage-red-500)">Chapter 04 · The Mill</span>
+                    <h2 class="cinematic-headline" style="color:var(--char-1000)">Sun-dried & <em>Sorted</em>.</h2>
+                    <p class="cinematic-body" style="color:var(--ink-on-cream-muted)">At the Kachebonaho mills, parchment is slow-dried on raised beds — preserving the unique floral and citrus notes of the highland soil.</p>
+                </div>
+                <div class="pan-container reveal">
+                    <img src="assets/story/coffee-drying-premium.webp" alt="Coffee drying on raised beds" class="pan-img" width="1200" height="675" loading="lazy">
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ CHAPTER 05: ROASTING ============ -->
+        <section id="roasting" class="bg-dark">
+            <div class="container">
+                <div class="reveal">
+                    <span class="chapter-label">Chapter 05 · The Roastery</span>
+                    <h2 class="cinematic-headline">The <em>Ceremony</em> of Roast.</h2>
+                    <p class="cinematic-body">Roasted in small batches in Dar es Salaam. Profiles named for the rituals they honor — Chioda for harvest, Ingoma for the warrior.</p>
+                </div>
+                <div class="reveal" style="margin-top:var(--space-8); position:relative; text-align:center;">
+                    <div class="crop-watermark" style="display:inline-block; border-radius:var(--r-lg); overflow:hidden;">
+                        <img src="assets/story/roasting-basket-premium.webp" alt="Freshly roasted coffee beans" width="900" height="562" style="display:block;" loading="lazy">
+                    </div>
+                    
+                    <!-- CSS Steam Overlay -->
+                    <div class="steam-container">
+                        <svg viewBox="0 0 100 160" preserveAspectRatio="none" style="width:200px; height:300px; position:absolute; bottom:0; left:50%; transform:translateX(-50%);">
+                            <path class="steam-path" d="M30 150 C 22 120 50 100 42 70 C 36 48 56 36 50 12" stroke="white" />
+                            <path class="steam-path" d="M58 150 C 66 122 42 102 52 76 C 60 56 44 40 56 18" stroke="white" />
+                            <path class="steam-path" d="M44 150 C 48 130 40 116 46 96" stroke="white" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <!-- Texture overlay -->
+            <div style="position:absolute; inset:0; background:url('assets/story/heritage-line-art-premium.webp') center/cover; opacity:0.04; pointer-events:none; mix-blend-mode:screen;"></div>
+        </section>
+
+        <!-- ============ CHAPTER 06: GRINDING ============ -->
+        <section id="grinding" class="bg-dark">
+            <div class="container text-center">
+                <div class="reveal">
+                    <span class="chapter-label">Chapter 06 · Precision</span>
+                    <h2 class="cinematic-headline">Ground for the cup it's <em>meant</em> for.</h2>
+                    <p class="cinematic-body">Coarse for filter. Fine for espresso. Precise for what comes next.</p>
+                </div>
+            </div>
+            <!-- Texture overlay -->
+            <div style="position:absolute; inset:0; background:url('assets/story/heritage-line-art-premium.webp') center/cover; opacity:0.04; pointer-events:none; mix-blend-mode:screen;"></div>
+        </section>
+
+        <!-- ============ CHAPTER 07: BREWING ============ -->
+        <section id="brewing" class="bg-coffee">
+            <div class="container text-center">
+                <div class="reveal">
+                    <span class="chapter-label">Chapter 07 · The Pour</span>
+                    <h2 class="cinematic-headline">The first <em>pour</em>.</h2>
+                    <p class="cinematic-body">Color. Body. Aroma. Finally, yours.</p>
+                </div>
+            </div>
+            <!-- Texture overlay -->
+            <div style="position:absolute; inset:0; background:url('assets/story/heritage-line-art-premium.webp') center/cover; opacity:0.04; pointer-events:none; mix-blend-mode:overlay;"></div>
+        </section>
+
+        <!-- ============ CHAPTER 08: PRODUCTS ============ -->
+        <section id="products" class="bg-cream">
+            <div class="container">
+                <div class="reveal" style="margin-bottom:var(--space-6)">
+                    <span class="chapter-label" style="color:var(--heritage-red-500)">Chapter 08 · The Collection</span>
+                    <h2 class="cinematic-headline" style="color:var(--char-1000)">Three products.<br>One <em>vocabulary</em>.</h2>
+                </div>
+                
+                <div class="pack-grid">
+                    <!-- CHIODA GOLD -->
+                    <article class="pack product-chioda reveal">
+                        <div class="product-image-container">
+                            <img src="assets/products/studio/chioda-gold-premium-3x4.jpg" alt="Chioda Gold" class="product-image" loading="lazy">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="t-display">Chioda Gold</h3>
+                            <p class="t-editorial-italic">Bright & Sweet</p>
+                        </div>
+                    </article>
+                    <!-- INGOMA -->
+                    <article class="pack product-ingoma reveal">
+                        <div class="product-image-container">
+                            <img src="assets/products/studio/ingoma-premium-3x4-v2.webp" alt="Ingoma Pack" class="product-image" loading="lazy">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="t-display">Ingoma</h3>
+                            <p class="t-editorial-italic">Bold & Grounded</p>
+                        </div>
+                    </article>
+                    <!-- DRIP COFFEE -->
+                    <article class="pack product-drip reveal">
+                        <div class="product-image-container">
+                            <img src="assets/products/studio/drip-coffee-premium-3x4-v2.webp" alt="Drip Coffee" class="product-image" loading="lazy">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="t-display">Drip Coffee</h3>
+                            <p class="t-editorial-italic">Pure Convenience</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ CHAPTER 09: CAFE ============ -->
+        <section id="cafe" class="bg-dark">
+            <div class="container grid-2">
+                <div class="reveal">
+                    <span class="chapter-label">Chapter 09 · The Hub</span>
+                    <h2 class="cinematic-headline">A culture hub.<br>Not a <em>coffee shop</em>.</h2>
+                    <p class="cinematic-body">Where the youth of Dar es Salaam meet the heritage of Karagwe. A space for business, incubation, and the perfect pour-over.</p>
+                    <div style="margin-top:var(--space-8);">
+                        <div class="logo-card">
+                            <img src="assets/logos/real-emwani-cafe-logo.png" alt="Emwani Café Logo" width="160" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+                <div class="reveal text-center">
+                    <img src="assets/story/cafe-interior-masaki-placeholder.webp" alt="Emwani Cafe Masaki Interior" width="600" height="500" style="border-radius:var(--r-lg); width:100%; object-fit:cover; height:500px;" loading="lazy">
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ FOUNDER ============ -->
+        <section id="founder" class="bg-green">
+            <div class="container grid-2">
+                <div class="reveal">
+                    <img src="assets/extracted/selected/founder-leodger.jpeg" alt="Founder Leodger L. Kachebonaho" width="500" height="600" style="border-radius:var(--r-lg); filter:grayscale(20%);" loading="lazy">
+                </div>
+                <div class="reveal">
+                    <span class="chapter-label">The Vision</span>
+                    <blockquote style="font-family:var(--font-editorial); font-style:italic; font-size:var(--fs-h3); line-height:1.2; color:var(--bone-100);">
+                        "Coffee, for our people, has always been a <em>ritual of welcome</em>. We are simply returning that ritual — and the word <strong>Emwani</strong> — to the world's table."
+                    </blockquote>
+                    <p class="cinematic-body" style="margin-top:var(--space-6)">Leodger L. Kachebonaho · CEO & Founder</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ CHAPTER 10: CONTACT ============ -->
+        <section id="contact" class="bg-dark">
+            <div class="container">
+                <div class="reveal">
+                    <span class="chapter-label">Chapter 10 · Connection</span>
+                    <h2 class="cinematic-headline">Bring Emwani <em>closer</em>.</h2>
+                </div>
+                
+                <div class="grid-4 reveal" style="margin-top:var(--space-9)">
+                    <div>
+                        <h4 class="t-display" style="font-size:0.8rem; margin-bottom:var(--space-4); color:var(--gold-500);">Order</h4>
+                        <p class="t-caption">WhatsApp: <a href="https://wa.me/255774411090" style="color:var(--bone-100); text-decoration:underline;">+255 774 411 090</a></p>
+                    </div>
+                    <div>
+                        <h4 class="t-display" style="font-size:0.8rem; margin-bottom:var(--space-4); color:var(--gold-500);">Visit</h4>
+                        <p class="t-caption">Masaki, Haile Selassie Road<br>Dar es Salaam, Tanzania</p>
+                        <p class="t-caption" style="opacity:0.5; font-size:0.7rem; margin-top:var(--space-2);">Directions / Map coming soon</p>
+                    </div>
+                    <div>
+                        <h4 class="t-display" style="font-size:0.8rem; margin-bottom:var(--space-4); color:var(--gold-500);">Supply</h4>
+                        <p class="t-caption"><a href="mailto:leodger@emwanicoffee.co.tz" style="color:var(--bone-100);">leodger@emwanicoffee.co.tz</a></p>
+                    </div>
+                    <div>
+                        <h4 class="t-display" style="font-size:0.8rem; margin-bottom:var(--space-4); color:var(--gold-500);">Ask</h4>
+                        <p class="t-caption">7:00 AM — 9:00 PM Daily</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer bg-dark" style="border-top:1px solid var(--border-dark); padding:var(--space-9) 0;">
+        <div class="container">
+            <div class="grid-2">
+                <div>
+                    <div class="logo-card" style="margin-bottom:var(--space-6)">
+                        <img src="assets/logos/real-emwani-logo.jpg" alt="Emwani Logo" width="100" loading="lazy">
+                    </div>
+                    <p class="t-editorial-italic" style="font-size:1.4rem; color:var(--gold-300);">Tanzanian coffee heritage, returned to the world's table.</p>
+                </div>
+                <div style="text-align:right;">
+                    <p style="font-size:0.8rem; color:var(--ink-on-dark-muted); line-height:1.6; max-width:50ch; margin-left:auto;">
+                        © 2026 Emwani Coffee Ltd. All rights reserved.<br>
+                        Unofficial demo concept prepared by Nextec Corp for presentation purposes. Final public deployment requires client approval of copy, images, trademarks, and product information.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+    <script src="assets/js/cinematic.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+Emwani Coffee Cinematic Brand System - Claude Design Notes
+
+Create a premium design system for Emwani Coffee / Emwani Cafe using these confirmed brand details from the company profile.
+
+Brand Essence:
+Emwani is a Tanzanian coffee heritage brand rooted in Haya/Karagwe identity, African cultural pride, farmer empowerment, ethical sourcing, premium coffee, and modern cafe culture. Emwani means coffee in the Haya language. The brand frames itself as a cultural resurrection: reclaiming African identity and Tanzanian coffee value in the global coffee industry.
+
+Founder / Origin Story:
+Founder: Leodger Leonard Kachebonaho, CEO & Founder of Emwani Coffee Ltd. Born in Karagwe, Kagera. The founder story connects coffee to Tanzanian history, ritual, hospitality, elders, family, and farmer empowerment. His father Leonard Kachebonaho built mills and founded Kaderes Peasant Development Organization (KPD) to uplift smallholder farmers.
+
+Brand Objectives:
+- Elevate Tanzanian coffee by celebrating origin, farmers, and heritage.
+- Ensure fair trade and economic justice for local growers.
+- Expand African ownership and visibility in the global coffee market.
+- Offer world-class quality coffee rooted in authenticity.
+- Connect coffee with culture through cafes, packaging, and experiences.
+
+Logo Meaning:
+The Emwani crest is culturally anchored and includes:
+- Crown / top four segments: royalty, pride, honor, heritage; connected to Karagwe Kingdom pride.
+- Abstract Emwani E: brand identity, minimal, creative, open-minded.
+- Coffee leaves: life, fertility, sustainability, eco-friendly and ethical cultivation.
+- Mushonge lower arcs: traditional Karagwe/Haya hut structure; power, wealth, respect, home, rootedness, cultural shelter.
+- Central coffee bean: the core of the brand and Robusta coffee; organic, authentic, strong, growth, energy, legacy.
+
+Visual Identity:
+Use Emwani green, heritage red, coffee cream/muted gold, deep charcoal/black, coffee brown, warm off-white. Visual motifs include Mushonge hut pattern, coffee leaves, coffee cherries, farmer basket imagery, black-and-white heritage illustration style, red ribbon/wave shape, cream/gold wave shape, green patterned backgrounds, coffee pouring, steam, product packaging blocks.
+
+Products:
+Arabica Product Line:
+- Variety 01: Dark Roasted Beans. Bold roast, Tanzanian highland Arabica, heavy body, dark cocoa, smoky finish.
+- Variety 02: Drip Coffee. Pre-portioned portable format, clean medium-bodied cup, travel/gifting/busy lifestyle.
+
+Chioda Gold:
+Rooted in Mbinga. Inspired by the Chioda traditional Matengo dance, performed during harvests, weddings, and village ceremonies. Chioda is graceful, circular, grounded, harmonized, and connected to planting, gratitude, and renewal. Product sizes shown: 1KG, 500G, 250G.
+
+Ingoma - The Warrior:
+Rooted in Mbozi. Inspired by the ceremonial Ingoma dance of the Nyiha people. Bold, deep, masculine, grounded, warrior strength. High-altitude cultivation, small-batch roasting, packed with reverence. Product sizes shown: 1KG, 500G, 250G.
+
+Sourcing / Competence:
+Emwani Coffee Roasters sources directly from farmer groups in Mbinga, Mbozi, and Karagwe. Engagement is not transactional; it includes training, agronomic support, and long-term relationships rooted in shared value.
+
+Approach:
+- Farmer-centric: direct work with local farmers, fair prices, training, resources.
+- Heritage-led branding: Haya traditions, African identity, cultural storytelling in language, packaging, cafe experience.
+- Sustainable practice: eco-conscious farming and biodegradable packaging.
+- Premium experience: every touchpoint from bean to bag, cafe to cup, should feel globally competitive with African soul.
+
+Cafe Concept:
+Emwani Cafe is not only a retail outlet. It is a strategic platform for marketing, brand visibility, customer engagement, and promoting a vibrant coffee culture. The cafe vision is a network of culture hubs, learning platforms, youth empowerment spaces, business incubators, and showrooms for beans and blends.
+
+Contact:
+Emwani Coffee Ltd
+22nd Floor, PSPF Tower, Mission St, Ilala CBD, Dar es Salaam
++255 748 787 981
+www.emwanicoffee.co.tz
+Email from profile: leodger@emwanicoffee.co.tz
+
+Design System Requirements:
+Create reusable components for:
+- Cinematic hero
+- Section title block
+- Origin story card
+- Founder vision quote block
+- Coffee journey step
+- Product showcase card
+- Chioda Gold product card
+- Ingoma product card
+- Drip coffee product card
+- Cafe experience card
+- Farmer/sustainability card
+- Premium CTA buttons
+- Contact/location block
+- Mobile sticky CTA
+- Footer disclaimer block
+
+Motion Style:
+Slow cinematic reveals, steam-like fade transitions, coffee bean flow/orbit concept, packaging hover rotation concept, scroll-driven origin journey. Avoid cheap bouncing animations. Mobile performance must stay light.
+
+Asset Rules:
+Treat founder images, farmer images, exact product packaging images, exact logo/crest, and profile photos as requiring client permission before public deployment. For private concept, they can guide the design. Recreate patterns and interface motifs rather than copying photos directly. Use placeholder imagery for public demo unless permission is granted.
+
+Output Goal:
+Create a clean reusable design system named Emwani Coffee Cinematic Brand System, strong enough to generate a high-fidelity cinematic website prototype after this step.

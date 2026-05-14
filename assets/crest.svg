@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 280" fill="none" role="img" aria-label="Emwani crest (recreated mark)">
+  
+
+  <defs>
+    <linearGradient id="beanGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5B3522"></stop>
+      <stop offset="1" stop-color="#2A1810"></stop>
+    </linearGradient>
+    <linearGradient id="leafGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3D5C42"></stop>
+      <stop offset="1" stop-color="#1E3A2A"></stop>
+    </linearGradient>
+  </defs>
+
+  <g stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none">
+
+    
+    <g>
+      <path d="M 60 58 L 70 24 L 84 50"></path>
+      <path d="M 84 50 L 102 18 L 120 50"></path>
+      <path d="M 120 50 L 138 18 L 156 50"></path>
+      <path d="M 156 50 L 170 24 L 180 58"></path>
+      
+      <path d="M 56 58 L 184 58"></path>
+      
+      <circle cx="70" cy="24" r="2.4" fill="currentColor"></circle>
+      <circle cx="102" cy="18" r="2.4" fill="currentColor"></circle>
+      <circle cx="138" cy="18" r="2.4" fill="currentColor"></circle>
+      <circle cx="170" cy="24" r="2.4" fill="currentColor"></circle>
+    </g>
+
+    
+    <g opacity="0.0"></g>
+
+    
+    <g>
+      
+      <path d="M 56 90 C 32 100, 22 130, 36 160 C 56 150, 70 130, 68 102 Z"></path>
+      <path d="M 50 102 L 60 152"></path>
+      
+      <path d="M 184 90 C 208 100, 218 130, 204 160 C 184 150, 170 130, 172 102 Z"></path>
+      <path d="M 190 102 L 180 152"></path>
+    </g>
+
+    
+    <g>
+      <ellipse cx="120" cy="138" rx="28" ry="44"></ellipse>
+      
+      <path d="M 120 96 C 112 116, 112 160, 120 180"></path>
+    </g>
+
+    
+    <g>
+      
+      <path d="M 40 210 C 60 188, 180 188, 200 210"></path>
+      
+      <path d="M 56 220 C 76 200, 164 200, 184 220"></path>
+      
+      <path d="M 72 230 C 90 214, 150 214, 168 230"></path>
+      
+      <path d="M 40 244 L 200 244"></path>
+    </g>
+
+    
+    <g opacity="0.55">
+      <path d="M 108 124 L 132 124"></path>
+      <path d="M 106 140 L 134 140"></path>
+      <path d="M 108 156 L 132 156"></path>
+    </g>
+
+  </g>
+</svg>

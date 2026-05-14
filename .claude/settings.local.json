@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-Location)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\wise_gtr\\\\Desktop\\\\Emwani Coffee — Cinematic Brand System\" -Force)",
+      "Bash(Select-Object Mode, Name, Length, LastWriteTime)",
+      "Bash(Format-Table -AutoSize)",
+      "PowerShell(Start-Process \"C:\\\\Users\\\\wise_gtr\\\\Desktop\\\\Emwani Coffee — Cinematic Brand System\\\\EMWANI_BLUEPRINT.html\")"
+    ]
+  }
+}

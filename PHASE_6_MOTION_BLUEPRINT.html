@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Emwani Coffee — Phase 6 Motion Blueprint</title>
+<link rel="stylesheet" href="assets/tokens.css">
+<style>
+  body {
+    font-family: var(--font-body, system-ui, sans-serif);
+    background: var(--char-1000, #0A0807);
+    color: var(--bone-100, #F6EFDD);
+    line-height: 1.65;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 64px 32px 120px;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-editorial, Georgia, serif);
+    font-weight: 400;
+    color: var(--bone-50, #FBF7EC);
+    line-height: 1.15;
+    margin-top: 2.4em;
+  }
+  h1 { font-size: 3.2rem; margin-top: 0; letter-spacing: -0.01em; }
+  h1 em { color: var(--gold-300, #E6D2A8); font-style: italic; }
+  h2 { font-size: 2rem; border-top: 1px solid rgba(246,239,221,0.12); padding-top: 1.4em; }
+  h3 { font-size: 1.35rem; color: var(--gold-300, #E6D2A8); }
+  h4 { font-size: 1.05rem; font-family: var(--font-body, system-ui, sans-serif); font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: var(--gold-500, #C9A86A); }
+  .meta {
+    font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold-500, #C9A86A); margin-bottom: 0.8em;
+  }
+  .lede {
+    font-family: var(--font-editorial, Georgia, serif);
+    font-style: italic; font-size: 1.25rem;
+    color: rgba(246,239,221,0.78);
+    border-left: 2px solid var(--gold-500, #C9A86A);
+    padding-left: 1em; margin: 1.5em 0 2.5em;
+  }
+  code, pre {
+    font-family: ui-monospace, "JetBrains Mono", Consolas, monospace;
+    font-size: 0.86rem;
+  }
+  code { background: rgba(246,239,221,0.08); padding: 1px 6px; border-radius: 3px; color: var(--gold-300, #E6D2A8); }
+  pre {
+    background: #14110E; border: 1px solid rgba(246,239,221,0.10);
+    border-radius: 8px; padding: 18px 22px; overflow-x: auto;
+    color: var(--bone-100, #F6EFDD); line-height: 1.5;
+  }
+  pre code { background: none; padding: 0; color: inherit; }
+  ul, ol { padding-left: 1.4em; }
+  li { margin: 0.35em 0; }
+  table { width: 100%; border-collapse: collapse; margin: 1em 0; font-size: 0.92rem; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid rgba(246,239,221,0.10); vertical-align: top; }
+  th { color: var(--gold-300, #E6D2A8); font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.72rem; }
+  .pill {
+    display: inline-block; font-size: 0.7rem; padding: 2px 10px; border-radius: 999px;
+    letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600;
+    background: rgba(201,168,106,0.15); color: var(--gold-300, #E6D2A8);
+  }
+  .pill.warn { background: rgba(165,42,30,0.22); color: #E6A89E; }
+  .pill.ok   { background: rgba(47,107,74,0.25); color: #9FCFB3; }
+  .callout {
+    border: 1px solid rgba(201,168,106,0.35);
+    background: rgba(201,168,106,0.06);
+    border-radius: 10px; padding: 16px 20px; margin: 1.4em 0;
+  }
+  .callout.warn { border-color: rgba(165,42,30,0.45); background: rgba(165,42,30,0.08); }
+  hr { border: none; border-top: 1px solid rgba(246,239,221,0.12); margin: 3em 0; }
+  .toc { columns: 2; column-gap: 32px; font-size: 0.92rem; }
+  .toc a { color: var(--gold-300, #E6D2A8); text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+  .checkbox::before { content: "☐ "; color: var(--gold-500, #C9A86A); margin-right: 4px; }
+</style>
+</head>
+<body>
+
+<div class="meta">Emwani Coffee · Phase 6 · Motion Integration</div>
+<h1>The Story <em>Moves</em>.</h1>
+<p class="lede">A planning blueprint for inserting cinematic motion into <code>website.html</code> without disturbing the field-ready still-image baseline. No code is changed by this document.</p>
+
+<p><strong>Status:</strong> <span class="pill">Proposed</span> &nbsp; <strong>Date:</strong> 2026-05-13 &nbsp; <strong>Owner:</strong> Nextec Corp · Frontend Motion</p>
+
+<h3>Table of Contents</h3>
+<div class="toc">
+  <ol>
+    <li><a href="#section-map">Current Section Map</a></li>
+    <li><a href="#insertion-points">Motion Insertion Points</a></li>
+    <li><a href="#html-structure">HTML Structure</a></li>
+    <li><a href="#css-architecture">CSS Architecture</a></li>
+    <li><a href="#js-architecture">JS Architecture</a></li>
+    <li><a href="#reduced-motion">Reduced-Motion Fallback</a></li>
+    <li><a href="#mobile-fallback">Mobile Fallback</a></li>
+    <li><a href="#performance">Performance Rules</a></li>
+    <li><a href="#paths">File Path Checklist</a></li>
+    <li><a href="#qa">QA Checklist</a></li>
+    <li><a href="#risks">Risk List</a></li>
+    <li><a href="#plan">Step-by-Step Implementation Plan</a></li>
+  </ol>
+</div>
+
+<div class="callout warn">
+  <strong>Prerequisite (BLOCKER):</strong> The directories <code>assets/story/video/</code> and <code>assets/story/posters/</code> exist but are <strong>currently empty</strong>. None of the three referenced motion files or their posters are on disk yet. Implementation cannot start until at least the two required clips and posters are delivered. The orbit clip is optional — site can ship without it.
+</div>
+
+<hr>
+
+<!-- ========================================================== -->
+<h2 id="section-map">1 · Current Section Map of <code>website.html</code></h2>
+
+<table>
+  <thead><tr><th>Order</th><th>Section ID</th><th>Class / BG</th><th>Role</th><th>Motion Today</th></tr></thead>
+  <tbody>
+    <tr><td>—</td><td><code>nav</code></td><td>fixed glass</td><td>Navigation (real logo)</td><td>static</td></tr>
+    <tr><td>0</td><td><code>#hero</code></td><td>radial dark</td><td>Vol. 01 headline</td><td>reveal only</td></tr>
+    <tr><td>1</td><td><code>#origin</code></td><td>bg-dark</td><td>Chapter 01 · The Source</td><td>reveal only</td></tr>
+    <tr><td>2</td><td><code>#harvest</code></td><td>bg-coffee</td><td>Chapter 02 · Hand-pick</td><td>GSAP pin</td></tr>
+    <tr><td>3</td><td><code>#cherry-selection</code></td><td>bg-dark</td><td>Chapter 03 · Selection</td><td>reveal only</td></tr>
+    <tr><td>4</td><td><code>#processing</code></td><td>bg-cream</td><td>Chapter 04 · The Mill</td><td>horizontal pan tween</td></tr>
+    <tr><td>5</td><td><code>#roasting</code></td><td>bg-dark</td><td>Chapter 05 · The Roastery</td><td>GSAP pin + CSS steam SVG</td></tr>
+    <tr><td>6</td><td><code>#grinding</code></td><td>bg-dark</td><td><strong>Chapter 06 · Precision</strong></td><td><span class="pill warn">Empty — text only</span></td></tr>
+    <tr><td>7</td><td><code>#brewing</code></td><td>bg-coffee → cream</td><td><strong>Chapter 07 · The Pour</strong></td><td><span class="pill warn">Empty — text only, GSAP pin + bg tween</span></td></tr>
+    <tr><td>8</td><td><code>#products</code></td><td>bg-cream</td><td>Chapter 08 · The Collection</td><td><span class="pill ok">LOCKED — do not touch</span></td></tr>
+    <tr><td>9</td><td><code>#cafe</code></td><td>bg-dark</td><td>Chapter 09 · The Hub</td><td>reveal only (Café logo here only)</td></tr>
+    <tr><td>10</td><td><code>#founder</code></td><td>bg-green</td><td>The Vision quote</td><td>reveal only</td></tr>
+    <tr><td>11</td><td><code>#contact</code></td><td>bg-dark</td><td>Chapter 10 · Connection</td><td>reveal only</td></tr>
+    <tr><td>—</td><td><code>footer</code></td><td>bg-dark</td><td>Disclaimer + © (must remain)</td><td>static</td></tr>
+  </tbody>
+</table>
+
+<hr>
+
+<!-- ========================================================== -->
+<h2 id="insertion-points">2 · Motion Insertion Points</h2>
+
+<p>Two empty chapters are the natural homes. The optional orbit clip — if delivered — slots into <code>#products</code> as a non-destructive backdrop only.</p>
+
+<table>
+  <thead><tr><th>#</th><th>Section</th><th>Asset</th><th>Treatment</th><th>Required?</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>A</td>
+      <td><code>#grinding</code> (Chapter 06)</td>
+      <td><code>grinding-assembly-loop.webm</code><br>poster <code>grinding-assembly-poster.webp</code></td>
+      <td>Centered cinematic video panel below the headline. 16:9. Looped, muted, autoplays only when in view.</td>
+      <td><span class="pill">Required</span></td>
+    </tr>
+    <tr>
+      <td>B</td>
+      <td><code>#brewing</code> (Chapter 07)</td>
+      <td><code>brewing-pour-loop.webm</code><br>poster <code>brewing-pour-poster.webp</code></td>
+      <td>Centered video panel. Coexists with the existing <code>#brewing</code> background-color scrub (dark→cream). Pin is preserved on desktop only.</td>
+      <td><span class="pill">Required</span></td>
+    </tr>
+    <tr>
+      <td>C</td>
+      <td><code>#products</code> backdrop (optional)</td>
+      <td><code>product-orbit-loop.webm</code><br>poster <code>product-orbit-poster.webp</code></td>
+      <td>Subtle low-opacity (~0.18) background loop behind the cream pack-grid. Must NOT change product cards in any way.</td>
+      <td><span class="pill warn">Optional — skip if it disturbs product clarity</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Rule of restraint:</strong> If clip C compromises product card legibility on a projector, omit it. The site is already field-ready.</p>
+
+<hr>
+
+<!-- ========================================================== -->
+<h2 id="html-structure">3 · Recommended HTML Structure</h2>
+
+<h3>Reusable Video Panel Pattern</h3>
+<pre><code>&lt;figure class="cinematic-video reveal" data-cinematic-video&gt;
+  &lt;video
+    class="cinematic-video__el"
+    poster="assets/story/posters/grinding-assembly-poster.webp"
+    muted
+    loop
+    playsinline
+    preload="none"
+    aria-label="Coffee grinder in motion — silent loop"&gt;
+    &lt;source data-src="assets/story/video/grinding-assembly-loop.webm" type="video/webm"&gt;
+  &lt;/video&gt;
+  &lt;img
+    class="cinematic-video__poster-fallback"
+    src="assets/story/posters/grinding-assembly-poster.webp"
+    alt="Coffee grinder mid-pour, frozen frame"
+    loading="lazy"
+    width="1600" height="900"&gt;
+&lt;/figure&gt;</code></pre>
+
+<p><strong>Why this shape:</strong></p>
+<ul>
+  <li><code>&lt;source data-src&gt;</code> defers the actual download until the JS observer attaches it — true lazy load.</li>
+  <li>The sibling <code>&lt;img&gt;</code> is the safety net: it shows immediately, and stays under the video. If the video element fails or is suppressed (reduced-motion / no JS), the poster is what the viewer sees.</li>
+  <li><code>preload="none"</code> + <code>poster</code> attribute prevents the blank-frame flash even before JS fires.</li>
+  <li>No audio source means there is nothing to mute incorrectly.</li>
+</ul>
+
+<h3>Drop-in for Chapter 06 — <code>#grinding</code></h3>
+<pre><code>&lt;section id="grinding" class="bg-dark"&gt;
+  &lt;div class="container text-center"&gt;
+    &lt;div class="reveal"&gt;
+      &lt;span class="chapter-label"&gt;Chapter 06 · Precision&lt;/span&gt;
+      &lt;h2 class="cinematic-headline"&gt;Ground for the cup it&#39;s &lt;em&gt;meant&lt;/em&gt; for.&lt;/h2&gt;
+      &lt;p class="cinematic-body"&gt;Coarse for filter. Fine for espresso. Precise for what comes next.&lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;!-- NEW: Phase 6 motion panel --&gt;
+    &lt;figure class="cinematic-video reveal" data-cinematic-video&gt; … &lt;/figure&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+
+<h3>Drop-in for Chapter 07 — <code>#brewing</code></h3>
+<p>Identical pattern. The existing GSAP pin and dark→cream background tween stay in place; the video sits inside the pinned content so it remains visible during the pin.</p>
+
+<hr>
+
+<!-- ========================================================== -->
+<h2 id="css-architecture">4 · CSS Architecture for Responsive Video Panels</h2>
+
+<p>Add to <code>assets/css/cinematic.css</code> — do not modify product styles.</p>
+
+<pre><code>/* === Cinematic Video Panel === */
+.cinematic-video {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  margin: var(--space-8) auto 0;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-cinema);
+  background: var(--char-1000); /* prevents white flash before poster paints */
+}
+
+.cinematic-video__el,
+.cinematic-video__poster-fallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Poster sits BELOW the video. Video paints over it once playing. */
+.cinematic-video__poster-fallback { z-index: 1; }
+.cinematic-video__el              { z-index: 2; }
+
+/* If JS marks the panel as "static" (reduced motion, mobile-skip, or load failure),
+   hide the video element and let the poster show through. */
+.cinematic-video.is-static .cinematic-video__el { display: none; }
+
+/* Optional product backdrop variant — clip C only */
+.cinematic-video--backdrop {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  max-width: none;
+  border-radius: 0;
+  box-shadow: none;
+  opacity: 0.18;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@media (max-width: 768px) {
+  .cinematic-video { margin-top: var(--space-6); border-radius: var(--r-md); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cinematic-video__el { display: none !important; }
+}</code></pre>
+
+<p><strong>Notes:</strong></p>
+<ul>
+  <li><code>aspect-ratio: 16/9</code> reserves layout space → zero CLS.</li>
+  <li><code>object-fit: cover</code> preserves cinematic framing across breakpoints.</li>
+  <li>No <code>position: fixed</code>, no horizontal translate — guarantees no horizontal scroll.</li>
+  <li>Reduced-motion is enforced in CSS as a backstop even if JS misfires.</li>
+</ul>
+
+<hr>
+
+<!-- ========================================================== -->
+<h2 id="js-architecture">5 · JS Architecture for Safe Video Loading / Play-Pause</h2>
+
+<p>Append to <code>assets/js/cinematic.js</code>, after the existing IntersectionObserver block. Self-contained, additive, no rewrites.</p>
+
+<pre><code>// --- Phase 6: Cinematic Video Panels ---
+(function initCinematicVideos() {
+  const panels = document.querySelectorAll('[data-cinematic-video]');
+  if (!panels.length) return;
+
+  const reduce  = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
+  panels.forEach(panel =&gt; {
+    const video = panel.querySelector('video');
+    if (!video) return;
+
+    // Reduced motion OR mobile → poster only, never load the clip
+    if (reduce || isMobile) {
+      panel.classList.add('is-static');
+      return;
+    }
+
+    // Promote data-src → src lazily when the panel enters view
+    const source = video.querySelector('source[data-src]');
+    let loaded = false;
+
+    const load = () =&gt; {
+      if (loaded) return;
+      loaded = true;
+      if (source) {
+        source.src = source.dataset.src;
+        video.load();
+      }
+    };
+
+    // Fallback to poster on any load/decode error
+    video.addEventListener('error', () =&gt; panel.classList.add('is-static'), { once: true });
+
+    const io = new IntersectionObserver((entries) =&gt; {
+      entries.forEach(entry =&gt; {
+        if (entry.isIntersecting) {
+          load();
+          const p = video.play();
+          if (p &amp;&amp; typeof p.catch === 'function') {
+            p.catch(() =&gt; panel.classList.add('is-static'));
+          }
+        } else {
+          if (!video.paused) video.pause();
+        }
+      });
+    }, { threshold: 0.35 });
+
+    io.observe(panel);
+  });
+})();</code></pre>
+
+<p><strong>Guarantees:</strong></p>
+<ul>
+  <li>Will not crash if zero panels exist (early return).</li>
+  <li>Will not download video bytes on mobile or reduced-motion users.</li>
+  <li>Pauses when offscreen → no background CPU/GPU drain during scroll.</li>
+  <li><code>play()</code> promise rejection (autoplay-blocked browsers) gracefully falls back to poster.</li>
+  <li>Decode/network errors flip <code>.is-static</code> → poster takes over.</li>
+</ul>
+
+<hr>
+
+<!-- ========================================================== -->
+<h2 id="reduced-motion">6 · Reduced-Motion Fallback</h2>
+
+<ul>
+  <li><strong>JS layer:</strong> <code>matchMedia('(prefers-reduced-motion: reduce)')</code> short-circuits — no <code>src</code> assignment, no <code>play()</code> call, no network request for the video file.</li>
+  <li><strong>CSS layer:</strong> <code>@media (prefers-reduced-motion: reduce) { .cinematic-video__el { display: none !important; } }</code> guarantees that even if JS executes, the video element is invisible.</li>
+  <li><strong>Poster layer:</strong> The sibling <code>&lt;img&gt;</code> remains visible at all times; the design works as a still composition.</li>
+</ul>
+
+<hr>
+
+<!-- ========================================================== -->
+<h2 id="mobile-fallback">7 · Mobile Fallback</h2>
+
+<ul>
+  <li>Below 768px the panel is marked <code>.is-static</code> at init — video element is hidden, poster image carries the section.</li>
+  <li>No autoplay on mobile data plans; respects user bandwidth.</li>
+  <li>No GSAP pin or scrub interaction is added on mobile (existing <code>!isMobile</code> guard at <code>cinematic.js:16</code> remains the source of truth for pinned sections).</li>
+  <li>Posters are sized to the same <code>aspect-ratio: 16/9</code> container, so layout and reveal timing are identical to desktop.</li>
+</ul>
+
+<hr>
+
+<!-- ========================================================== -->
+<h2 id="performance">8 · Performance Rules</h2>
+
+<table>
+  <thead><tr><th>Rule</th><th>Target</th></tr></thead>
+  <tbody>
+    <tr><td>Per-clip file size</td><td>≤ 2.5 MB (WebM VP9 or AV1)</td></tr>
+    <tr><td>Clip resolution</td><td>1280×720 max — projector-acceptable, half the bytes of 1080p</td></tr>
+    <tr><td>Loop length</td><td>4–8 s, seamless cut</td></tr>
+    <tr><td>Audio track</td><td><strong>None</strong> — strip during export. No silent audio stream.</td></tr>
+    <tr><td>Container</td><td>WebM (.webm) only for now. MP4 fallback can be added in Phase 6.1 if a Safari issue surfaces.</td></tr>
+    <tr><td>Poster</td><td>WebP, ≤ 120 KB, 1280×720</td></tr>
+    <tr><td>Loading</td><td><code>preload="none"</code> + <code>data-src</code> lazy promotion</td></tr>
+    <tr><td>Playback</td><td>Pause when offscreen (IO threshold 0.35)</td></tr>
+    <tr><td>CLS</td><td>Reserved by <code>aspect-ratio</code>; explicit <code>width</code>/<code>height</code> on poster <code>&lt;img&gt;</code></td></tr>
+    <tr><td>Total added page weight (desktop, 2 clips visible)</td><td>≤ 5 MB</td></tr>
+    <tr><td>Total added page weight (mobile)</td><td>≤ 240 KB (posters only)</td></tr>
+  </tbody>
+</table>
+
+<hr>
+
+<!-- ========================================================== -->
+<h2 id="paths">9 · File Path Checklist</h2>
+
+<p>Required on disk before implementation begins:</p>
+<ul>
+  <li class="checkbox"><code>assets/story/video/grinding-assembly-loop.webm</code></li>
+  <li class="checkbox"><code>assets/story/posters/grinding-assembly-poster.webp</code></li>
+  <li class="checkbox"><code>assets/story/video/brewing-pour-loop.webm</code></li>
+  <li class="checkbox"><code>assets/story/posters/brewing-pour-poster.webp</code></li>
+</ul>
+
+<p>Optional (clip C):</p>
+<ul>
+  <li class="checkbox"><code>assets/story/video/product-orbit-loop.webm</code></li>
+  <li class="checkbox"><code>assets/story/posters/product-orbit-poster.webp</code></li>
+</ul>
+
+<p><strong>Current state:</strong> <code>assets/story/video/</code> and <code>assets/story/posters/</code> directories exist but are empty. <span class="pill warn">All four required files missing.</span></p>
+
+<hr>
+
+<!-- ========================================================== -->
+<h2 id="qa">10 · QA Checklist</h2>
+
+<h4>Functional</h4>
+<ul>
+  <li class="checkbox">Both required <code>.webm</code> files return HTTP 200.</li>
+  <li class="checkbox">Both poster <code>.webp</code> files return HTTP 200.</li>
+  <li class="checkbox">No 404 in DevTools Network tab on full-page scroll.</li>
+  <li class="checkbox">Video plays only when its panel is ≥ 35 % visible.</li>
+  <li class="checkbox">Video pauses when scrolled offscreen (verify in Network/Performance tab — no continued decode).</li>
+  <li class="checkbox">Video has no audio track (verify with <code>ffprobe</code> or by muting system).</li>
+  <li class="checkbox">All <code>&lt;video&gt;</code> elements carry <code>muted loop playsinline preload="none"</code>.</li>
+  <li class="checkbox">Disabling JavaScript still shows the poster image cleanly.</li>
+  <li class="checkbox">Forcing the video URL to 404 still shows poster (error fallback path).</li>
+</ul>
+
+<h4>Reduced Motion</h4>
+<ul>
+  <li class="checkbox">OS-level reduced motion → no video element visible, poster shown.</li>
+  <li class="checkbox">No video network request initiated under reduced motion (Network tab confirms).</li>
+</ul>
+
+<h4>Mobile (≤ 768px)</h4>
+<ul>
+  <li class="checkbox">No video file requested on mobile (Network tab on iPhone SE / 375 px).</li>
+  <li class="checkbox">Poster fills the panel cleanly at the same aspect ratio.</li>
+  <li class="checkbox">No horizontal scroll at 320, 375, 414, 768 px widths.</li>
+  <li class="checkbox">Existing GSAP pins remain disabled on mobile.</li>
+</ul>
+
+<h4>Layout / CLS</h4>
+<ul>
+  <li class="checkbox">Lighthouse CLS &lt; 0.1 for the page.</li>
+  <li class="checkbox">No section above the panel jumps when the video swaps in.</li>
+  <li class="checkbox">Existing <code>#brewing</code> dark→cream tween still resolves correctly with the video present.</li>
+</ul>
+
+<h4>Brand / Story</h4>
+<ul>
+  <li class="checkbox">Footer Nextec disclaimer remains intact and visible.</li>
+  <li class="checkbox">Product section visually unchanged (clip C either omitted or proven non-disruptive).</li>
+  <li class="checkbox">Café logo still appears <em>only</em> in <code>#cafe</code>.</li>
+  <li class="checkbox">Page title unchanged.</li>
+</ul>
+
+<hr>
+
+<!-- ========================================================== -->
+<h2 id="risks">11 · Risk List</h2>
+
+<table>
+  <thead><tr><th>Risk</th><th>Likelihood</th><th>Impact</th><th>Mitigation</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>Assets not delivered before client deadline</td>
+      <td><span class="pill warn">High</span></td>
+      <td>Blocks Phase 6 entirely</td>
+      <td>Confirm asset delivery date before starting; site is already field-ready, can ship as-is.</td>
+    </tr>
+    <tr>
+      <td>WebM-only fails on older Safari versions</td>
+      <td>Medium</td>
+      <td>Video silently broken on iOS 16-</td>
+      <td>Error handler swaps to poster automatically. If issue is widespread, add MP4/H.264 fallback <code>&lt;source&gt;</code> in a 6.1 patch.</td>
+    </tr>
+    <tr>
+      <td>Autoplay blocked by browser policy</td>
+      <td>Low (muted videos almost always allowed)</td>
+      <td>Static poster instead of motion</td>
+      <td><code>play().catch()</code> already swaps to <code>.is-static</code>. Acceptable degradation.</td>
+    </tr>
+    <tr>
+      <td>Video introduces CLS or layout jump</td>
+      <td>Low</td>
+      <td>Visible reflow on load</td>
+      <td><code>aspect-ratio: 16/9</code> + explicit <code>width</code>/<code>height</code> on poster.</td>
+    </tr>
+    <tr>
+      <td>Pin + video in <code>#brewing</code> conflict</td>
+      <td>Medium</td>
+      <td>Video plays during pin but disappears at pin release</td>
+      <td>Video sits inside the pinned <code>.container</code>; IO observer continues to manage play/pause based on visibility, not pin state. Test on staging.</td>
+    </tr>
+    <tr>
+      <td>Optional clip C disturbs product clarity</td>
+      <td>Medium</td>
+      <td>Client rejects locked product look</td>
+      <td>Skip clip C entirely. Ship two-clip version.</td>
+    </tr>
+    <tr>
+      <td>Mobile bandwidth complaint</td>
+      <td>Very low</td>
+      <td>Data-plan friction</td>
+      <td>Mobile receives posters only — no video bytes downloaded.</td>
+    </tr>
+    <tr>
+      <td>Reduced-motion users see flash of motion before JS runs</td>
+      <td>Low</td>
+      <td>Accessibility regression</td>
+      <td>CSS <code>@media (prefers-reduced-motion: reduce)</code> hides <code>.cinematic-video__el</code> regardless of JS state.</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr>
+
+<!-- ========================================================== -->
+<h2 id="plan">12 · Step-by-Step Implementation Plan</h2>
+
+<h3>Phase 6.0 — Asset Intake (BLOCKING)</h3>
+<ol>
+  <li>Receive and verify the two required clips and posters.</li>
+  <li>Strip audio tracks; transcode to VP9 WebM at 1280×720, ≤ 2.5 MB each.</li>
+  <li>Export posters as WebP at 1280×720, ≤ 120 KB each.</li>
+  <li>Drop into <code>assets/story/video/</code> and <code>assets/story/posters/</code> with the exact filenames in §9.</li>
+  <li>Verify <code>ffprobe</code> shows zero audio streams.</li>
+</ol>
+
+<h3>Phase 6.1 — CSS</h3>
+<ol start="6">
+  <li>Append the <code>.cinematic-video</code> rules from §4 to <code>assets/css/cinematic.css</code>. No edits to existing rules.</li>
+</ol>
+
+<h3>Phase 6.2 — JS</h3>
+<ol start="7">
+  <li>Append the IIFE from §5 to <code>assets/js/cinematic.js</code> after the existing reveal observer. Keep the existing GSAP fallback guard as the first line of defense.</li>
+</ol>
+
+<h3>Phase 6.3 — HTML</h3>
+<ol start="8">
+  <li>Insert the <code>&lt;figure data-cinematic-video&gt;</code> block into <code>#grinding</code> below the existing <code>.reveal</code> headline div.</li>
+  <li>Insert the same pattern into <code>#brewing</code> below its headline. Do NOT remove the existing pin or background tween.</li>
+  <li><strong>Decision gate:</strong> if clip C is delivered AND a stakeholder approves, add <code>.cinematic-video--backdrop</code> variant absolutely positioned inside <code>#products</code>. Otherwise skip.</li>
+</ol>
+
+<h3>Phase 6.4 — Verification</h3>
+<ol start="11">
+  <li>Run the full §10 QA checklist on desktop Chrome, desktop Safari, iOS Safari (375 px), and a reduced-motion session.</li>
+  <li>Lighthouse desktop run — confirm Performance ≥ 85 still holds.</li>
+  <li>Network-tab spot check: only the in-view video clip is downloaded; offscreen clips are deferred.</li>
+  <li>Confirm footer disclaimer visible and unchanged. Confirm product section visually unchanged.</li>
+</ol>
+
+<h3>Phase 6.5 — Field Sign-off</h3>
+<ol start="15">
+  <li>Present to internal review on a projector before client demo.</li>
+  <li>Capture a 30 s scroll recording for the client deck.</li>
+  <li>Mark Phase 6 complete in project notes; archive this blueprint.</li>
+</ol>
+
+<hr>
+
+<p style="font-size:0.78rem;color:rgba(246,239,221,0.4);text-align:center;margin-top:4em;">
+  Phase 6 Motion Blueprint · Emwani Coffee — Cinematic Brand System<br>
+  Prepared by Nextec Corp · 2026-05-13 · Planning artifact only — no production files modified.
+</p>
+
+</body>
+</html>

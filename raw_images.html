@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body { font-family: sans-serif; background: #333; color: white; }
+.gallery { display: flex; flex-wrap: wrap; gap: 20px; }
+.item { border: 1px solid #555; padding: 10px; background: #222; text-align: center; }
+img { max-width: 400px; max-height: 400px; display: block; margin: 0 auto 10px; }
+</style>
+</head>
+<body>
+<h1>Raw Images</h1>
+<div class="gallery">
+<script>
+const files = [
+"emwani_profile_v2_part1_pages_1-10_page10_img0.jpeg",
+"emwani_profile_v2_part1_pages_1-10_page1_img0.jpeg",
+"emwani_profile_v2_part1_pages_1-10_page1_img1.jpeg",
+"emwani_profile_v2_part1_pages_1-10_page1_img2.png",
+"emwani_profile_v2_part1_pages_1-10_page1_img3.jpeg",
+"emwani_profile_v2_part1_pages_1-10_page1_img4.jpeg",
+"emwani_profile_v2_part1_pages_1-10_page2_img0.jpeg",
+"emwani_profile_v2_part1_pages_1-10_page3_img0.jpeg",
+"emwani_profile_v2_part1_pages_1-10_page4_img0.jpeg",
+"emwani_profile_v2_part1_pages_1-10_page5_img0.png",
+"emwani_profile_v2_part1_pages_1-10_page6_img0.jpeg",
+"emwani_profile_v2_part1_pages_1-10_page7_img0.jpeg",
+"emwani_profile_v2_part1_pages_1-10_page8_img0.jpeg",
+"emwani_profile_v2_part1_pages_1-10_page8_img1.jpeg",
+"emwani_profile_v2_part1_pages_1-10_page8_img2.jpeg",
+"emwani_profile_v2_part1_pages_1-10_page8_img3.jpeg",
+"emwani_profile_v2_part2_pages_11-20_page10_img0.jpeg",
+"emwani_profile_v2_part2_pages_11-20_page10_img1.jpeg",
+"emwani_profile_v2_part2_pages_11-20_page10_img2.jpeg",
+"emwani_profile_v2_part2_pages_11-20_page10_img3.jpeg",
+"emwani_profile_v2_part2_pages_11-20_page10_img4.png",
+"emwani_profile_v2_part2_pages_11-20_page1_img0.png",
+"emwani_profile_v2_part2_pages_11-20_page2_img0.jpeg",
+"emwani_profile_v2_part2_pages_11-20_page4_img0.jpeg",
+"emwani_profile_v2_part2_pages_11-20_page5_img0.jpeg",
+"emwani_profile_v2_part2_pages_11-20_page5_img1.png",
+"emwani_profile_v2_part2_pages_11-20_page6_img0.jpeg",
+"emwani_profile_v2_part2_pages_11-20_page7_img0.jpeg",
+"emwani_profile_v2_part2_pages_11-20_page8_img0.jpeg",
+"emwani_profile_v2_part2_pages_11-20_page8_img1.jpeg",
+"emwani_profile_v2_part2_pages_11-20_page8_img2.jpeg",
+"emwani_profile_v2_part2_pages_11-20_page9_img0.png",
+"emwani_profile_v2_part2_pages_11-20_page9_img1.jpeg",
+"emwani_profile_v2_part2_pages_11-20_page9_img2.png",
+"emwani_profile_v2_part2_pages_11-20_page9_img3.jpeg",
+"emwani_profile_v2_part3_pages_21-30_page10_img0.jpeg",
+"emwani_profile_v2_part3_pages_21-30_page1_img0.jpeg",
+"emwani_profile_v2_part3_pages_21-30_page2_img0.jpeg",
+"emwani_profile_v2_part3_pages_21-30_page3_img0.jpeg",
+"emwani_profile_v2_part3_pages_21-30_page3_img1.jpeg",
+"emwani_profile_v2_part3_pages_21-30_page3_img2.jpeg",
+"emwani_profile_v2_part3_pages_21-30_page3_img3.jpeg",
+"emwani_profile_v2_part3_pages_21-30_page4_img0.jpeg",
+"emwani_profile_v2_part3_pages_21-30_page4_img1.png",
+"emwani_profile_v2_part3_pages_21-30_page4_img2.png",
+"emwani_profile_v2_part3_pages_21-30_page4_img3.jpeg",
+"emwani_profile_v2_part3_pages_21-30_page5_img0.jpeg",
+"emwani_profile_v2_part3_pages_21-30_page5_img1.png",
+"emwani_profile_v2_part3_pages_21-30_page5_img2.jpeg",
+"emwani_profile_v2_part3_pages_21-30_page5_img3.jpeg",
+"emwani_profile_v2_part3_pages_21-30_page6_img0.jpeg",
+"emwani_profile_v2_part3_pages_21-30_page7_img0.jpeg",
+"emwani_profile_v2_part3_pages_21-30_page8_img0.jpeg",
+"emwani_profile_v2_part3_pages_21-30_page9_img0.jpeg",
+"emwani_profile_v2_part4_pages_31-39_page1_img0.jpeg",
+"emwani_profile_v2_part4_pages_31-39_page2_img0.jpeg",
+"emwani_profile_v2_part4_pages_31-39_page3_img0.jpeg",
+"emwani_profile_v2_part4_pages_31-39_page4_img0.jpeg",
+"emwani_profile_v2_part4_pages_31-39_page5_img0.jpeg",
+"emwani_profile_v2_part4_pages_31-39_page6_img0.jpeg",
+"emwani_profile_v2_part4_pages_31-39_page7_img0.jpeg",
+"emwani_profile_v2_part4_pages_31-39_page7_img1.jpeg",
+"emwani_profile_v2_part4_pages_31-39_page8_img0.jpeg",
+"emwani_profile_v2_part4_pages_31-39_page8_img1.jpeg",
+"emwani_profile_v2_part4_pages_31-39_page9_img0.jpeg"
+];
+document.write(files.map(f => `<div class="item"><img src="assets/extracted/raw/${f}"><br>${f}</div>`).join(''));
+</script>
+</div>
+</body>
+</html>

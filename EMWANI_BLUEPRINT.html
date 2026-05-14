@@ -1,0 +1,1482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Emwani Coffee — Cinematic Animation Blueprint v1.0</title>
+<style>
+  :root {
+    --green: #0C2A1C; --green-mid: #1A4A30; --red: #A52A1E;
+    --gold: #C9A86A; --gold-light: #E6D2A8; --coffee: #2A1A10;
+    --bone: #F6EFDD; --bone-mid: #EFE5CB; --char: #0A0807;
+    --ink: #14110E; --muted: rgba(20,17,14,0.62);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Georgia, serif; background: var(--bone); color: var(--ink); font-size: 14px; line-height: 1.7; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  a { color: var(--red); }
+
+  /* COVER */
+  .cover { background: var(--char); color: var(--bone); min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 60px 40px; page-break-after: always; }
+  .cover-logo { font-family: 'Helvetica Neue', Arial, sans-serif; font-weight: 800; letter-spacing: 0.3em; font-size: 13px; color: var(--gold); text-transform: uppercase; margin-bottom: 48px; }
+  .cover h1 { font-size: 52px; font-weight: 300; line-height: 1.05; letter-spacing: -0.01em; color: var(--bone); max-width: 700px; }
+  .cover h1 em { font-style: italic; color: var(--gold-light); }
+  .cover-sub { margin-top: 32px; font-size: 16px; color: rgba(246,239,221,0.6); font-style: italic; }
+  .cover-meta { margin-top: 60px; display: flex; gap: 48px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(246,239,221,0.4); }
+  .cover-rule { width: 60px; height: 1px; background: var(--gold); opacity: 0.5; margin: 40px auto; }
+
+  /* TOC */
+  .toc { padding: 80px 60px; max-width: 900px; margin: 0 auto; page-break-after: always; }
+  .toc h2 { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 32px; }
+  .toc-item { display: flex; justify-content: space-between; align-items: baseline; padding: 12px 0; border-bottom: 1px solid rgba(20,17,14,0.1); }
+  .toc-item:first-of-type { border-top: 1px solid rgba(20,17,14,0.1); }
+  .toc-num { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11px; color: var(--gold); font-weight: 700; width: 32px; flex-shrink: 0; }
+  .toc-title { font-size: 15px; flex: 1; }
+  .toc-dots { flex: 1; border-bottom: 1px dotted rgba(20,17,14,0.2); margin: 0 12px; position: relative; top: -4px; }
+  .toc-page { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11px; color: var(--muted); }
+
+  /* BODY */
+  .page { padding: 64px 64px 80px; max-width: 960px; margin: 0 auto; }
+  .page + .page { border-top: 3px solid var(--char); }
+
+  /* Section headers */
+  .section-num { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; display: block; }
+  h2.section-title { font-size: 32px; font-weight: 300; line-height: 1.1; color: var(--char); margin-bottom: 8px; border-bottom: 2px solid var(--char); padding-bottom: 16px; margin-bottom: 32px; }
+  h2.section-title em { font-style: italic; color: var(--red); }
+  h3.sub { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--green-mid); margin: 36px 0 14px; padding-bottom: 6px; border-bottom: 1px solid rgba(26,74,48,0.25); }
+  h4.item-head { font-size: 15px; font-weight: bold; color: var(--char); margin: 24px 0 6px; }
+
+  /* Body text */
+  p { margin-bottom: 14px; color: var(--ink); }
+  ul, ol { padding-left: 24px; margin-bottom: 14px; }
+  li { margin-bottom: 5px; }
+  strong { font-weight: bold; }
+  em { font-style: italic; }
+  code { font-family: 'Courier New', monospace; font-size: 12px; background: rgba(20,17,14,0.06); padding: 2px 5px; border-radius: 3px; }
+  pre { background: var(--char); color: var(--bone); padding: 20px 24px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 12px; line-height: 1.6; overflow-x: auto; margin: 16px 0 20px; white-space: pre-wrap; word-break: break-all; }
+  blockquote { border-left: 3px solid var(--red); padding-left: 20px; color: var(--muted); font-style: italic; margin: 16px 0; }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 13px; }
+  th { background: var(--char); color: var(--gold); font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; padding: 10px 12px; text-align: left; }
+  td { padding: 9px 12px; border-bottom: 1px solid rgba(20,17,14,0.1); vertical-align: top; line-height: 1.5; }
+  tr:nth-child(even) td { background: rgba(246,239,221,0.5); }
+  tr:hover td { background: rgba(201,168,106,0.12); }
+  td:first-child { font-weight: 600; white-space: nowrap; color: var(--green); }
+
+  /* Status badges */
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 99px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+  .badge-ok { background: rgba(47,107,74,0.15); color: var(--green-mid); }
+  .badge-warn { background: rgba(201,168,106,0.2); color: #7a5e1a; }
+  .badge-crit { background: rgba(165,42,30,0.15); color: var(--red); }
+  .badge-missing { background: rgba(20,17,14,0.08); color: var(--muted); }
+
+  /* Checklist */
+  .checklist { list-style: none; padding: 0; }
+  .checklist li { padding: 6px 0 6px 28px; border-bottom: 1px solid rgba(20,17,14,0.07); position: relative; font-size: 13px; }
+  .checklist li::before { content: "☐"; position: absolute; left: 0; color: var(--gold); font-size: 15px; top: 4px; }
+
+  /* Chapter card */
+  .chapter-card { border: 1px solid rgba(20,17,14,0.15); border-radius: 6px; margin: 20px 0; overflow: hidden; }
+  .chapter-card .card-header { background: var(--green); color: var(--bone); padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; }
+  .chapter-card .card-header .cn { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); }
+  .chapter-card .card-header .ct { font-size: 16px; font-style: italic; }
+  .chapter-card table { margin: 0; }
+  .chapter-card td:first-child { color: var(--muted); font-weight: normal; font-size: 11px; font-family: 'Helvetica Neue', Arial, sans-serif; letter-spacing: 0.1em; text-transform: uppercase; width: 160px; }
+  .chapter-card td:last-child { color: var(--ink); font-weight: normal; }
+
+  /* Storyboard beat */
+  .beat { display: grid; grid-template-columns: 80px 1fr; gap: 0; margin: 12px 0; border: 1px solid rgba(20,17,14,0.1); border-radius: 4px; overflow: hidden; }
+  .beat-time { background: var(--coffee); color: var(--gold); font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; padding: 16px 8px; text-align: center; line-height: 1.3; }
+  .beat-content { padding: 14px 18px; }
+  .beat-content h5 { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--green-mid); margin-bottom: 6px; }
+  .beat-content p { font-size: 13px; margin: 0 0 6px; }
+  .beat-content .note { font-size: 11px; color: var(--muted); font-style: italic; }
+
+  /* Tool recommendation */
+  .tool-rec { display: grid; grid-template-columns: 80px 1fr; gap: 0; border: 1px solid rgba(20,17,14,0.1); border-radius: 4px; margin: 8px 0; overflow: hidden; }
+  .tool-tier { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; display: flex; align-items: center; justify-content: center; padding: 12px 6px; text-align: center; }
+  .tool-tier.best { background: rgba(47,107,74,0.12); color: var(--green-mid); }
+  .tool-tier.ok { background: rgba(201,168,106,0.15); color: #7a5e1a; }
+  .tool-tier.avoid { background: rgba(165,42,30,0.1); color: var(--red); }
+  .tool-content { padding: 10px 16px; font-size: 13px; }
+  .tool-content strong { display: block; margin-bottom: 3px; }
+
+  /* Disclaimer box */
+  .disclaimer { background: var(--coffee); color: var(--bone-mid); padding: 24px 28px; border-radius: 6px; margin: 32px 0; font-size: 13px; line-height: 1.7; }
+  .disclaimer strong { color: var(--gold); display: block; margin-bottom: 8px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; }
+
+  /* Prompt block */
+  .prompt-block { background: var(--green); color: var(--bone); padding: 20px 24px; border-radius: 6px; margin: 16px 0; font-size: 13px; line-height: 1.65; font-style: italic; }
+  .prompt-block .prompt-label { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); font-style: normal; margin-bottom: 10px; display: block; }
+
+  /* Page break hints for print */
+  @media print {
+    .page-break { page-break-before: always; }
+    pre { font-size: 10px; }
+    .cover { min-height: auto; padding: 40px; }
+    body { font-size: 12px; }
+  }
+
+  /* Divider */
+  hr { border: none; border-top: 1px solid rgba(20,17,14,0.12); margin: 32px 0; }
+  .rule-gold { border-color: var(--gold); opacity: 0.4; }
+
+  /* Warning callout */
+  .callout-warn { border: 1px solid rgba(165,42,30,0.3); border-left: 4px solid var(--red); background: rgba(165,42,30,0.05); padding: 14px 18px; border-radius: 0 4px 4px 0; margin: 16px 0; font-size: 13px; }
+  .callout-ok { border: 1px solid rgba(47,107,74,0.3); border-left: 4px solid var(--green-mid); background: rgba(47,107,74,0.04); padding: 14px 18px; border-radius: 0 4px 4px 0; margin: 16px 0; font-size: 13px; }
+  .callout-gold { border: 1px solid rgba(201,168,106,0.4); border-left: 4px solid var(--gold); background: rgba(201,168,106,0.06); padding: 14px 18px; border-radius: 0 4px 4px 0; margin: 16px 0; font-size: 13px; }
+</style>
+</head>
+<body>
+
+<!-- ======================================================
+     COVER
+     ====================================================== -->
+<div class="cover">
+  <div class="cover-logo">Emwani Coffee Ltd · Cinematic Brand System</div>
+  <h1>Cinematic Animation<br><em>Blueprint</em></h1>
+  <p class="cover-sub">Production-grade scroll experience architecture for the next phase</p>
+  <div class="cover-rule"></div>
+  <div class="cover-meta">
+    <span>Version 1.0</span>
+    <span>2026-05-12</span>
+    <span>Prepared by Nextec Corp</span>
+    <span>Blueprint Mode — No Files Edited</span>
+  </div>
+  <div style="margin-top:60px; font-size:11px; color:rgba(246,239,221,0.3); font-family:'Helvetica Neue',Arial,sans-serif; letter-spacing:0.1em; line-height:1.8; max-width:560px;">
+    Unofficial demo concept prepared by Nextec Corp for presentation purposes.<br>
+    Final public deployment requires client approval of copy, images, trademarks, and product information.
+  </div>
+</div>
+
+<!-- ======================================================
+     TABLE OF CONTENTS
+     ====================================================== -->
+<div class="toc">
+  <h2>Contents</h2>
+  <div class="toc-item"><span class="toc-num">1</span><span class="toc-title">Current Website Audit</span><span class="toc-dots"></span><span class="toc-page">3</span></div>
+  <div class="toc-item"><span class="toc-num">2</span><span class="toc-title">Final Scroll Experience Architecture (13 Chapters)</span><span class="toc-dots"></span><span class="toc-page">6</span></div>
+  <div class="toc-item"><span class="toc-num">3</span><span class="toc-title">Scroll Timing Blueprint</span><span class="toc-dots"></span><span class="toc-page">14</span></div>
+  <div class="toc-item"><span class="toc-num">4</span><span class="toc-title">Asset Creation Blueprint (15 Assets)</span><span class="toc-dots"></span><span class="toc-page">16</span></div>
+  <div class="toc-item"><span class="toc-num">5</span><span class="toc-title">Product Assembly Storyboard (8 Seconds)</span><span class="toc-dots"></span><span class="toc-page">22</span></div>
+  <div class="toc-item"><span class="toc-num">6</span><span class="toc-title">Recommended Tool Per Asset</span><span class="toc-dots"></span><span class="toc-page">26</span></div>
+  <div class="toc-item"><span class="toc-num">7</span><span class="toc-title">Ready-to-Use Asset Prompts</span><span class="toc-dots"></span><span class="toc-page">29</span></div>
+  <div class="toc-item"><span class="toc-num">8</span><span class="toc-title">Gemini CLI Implementation Prompt</span><span class="toc-dots"></span><span class="toc-page">33</span></div>
+  <div class="toc-item"><span class="toc-num">9</span><span class="toc-title">Final QA Checklist</span><span class="toc-dots"></span><span class="toc-page">38</span></div>
+</div>
+
+<!-- ======================================================
+     SECTION 1 — AUDIT
+     ====================================================== -->
+<div class="page page-break">
+  <span class="section-num">Section 01</span>
+  <h2 class="section-title">Current Website <em>Audit</em></h2>
+
+  <h3 class="sub">Section Order — website.html as-is</h3>
+  <table>
+    <tr><th>#</th><th>ID</th><th>Class</th><th>Visual Asset</th><th>Status</th></tr>
+    <tr><td>0</td><td>#hero</td><td>bg-dark</td><td>Gradient + pattern overlay</td><td><span class="badge badge-warn">Text only — no hero image</span></td></tr>
+    <tr><td>1</td><td>#origin</td><td>bg-dark</td><td>Pattern overlay</td><td><span class="badge badge-warn">Text only</span></td></tr>
+    <tr><td>2</td><td>#harvest</td><td>bg-coffee</td><td>farmer-cherries.jpeg</td><td><span class="badge badge-ok">Real asset — unoptimized 600KB</span></td></tr>
+    <tr><td>3</td><td>#cherry-selection</td><td>bg-dark</td><td>None</td><td><span class="badge badge-crit">Empty shell</span></td></tr>
+    <tr><td>4</td><td>#processing</td><td>bg-cream</td><td>coffee-drying.jpeg</td><td><span class="badge badge-crit">Real asset — 3MB critical risk</span></td></tr>
+    <tr><td>5</td><td>#roasting</td><td>bg-dark</td><td>coffee-basket.jpeg</td><td><span class="badge badge-warn">1.3MB · Steam SVG broken (no keyframe)</span></td></tr>
+    <tr><td>6</td><td>#grinding</td><td>bg-dark</td><td>None</td><td><span class="badge badge-crit">Empty shell</span></td></tr>
+    <tr><td>7</td><td>#brewing</td><td>bg-coffee</td><td>None</td><td><span class="badge badge-crit">Empty shell</span></td></tr>
+    <tr><td>8</td><td>#products</td><td>bg-cream</td><td>3 product images</td><td><span class="badge badge-warn">Paths valid · 4th product missing</span></td></tr>
+    <tr><td>9</td><td>#cafe</td><td>bg-dark</td><td>Placeholder div</td><td><span class="badge badge-crit">No real café image</span></td></tr>
+    <tr><td>10</td><td>#founder</td><td>bg-green</td><td>founder-leodger.jpeg</td><td><span class="badge badge-ok">Real asset · 57KB · Good</span></td></tr>
+    <tr><td>11</td><td>#contact</td><td>bg-dark</td><td>None</td><td><span class="badge badge-ok">Text/links only · functional</span></td></tr>
+  </table>
+
+  <div class="callout-warn"><strong>Missing entirely from website.html:</strong> Product Assembly Reveal chapter (Ch.08), Impact/Stats section (exists in prototype.html), bean journey progress indicator.</div>
+
+  <h3 class="sub">What Is Working</h3>
+  <ul>
+    <li><strong>Token system</strong> (tokens.css) — canonical, comprehensive, correctly applied everywhere.</li>
+    <li><strong>Typography</strong> — Cormorant Garamond / Manrope / Syne all load, applied consistently via CSS variables.</li>
+    <li><strong>Real logo</strong> — <code>real-emwani-logo.jpg</code> used in nav and footer. No fake SVG crest in website.html.</li>
+    <li><strong>Café logo</strong> — <code>real-emwani-cafe-logo.png</code> used only in Café section. Correct scope maintained.</li>
+    <li><strong>IntersectionObserver reveal</strong> — <code>.reveal</code> + <code>.in</code> class system functional, fires once per element.</li>
+    <li><strong>Mobile sticky CTA</strong> — IntersectionObserver on <code>#hero</code> shows/hides <code>.mobile-cta-bar</code> correctly.</li>
+    <li><strong>GSAP defer order</strong> — GSAP CDN loads before cinematic.js (both deferred). Execution order preserved.</li>
+    <li><strong>Horizontal pan</strong> — <code>#processing .pan-img</code> GSAP xPercent scrub is wired and has an image to run against.</li>
+    <li><strong>Background color tween</strong> — <code>#brewing</code> color transition from coffee-900 to bone cream is wired.</li>
+    <li><strong>Product card gradients</strong> — .pack.gold, .pack.red, .pack.cream match brand palette correctly.</li>
+    <li><strong>Footer disclaimer</strong> — Required exact text present and visible.</li>
+    <li><strong>Mobile reduced-motion guard</strong> — GSAP block wrapped in <code>!isMobile &amp;&amp; !reduce</code> conditional.</li>
+  </ul>
+
+  <h3 class="sub">What Is Weak</h3>
+  <ol>
+    <li><strong>Hero is invisible</strong> — No background image, no animation, no LCP asset. Gradient only.</li>
+    <li><strong>Steam paths are dead</strong> — <code>.steam-path</code> has <code>opacity: 0</code> in CSS with no <code>@keyframes</code> to bring them alive.</li>
+    <li><strong>Three chapters are empty shells</strong> — <code>#cherry-selection</code>, <code>#grinding</code>, <code>#brewing</code> have text and nothing else.</li>
+    <li><strong>Café section is a gray div</strong> — The comment <code>&lt;!-- TODO ASSET --&gt;</code> is live in production markup.</li>
+    <li><strong>Product Assembly chapter does not exist</strong> — The core cinematic moment is entirely absent.</li>
+    <li><strong>Only 3 products shown, headline says "Four products"</strong> — Mismatch between copy and content.</li>
+    <li><strong>.product-image class undefined</strong> — Used in product cards but not defined in cinematic.css.</li>
+    <li><strong>.product-card-visual class undefined</strong> — Article elements reference it with no rules.</li>
+    <li><strong>No bean journey progress indicator</strong> — No scroll-linked chapter trail exists.</li>
+    <li><strong>GSAP CDN dependency with no fallback</strong> — If CDN fails, cinematic.js throws on <code>gsap.registerPlugin()</code>.</li>
+    <li><strong>No loading="lazy" on any image</strong> — All images load on page parse, including the 3MB drying image.</li>
+  </ol>
+
+  <h3 class="sub">Asset Path Status</h3>
+  <table>
+    <tr><th>Reference in website.html</th><th>File Status</th><th>Issue</th></tr>
+    <tr><td>assets/logos/real-emwani-logo.jpg</td><td><span class="badge badge-ok">Exists 58KB</span></td><td>None</td></tr>
+    <tr><td>assets/logos/real-emwani-cafe-logo.png</td><td><span class="badge badge-warn">Exists 4.3KB</span></td><td>Suspiciously small — verify renders correctly at display size</td></tr>
+    <tr><td>assets/farmers/farmer-cherries.jpeg</td><td><span class="badge badge-ok">Exists 600KB</span></td><td>No loading="lazy"</td></tr>
+    <tr><td>assets/origin/coffee-drying.jpeg</td><td><span class="badge badge-crit">Exists 3MB</span></td><td>Critical: 3MB unoptimized, no lazy load</td></tr>
+    <tr><td>assets/origin/coffee-basket.jpeg</td><td><span class="badge badge-warn">Exists 1.3MB</span></td><td>Unoptimized, no lazy load</td></tr>
+    <tr><td>assets/products/studio/chioda-gold-transparent.png.png</td><td><span class="badge badge-warn">Exists 590KB</span></td><td>Double .png.png extension — fragile, rename risk</td></tr>
+    <tr><td>assets/products/studio/ingoma-transparent.png.png</td><td><span class="badge badge-warn">Exists 576KB</span></td><td>Double .png.png extension — rename risk</td></tr>
+    <tr><td>assets/products/drip-coffee-boxes.jpeg</td><td><span class="badge badge-ok">Exists 452KB</span></td><td>Fine</td></tr>
+    <tr><td>assets/patterns/heritage-line-art.jpeg</td><td><span class="badge badge-warn">Exists 2.3MB</span></td><td>Used at 10% opacity — 2.3MB for a tint</td></tr>
+    <tr><td>assets/patterns/green-wave-pattern.jpeg</td><td><span class="badge badge-ok">Exists 204KB</span></td><td>Fine</td></tr>
+    <tr><td>assets/extracted/selected/founder-leodger.jpeg</td><td><span class="badge badge-ok">Exists 57KB</span></td><td>Correct path</td></tr>
+  </table>
+
+  <div class="callout-ok"><strong>No 404 errors exist.</strong> All referenced paths resolve to real files. The risks are file size and double-extension fragility, not missing files.</div>
+
+  <h3 class="sub">Missing Assets (not on disk anywhere)</h3>
+  <ul>
+    <li>Hero cinematic wide image (any format)</li>
+    <li>Cherry-to-bean transformation animation</li>
+    <li>Cherry selection close-up still</li>
+    <li>Roasting smoke video or loop</li>
+    <li>Grinding particles loop</li>
+    <li>Brewing drip video</li>
+    <li>Product assembly sequence (video or frames)</li>
+    <li>Café interior photograph</li>
+    <li>Steam Lottie or animated SVG with actual keyframes</li>
+    <li>Bean path / journey progress SVG or Lottie</li>
+  </ul>
+
+  <h3 class="sub">Fake Logo Risk Assessment</h3>
+  <table>
+    <tr><th>File / Element</th><th>Risk Level</th><th>Detail</th></tr>
+    <tr><td>assets/logos/real-emwani-logo.jpg</td><td><span class="badge badge-ok">Safe</span></td><td>Real brand asset extracted from client PDF</td></tr>
+    <tr><td>assets/logos/real-emwani-cafe-logo.png</td><td><span class="badge badge-ok">Safe</span></td><td>Real brand asset (verify visual at 4.3KB)</td></tr>
+    <tr><td>prototype.html #crest SVG symbol</td><td><span class="badge badge-crit">High Risk</span></td><td>Fabricated coat-of-arms crest. Not real Emwani branding. Used on product cards in prototype.html. Must never enter website.html.</td></tr>
+    <tr><td>prototype.html #logo-primary &lt;use&gt;</td><td><span class="badge badge-crit">Broken</span></td><td>Symbol not defined anywhere — renders blank white box</td></tr>
+    <tr><td>website.html steam SVG paths</td><td><span class="badge badge-ok">Safe</span></td><td>Decorative steam wisps only — not a logo or brand mark</td></tr>
+  </table>
+
+  <h3 class="sub">Copy Problems</h3>
+  <ol>
+    <li>"Four products. One vocabulary." headline with only 3 products shown.</li>
+    <li>Café section placeholder text "Masaki Interior View" visible in DOM at opacity 0.2.</li>
+    <li>Contact section labeled "Chapter 10" but target architecture has 12 chapters — inconsistent numbering.</li>
+    <li>No <code>&lt;meta description&gt;</code> or Open Graph tags — critical for presentation link sharing.</li>
+    <li>Address inconsistency: prototype.html shows "22nd Floor, PSPF Tower, Mission St, Ilala CBD" but website.html shows "Masaki, Haile Selassie Road" — pick one confirmed address.</li>
+  </ol>
+
+  <h3 class="sub">Performance Risks</h3>
+  <table>
+    <tr><th>Risk</th><th>Severity</th><th>Detail</th></tr>
+    <tr><td>coffee-drying.jpeg at 3MB</td><td><span class="badge badge-crit">Critical</span></td><td>Largest image. No lazy load. Loads on page parse.</td></tr>
+    <tr><td>heritage-line-art.jpeg at 2.3MB</td><td><span class="badge badge-crit">High</span></td><td>Used at 10% opacity as hero background overlay.</td></tr>
+    <tr><td>coffee-basket.jpeg at 1.3MB</td><td><span class="badge badge-warn">High</span></td><td>No lazy load.</td></tr>
+    <tr><td>No WebP for any image</td><td><span class="badge badge-warn">High</span></td><td>All images JPEG/PNG. No modern format served.</td></tr>
+    <tr><td>No loading="lazy" anywhere</td><td><span class="badge badge-warn">High</span></td><td>All images load on page parse regardless of scroll position.</td></tr>
+    <tr><td>studio/hero.png at 2.3MB</td><td><span class="badge badge-warn">Medium</span></td><td>Exists on disk but not referenced — still inflates directory.</td></tr>
+    <tr><td>GSAP 3.12.2 from CDN, no local fallback</td><td><span class="badge badge-warn">Medium</span></td><td>If CDN blocked at presentation venue, all scroll animations break.</td></tr>
+    <tr><td>No image srcset/sizes</td><td><span class="badge badge-warn">Medium</span></td><td>Same full-resolution image served on mobile.</td></tr>
+  </table>
+
+  <h3 class="sub">Mobile Risks</h3>
+  <table>
+    <tr><th>Risk</th><th>Detail</th></tr>
+    <tr><td>Steam SVG overflow</td><td>200px wide, 300px tall, absolutely positioned — overflows product image bounds on narrow screens.</td></tr>
+    <tr><td>GSAP disabled on mobile</td><td>Correct, but means zero scroll feedback beyond basic reveals.</td></tr>
+    <tr><td>No will-change hints</td><td>GSAP may trigger layout reflow instead of GPU compositing on low-end devices.</td></tr>
+    <tr><td>Founder grid portrait ordering</td><td>Grid-2 collapses to portrait first, then quote — consider reversing for mobile (quote first, then image).</td></tr>
+    <tr><td>pack min-height: 480px</td><td>On 375px screens, card height feels excessive for a single-column stack.</td></tr>
+  </table>
+</div>
+
+<!-- ======================================================
+     SECTION 2 — SCROLL ARCHITECTURE
+     ====================================================== -->
+<div class="page page-break">
+  <span class="section-num">Section 02</span>
+  <h2 class="section-title">Final Scroll Experience <em>Architecture</em></h2>
+  <p>Thirteen chapters. Each maps to a distinct moment in the coffee journey, a commercial purpose, and a specific animation type. Chapters 00–12 correspond to the scroll sequence in final website.html.</p>
+
+  <div class="chapter-card">
+    <div class="card-header"><span class="cn">Chapter 00</span><span class="ct">Hero</span></div>
+    <table>
+      <tr><td>Section ID</td><td><code>#hero</code></td></tr>
+      <tr><td>Story purpose</td><td>First breath. The seed, the name, the promise.</td></tr>
+      <tr><td>Commercial purpose</td><td>Brand impression. Establish premium, heritage, organic African luxury. Make the viewer lean in.</td></tr>
+      <tr><td>Visual concept</td><td>Wide cinematic aerial or landscape of Tanzanian highland coffee country at golden hour. Editorial title text overlaid. Real Emwani logo fades in top-left. Subtle film grain texture overlay.</td></tr>
+      <tr><td>Current asset</td><td>None — gradient only</td></tr>
+      <tr><td>New asset required</td><td><code>hero-cinematic-wide.webp</code> — 2560×1440, golden-hour highland landscape</td></tr>
+      <tr><td>Animation type</td><td>Parallax background slow drift (0.8× scroll speed) on desktop. Static on mobile.</td></tr>
+      <tr><td>Scroll duration</td><td>100vh</td></tr>
+      <tr><td>Desktop behavior</td><td>Background image drifts upward at 0.8× scroll speed. Headline, label, body copy stagger-reveal at page load via CSS transition — no GSAP needed.</td></tr>
+      <tr><td>Mobile behavior</td><td>Static background. Text reveals via IntersectionObserver.</td></tr>
+      <tr><td>Fallback</td><td>Current radial-gradient + heritage-line-art.jpeg overlay. Acceptable for demo.</td></tr>
+    </table>
+  </div>
+
+  <div class="chapter-card">
+    <div class="card-header"><span class="cn">Chapter 01</span><span class="ct">Origin</span></div>
+    <table>
+      <tr><td>Section ID</td><td><code>#origin</code></td></tr>
+      <tr><td>Story purpose</td><td>Establish geography. Mbinga. Mbozi. Karagwe. Roots.</td></tr>
+      <tr><td>Commercial purpose</td><td>Provenance and traceability — key premium coffee trust signals.</td></tr>
+      <tr><td>Visual concept</td><td>Three-column chapter cards with location names, step numbers, short copy. Background: green-wave-pattern at low opacity. Subtle animated topographic line sweep on scroll.</td></tr>
+      <tr><td>Current asset</td><td>green-wave-pattern.jpeg (background overlay only)</td></tr>
+      <tr><td>New asset required</td><td>Optional: 3 small crop images of Mbinga / Mbozi / Karagwe. CSS-drawn topo lines acceptable fallback.</td></tr>
+      <tr><td>Animation type</td><td>Stagger reveal on each chapter card as section enters viewport.</td></tr>
+      <tr><td>Scroll duration</td><td>120vh</td></tr>
+      <tr><td>Desktop behavior</td><td>Cards stagger left-to-right with 150ms delay each.</td></tr>
+      <tr><td>Mobile behavior</td><td>Cards stack vertically, stagger top-to-bottom.</td></tr>
+      <tr><td>Fallback</td><td>Pure text + step numbers. Already coherent without images.</td></tr>
+    </table>
+  </div>
+
+  <div class="chapter-card">
+    <div class="card-header"><span class="cn">Chapter 02</span><span class="ct">Harvest / Coffee Cherries</span></div>
+    <table>
+      <tr><td>Section ID</td><td><code>#harvest</code></td></tr>
+      <tr><td>Story purpose</td><td>First human touch. The hands that pick.</td></tr>
+      <tr><td>Commercial purpose</td><td>Ethical sourcing signal. Smallholder story. Emotional hook for premium buyer.</td></tr>
+      <tr><td>Visual concept</td><td>Pinned section. farmer-cherries.jpeg fills right column at full height. Left column text + cherry-to-bean Lottie. Pinned while scroll advances through content beats.</td></tr>
+      <tr><td>Current asset</td><td>farmer-cherries.jpeg (600KB — needs WebP optimization)</td></tr>
+      <tr><td>New asset required</td><td><code>cherry-to-bean.lottie</code> — cherry splits to reveal parchment bean, 3s</td></tr>
+      <tr><td>Animation type</td><td>GSAP pin. Image fades from slight blur to sharp on enter. Lottie progress-scrubbed to ScrollTrigger.</td></tr>
+      <tr><td>Scroll duration</td><td>180vh (pinned)</td></tr>
+      <tr><td>Desktop behavior</td><td>Section pins. 3 beats: (1) cherry image reveals, (2) text reveals, (3) Lottie plays cherry → bean.</td></tr>
+      <tr><td>Mobile behavior</td><td>No pin. Standard scroll with IO reveals. Lottie plays once on enter.</td></tr>
+      <tr><td>Fallback</td><td>Static farmer-cherries.jpeg + text only. Already in place.</td></tr>
+    </table>
+  </div>
+
+  <div class="chapter-card">
+    <div class="card-header"><span class="cn">Chapter 03</span><span class="ct">Cherry Selection</span></div>
+    <table>
+      <tr><td>Section ID</td><td><code>#cherry-selection</code></td></tr>
+      <tr><td>Story purpose</td><td>Patience and craft. The human eye as quality control.</td></tr>
+      <tr><td>Commercial purpose</td><td>Manual selection as premium differentiator.</td></tr>
+      <tr><td>Visual concept</td><td>Full-bleed close-up of a hand sorting cherries on a wet table, tight crop, shallow depth of field. Text overlaid on deep shadow.</td></tr>
+      <tr><td>Current asset</td><td>None</td></tr>
+      <tr><td>New asset required</td><td><code>cherry-selection-closeup.webp</code> — 1920×1080, hand + cherries, shallow DOF</td></tr>
+      <tr><td>Animation type</td><td>Parallax reveal — image zooms scale(1.1)→scale(1.0) as section enters.</td></tr>
+      <tr><td>Scroll duration</td><td>120vh</td></tr>
+      <tr><td>Desktop behavior</td><td>Image fills section background. Text fades in from opacity 0.</td></tr>
+      <tr><td>Mobile behavior</td><td>background-size: cover, static. Text overlay same.</td></tr>
+      <tr><td>Fallback</td><td>bg-dark with text only — current state.</td></tr>
+    </table>
+  </div>
+
+  <div class="chapter-card">
+    <div class="card-header"><span class="cn">Chapter 04</span><span class="ct">Drying / Processing</span></div>
+    <table>
+      <tr><td>Section ID</td><td><code>#processing</code></td></tr>
+      <tr><td>Story purpose</td><td>Time as ingredient. Sun, air, raised beds.</td></tr>
+      <tr><td>Commercial purpose</td><td>Processing methodology = flavor differentiation and craft signal.</td></tr>
+      <tr><td>Visual concept</td><td>Wide horizontal image of drying beds. Horizontal parallax pan already wired in GSAP.</td></tr>
+      <tr><td>Current asset</td><td>coffee-drying.jpeg (3MB — must optimize to WebP ≤300KB)</td></tr>
+      <tr><td>New asset required</td><td><code>coffee-drying.webp</code> — optimized version of existing</td></tr>
+      <tr><td>Animation type</td><td>Horizontal scrub pan (already wired: xPercent: -10 scrub).</td></tr>
+      <tr><td>Scroll duration</td><td>180vh</td></tr>
+      <tr><td>Desktop behavior</td><td>Pan image scrolls horizontally across overflow-hidden container.</td></tr>
+      <tr><td>Mobile behavior</td><td>Static, object-position: center. No pan.</td></tr>
+      <tr><td>Fallback</td><td>Static JPEG already works.</td></tr>
+    </table>
+  </div>
+
+  <div class="chapter-card">
+    <div class="card-header"><span class="cn">Chapter 05</span><span class="ct">Roasting</span></div>
+    <table>
+      <tr><td>Section ID</td><td><code>#roasting</code></td></tr>
+      <tr><td>Story purpose</td><td>Transformation. Heat, color, aroma. Ceremony.</td></tr>
+      <tr><td>Commercial purpose</td><td>Small-batch roasting = artisan signal. "Profiles named for ceremonies" is brand poetry.</td></tr>
+      <tr><td>Visual concept</td><td>Pinned dark section. Close-up roasting drum or tumbling beans. Animated steam overlay. Video loop with poster if available.</td></tr>
+      <tr><td>Current asset</td><td>coffee-basket.jpeg (1.3MB — usable as poster image)</td></tr>
+      <tr><td>New asset required</td><td><code>roasting-smoke-loop.mp4</code> (10s, 1080p) OR repaired steam SVG @keyframes</td></tr>
+      <tr><td>Animation type</td><td>GSAP pin. Steam paths animate via fixed CSS @keyframes. Video plays via IntersectionObserver.</td></tr>
+      <tr><td>Scroll duration</td><td>200vh (pinned)</td></tr>
+      <tr><td>Desktop behavior</td><td>Pin for 200vh. Steam rises continuously. Two beats of copy reveal.</td></tr>
+      <tr><td>Mobile behavior</td><td>No pin. Poster image + CSS steam. No video loaded.</td></tr>
+      <tr><td>Fallback</td><td>coffee-basket.jpeg + repaired steam SVG.</td></tr>
+    </table>
+  </div>
+
+  <div class="chapter-card">
+    <div class="card-header"><span class="cn">Chapter 06</span><span class="ct">Grinding</span></div>
+    <table>
+      <tr><td>Section ID</td><td><code>#grinding</code></td></tr>
+      <tr><td>Story purpose</td><td>Precision. Grind = final act before the cup.</td></tr>
+      <tr><td>Commercial purpose</td><td>Ground-to-order positioning. Different grind profiles signal product differentiation.</td></tr>
+      <tr><td>Visual concept</td><td>Pinned dark section. Particle loop: golden coffee particles fall and settle on black. "Coarse for filter. Fine for espresso."</td></tr>
+      <tr><td>Current asset</td><td>None</td></tr>
+      <tr><td>New asset required</td><td><code>grinding-particles-loop.mp4</code> (8s loop) OR CSS particle animation</td></tr>
+      <tr><td>Animation type</td><td>GSAP pin. Video or CSS particles scrubbed to scroll. Text reveals in two beats.</td></tr>
+      <tr><td>Scroll duration</td><td>160vh (pinned)</td></tr>
+      <tr><td>Desktop behavior</td><td>Section pins. Particle animation plays as scroll progresses.</td></tr>
+      <tr><td>Mobile behavior</td><td>No pin. CSS warm dust texture with opacity reveal.</td></tr>
+      <tr><td>Fallback</td><td>CSS @keyframes with 3–5 absolutely-positioned circle divs animating downward.</td></tr>
+    </table>
+  </div>
+
+  <div class="chapter-card">
+    <div class="card-header"><span class="cn">Chapter 07</span><span class="ct">Brewing</span></div>
+    <table>
+      <tr><td>Section ID</td><td><code>#brewing</code></td></tr>
+      <tr><td>Story purpose</td><td>The pour. The ritual. Water meets ground. Aroma rises.</td></tr>
+      <tr><td>Commercial purpose</td><td>Final product in use. Converts the journey into consumer desire.</td></tr>
+      <tr><td>Visual concept</td><td>Dark-to-cream background color transition (already wired in GSAP). Close-up drip video. Steam from cup.</td></tr>
+      <tr><td>Current asset</td><td>GSAP backgroundColor tween is wired and functional</td></tr>
+      <tr><td>New asset required</td><td><code>brewing-drip-loop.mp4</code> (12s, slow-mo pour)</td></tr>
+      <tr><td>Animation type</td><td>GSAP pin + backgroundColor scrub (existing). Video plays on IO.</td></tr>
+      <tr><td>Scroll duration</td><td>180vh (pinned)</td></tr>
+      <tr><td>Desktop behavior</td><td>Background transitions dark → bone cream. Video plays. Copy reveals.</td></tr>
+      <tr><td>Mobile behavior</td><td>No video. Static darkened background with CSS steam.</td></tr>
+      <tr><td>Fallback</td><td>Current GSAP background tween alone is presentable.</td></tr>
+    </table>
+  </div>
+
+  <div class="chapter-card">
+    <div class="card-header"><span class="cn">Chapter 08</span><span class="ct">Product Assembly Reveal <em style="color:var(--gold)">— New Section</em></span></div>
+    <table>
+      <tr><td>Section ID</td><td><code>#assembly</code> — does not yet exist in website.html</td></tr>
+      <tr><td>Story purpose</td><td>The journey resolves into the object. Coffee becomes product.</td></tr>
+      <tr><td>Commercial purpose</td><td>Highest conversion moment. Sets up product collection. The emotional payoff of the entire scroll journey.</td></tr>
+      <tr><td>Visual concept</td><td>Full-screen pinned scrub: cherries float in → parchment beans → roasted beans → grounds → drip filter → brew stream → steam curve → product lineup reveals.</td></tr>
+      <tr><td>Current asset</td><td>None</td></tr>
+      <tr><td>New asset required</td><td><code>product-assembly.mp4</code> (8s sequence) or image sequence (24–48 frames)</td></tr>
+      <tr><td>Animation type</td><td>GSAP ScrollTrigger scrub. video.currentTime scrubbed by progress 0→1.</td></tr>
+      <tr><td>Scroll duration</td><td>240vh (pinned) — longest section</td></tr>
+      <tr><td>Desktop behavior</td><td>Pin for 240vh. Video currentTime controlled by scroll progress.</td></tr>
+      <tr><td>Mobile behavior</td><td>No scrub. Video plays once as autoplay muted loop. Or: 3 staggered product images only.</td></tr>
+      <tr><td>Fallback</td><td>studio/hero.png static image (optimize to WebP first) with stagger reveal.</td></tr>
+    </table>
+  </div>
+
+  <div class="chapter-card">
+    <div class="card-header"><span class="cn">Chapter 09</span><span class="ct">Product Collection</span></div>
+    <table>
+      <tr><td>Section ID</td><td><code>#products</code></td></tr>
+      <tr><td>Story purpose</td><td>The catalog. The names. The ritual.</td></tr>
+      <tr><td>Commercial purpose</td><td>Direct conversion point. Product differentiation. Flavor vocabulary.</td></tr>
+      <tr><td>Visual concept</td><td>Three (or four) product cards on cream background. Real packaging transparent PNGs. Hover lift effect.</td></tr>
+      <tr><td>Current asset</td><td>chioda-gold-transparent.png.png, ingoma-transparent.png.png, drip-coffee-boxes.jpeg</td></tr>
+      <tr><td>New asset required</td><td>Drip Coffee transparent PNG (remove background from existing JPEG). Fourth product PNG if confirmed.</td></tr>
+      <tr><td>Animation type</td><td>GSAP stagger from y:40 opacity:0 (already wired in cinematic.js).</td></tr>
+      <tr><td>Scroll duration</td><td>160vh</td></tr>
+      <tr><td>Desktop behavior</td><td>Cards stagger on enter. Hover translateY(-6px).</td></tr>
+      <tr><td>Mobile behavior</td><td>1-column stack, no hover. Stagger fires via IO.</td></tr>
+      <tr><td>Fallback</td><td>Current state is functional — just needs .product-image CSS class defined.</td></tr>
+    </table>
+  </div>
+
+  <div class="chapter-card">
+    <div class="card-header"><span class="cn">Chapter 10</span><span class="ct">Café / Community</span></div>
+    <table>
+      <tr><td>Section ID</td><td><code>#cafe</code></td></tr>
+      <tr><td>Story purpose</td><td>The destination. Heritage meets city. The community hub.</td></tr>
+      <tr><td>Commercial purpose</td><td>Café visit conversion. Reserve-a-tasting CTA. Brand experience beyond product.</td></tr>
+      <tr><td>Visual concept</td><td>Two-column: text + Emwani Café logo left. Real café interior photograph right, warm afternoon light.</td></tr>
+      <tr><td>Current asset</td><td>real-emwani-cafe-logo.png (use here only)</td></tr>
+      <tr><td>New asset required</td><td><code>cafe-interior-masaki.webp</code> — real client photo preferred; Midjourney placeholder acceptable for demo</td></tr>
+      <tr><td>Animation type</td><td>Image fades in with slight upward drift on IO entry.</td></tr>
+      <tr><td>Scroll duration</td><td>120vh</td></tr>
+      <tr><td>Desktop behavior</td><td>Text reveal + image reveal on IO. Café logo on white card, bottom-left.</td></tr>
+      <tr><td>Mobile behavior</td><td>Text stacks above image. Same IO reveal.</td></tr>
+      <tr><td>Fallback</td><td>Existing gray placeholder div. Acceptable for internal demo only.</td></tr>
+    </table>
+  </div>
+
+  <div class="chapter-card">
+    <div class="card-header"><span class="cn">Chapter 11</span><span class="ct">Founder / Trust</span></div>
+    <table>
+      <tr><td>Section ID</td><td><code>#founder</code></td></tr>
+      <tr><td>Story purpose</td><td>The human behind the house. Leodger Kachebonaho. Karagwe.</td></tr>
+      <tr><td>Commercial purpose</td><td>Trust signal. Founder-led brand premium. Provenance credibility.</td></tr>
+      <tr><td>Visual concept</td><td>Green background. Founder portrait left (real founder-leodger.jpeg). Quote right with heritage-red left-border.</td></tr>
+      <tr><td>Current asset</td><td>founder-leodger.jpeg (57KB — good size)</td></tr>
+      <tr><td>New asset required</td><td>None. Use what exists.</td></tr>
+      <tr><td>Animation type</td><td>Portrait fades in from left, quote fades in from right. IO stagger.</td></tr>
+      <tr><td>Scroll duration</td><td>100vh</td></tr>
+      <tr><td>Desktop behavior</td><td>Grid-2 stagger left then right.</td></tr>
+      <tr><td>Mobile behavior</td><td>Portrait stacks above quote.</td></tr>
+      <tr><td>Fallback</td><td>Already functional — no changes needed.</td></tr>
+    </table>
+  </div>
+
+  <div class="chapter-card">
+    <div class="card-header"><span class="cn">Chapter 12</span><span class="ct">Contact / Conversion</span></div>
+    <table>
+      <tr><td>Section ID</td><td><code>#contact</code></td></tr>
+      <tr><td>Story purpose</td><td>Invitation. The final pour belongs to you.</td></tr>
+      <tr><td>Commercial purpose</td><td>WhatsApp order, café visit, supply inquiry. Direct revenue paths.</td></tr>
+      <tr><td>Visual concept</td><td>Dark background. "Bring Emwani closer." Four contact columns. Mobile sticky CTA visible.</td></tr>
+      <tr><td>Current asset</td><td>Contact data (WhatsApp, address, email)</td></tr>
+      <tr><td>New asset required</td><td>None</td></tr>
+      <tr><td>Animation type</td><td>IO stagger on 4 contact columns.</td></tr>
+      <tr><td>Scroll duration</td><td>100vh</td></tr>
+      <tr><td>Desktop behavior</td><td>Grid-4 stagger reveal.</td></tr>
+      <tr><td>Mobile behavior</td><td>2-column grid collapse (matches existing grid-4 CSS).</td></tr>
+      <tr><td>Fallback</td><td>Already functional.</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ======================================================
+     SECTION 3 — SCROLL TIMING
+     ====================================================== -->
+<div class="page page-break">
+  <span class="section-num">Section 03</span>
+  <h2 class="section-title">Scroll Timing <em>Blueprint</em></h2>
+  <p>Viewport heights represent total scroll travel, including GSAP-inserted pin spacers. "Pinned" sections use <code>end: "+=Xvh"</code> expressed as a percentage of <code>window.innerHeight</code>. All values assume desktop viewport ≥ 900px tall.</p>
+
+  <table>
+    <tr><th>Chapter</th><th>Section ID</th><th>Duration</th><th>GSAP Mode</th><th>Reasoning</th></tr>
+    <tr><td>00 Hero</td><td>#hero</td><td>100vh</td><td>CSS parallax only</td><td>No GSAP pin needed. Background drifts via background-position on scroll event listener.</td></tr>
+    <tr><td>01 Origin</td><td>#origin</td><td>120vh</td><td>IO stagger only</td><td>Extra 20vh gives stagger cards time to complete reveal before user scrolls past.</td></tr>
+    <tr><td>02 Harvest</td><td>#harvest</td><td>180vh pinned</td><td>GSAP pin</td><td>3-beat content reveal needs time. 180vh at typical scroll speed ≈ 9 seconds dwell.</td></tr>
+    <tr><td>03 Cherry Selection</td><td>#cherry-selection</td><td>120vh</td><td>CSS scale + IO</td><td>Quick chapter. Image zoom on enter, short copy. No pin justified.</td></tr>
+    <tr><td>04 Processing</td><td>#processing</td><td>180vh</td><td>GSAP scrub (existing)</td><td>Horizontal pan from start:"top bottom" to end:"bottom top" — adjust container to +=180vh.</td></tr>
+    <tr><td>05 Roasting</td><td>#roasting</td><td>200vh pinned</td><td>GSAP pin</td><td>200vh (not 180vh) — fire/smoke imagery needs longer dwell to feel oppressive and cinematic.</td></tr>
+    <tr><td>06 Grinding</td><td>#grinding</td><td>160vh pinned</td><td>GSAP pin</td><td>Particle loop needs 160vh to feel resolved before next chapter begins.</td></tr>
+    <tr><td>07 Brewing</td><td>#brewing</td><td>180vh pinned</td><td>GSAP pin</td><td>Background color tween needs full 180vh to feel gradual rather than snapping.</td></tr>
+    <tr><td>08 Assembly</td><td>#assembly</td><td>240vh pinned</td><td>GSAP pin + video scrub</td><td>Longest pin. 240vh ≈ 8s video at typical scroll speed. video.currentTime = progress × duration.</td></tr>
+    <tr><td>09 Products</td><td>#products</td><td>160vh</td><td>GSAP stagger (existing)</td><td>Cards stagger at 75% viewport entry. Extra 60vh gives hover dwell time before scroll continues.</td></tr>
+    <tr><td>10 Café</td><td>#cafe</td><td>120vh</td><td>IO reveal</td><td>Two-column reveal. No pin needed.</td></tr>
+    <tr><td>11 Founder</td><td>#founder</td><td>100vh</td><td>IO stagger</td><td>Grid stagger left-right. Clean single viewport.</td></tr>
+    <tr><td>12 Contact</td><td>#contact</td><td>100vh</td><td>IO stagger</td><td>Last section. No scrolling past.</td></tr>
+  </table>
+
+  <div class="callout-gold">
+    <strong>Total nominal scroll height: ~1,940vh</strong> (sum of pinned + unpinned sections)<br>
+    With GSAP pin spacers, actual document height = section content height + all pin spacers. GSAP inserts these automatically — do not add manual spacer divs.
+  </div>
+
+  <h3 class="sub">Why 240vh on Assembly (not less)</h3>
+  <p>At typical laptop trackpad speed (~150px/s), 240vh on a 900px viewport = approximately 14–16 seconds of physical scroll to traverse the full 8-second video scrub. This is intentionally slow. It gives the viewer time to absorb each transformation beat — cherry, bean, roast, grind, filter, pour, steam, product. Rushing this section destroys its purpose.</p>
+
+  <h3 class="sub">Why 200vh on Roasting (not 180vh)</h3>
+  <p>Steam and fire imagery needs longer dwell to build atmospheric tension. 180vh felt rushed in comparable luxury coffee and spirits implementations. The extra 20vh costs negligible scroll effort but significantly improves mood.</p>
+
+  <h3 class="sub">Mobile Behavior — All Pinned Sections</h3>
+  <p>All GSAP pins are disabled on mobile (<code>!isMobile</code> guard in cinematic.js). On mobile, users see content revealed section by section via IntersectionObserver. Pinned-section timing becomes irrelevant — each section reverts to <code>min-height: auto</code> with normal padding. No GSAP spacers are inserted, so page height is dramatically shorter on mobile. This is correct behavior.</p>
+
+  <h3 class="sub">GSAP Implementation Pattern</h3>
+  <pre>// Pinned sections — update cinematic.js GSAP block
+const pinnedSections = [
+  { id: "#harvest",  end: "+=180%" },
+  { id: "#roasting", end: "+=200%" },
+  { id: "#grinding", end: "+=160%" },
+  { id: "#brewing",  end: "+=180%" },
+  { id: "#assembly", end: "+=240%" }
+];
+
+pinnedSections.forEach(({ id, end }) => {
+  ScrollTrigger.create({
+    trigger: id,
+    start: "top top",
+    end: end,
+    pin: true,
+    anticipatePin: 1
+  });
+});
+
+// Assembly video scrub
+const assemblyVideo = document.querySelector('#assembly video');
+if (assemblyVideo) {
+  assemblyVideo.addEventListener('loadedmetadata', () => {
+    ScrollTrigger.create({
+      trigger: '#assembly',
+      start: 'top top',
+      end: '+=240%',
+      scrub: true,
+      onUpdate: (self) => {
+        assemblyVideo.currentTime = self.progress * assemblyVideo.duration;
+      }
+    });
+  });
+}</pre>
+</div>
+
+<!-- ======================================================
+     SECTION 4 — ASSET CREATION BLUEPRINT
+     ====================================================== -->
+<div class="page page-break">
+  <span class="section-num">Section 04</span>
+  <h2 class="section-title">Asset Creation <em>Blueprint</em></h2>
+  <p>15 assets. For each: filename, type, purpose, dimensions, file size target, creation tool, source input, generation prompt reference, and fallback.</p>
+
+  <h3 class="sub">A · Hero Wide Cinematic Image</h3>
+  <table>
+    <tr><td>Final filename</td><td><code>hero-cinematic-wide.webp</code> (+ <code>.jpg</code> fallback)</td></tr>
+    <tr><td>Type</td><td>Image</td></tr>
+    <tr><td>Purpose</td><td>Hero section full-bleed background</td></tr>
+    <tr><td>Ideal dimensions</td><td>2560×1440 (2× retina: 3840×2160)</td></tr>
+    <tr><td>File size target</td><td>≤350KB WebP</td></tr>
+    <tr><td>Tool</td><td>Midjourney v7 or Adobe Firefly</td></tr>
+    <tr><td>Source input</td><td>None — generate from prompt</td></tr>
+    <tr><td>Prompt reference</td><td>Section 7A</td></tr>
+    <tr><td>Fallback</td><td>Current radial-gradient (already in place)</td></tr>
+  </table>
+
+  <h3 class="sub">B · Cherry-to-Bean Animation</h3>
+  <table>
+    <tr><td>Final filename</td><td><code>cherry-to-bean.lottie</code></td></tr>
+    <tr><td>Type</td><td>Lottie JSON</td></tr>
+    <tr><td>Purpose</td><td>Harvest section — cherry splits to reveal parchment bean, 3s loop</td></tr>
+    <tr><td>Ideal dimensions</td><td>400×400px canvas</td></tr>
+    <tr><td>Duration</td><td>3s, 30fps = 90 frames</td></tr>
+    <tr><td>File size target</td><td>≤80KB</td></tr>
+    <tr><td>Tool</td><td>After Effects + Bodymovin → LottieFiles</td></tr>
+    <tr><td>Source input</td><td>Reference: ripe red cherry, split, cream-colored parchment interior</td></tr>
+    <tr><td>Prompt reference</td><td>Section 7B</td></tr>
+    <tr><td>Fallback</td><td>Static farmer-cherries.jpeg</td></tr>
+  </table>
+
+  <h3 class="sub">C · Cherry Selection Close-up</h3>
+  <table>
+    <tr><td>Final filename</td><td><code>cherry-selection-closeup.webp</code></td></tr>
+    <tr><td>Type</td><td>Image</td></tr>
+    <tr><td>Purpose</td><td>Chapter 03 full-bleed background image</td></tr>
+    <tr><td>Ideal dimensions</td><td>1920×1080</td></tr>
+    <tr><td>File size target</td><td>≤200KB WebP</td></tr>
+    <tr><td>Tool</td><td>Midjourney v7</td></tr>
+    <tr><td>Source input</td><td>None — generate from prompt</td></tr>
+    <tr><td>Prompt reference</td><td>Section 7 (cherry selection prompt)</td></tr>
+    <tr><td>Fallback</td><td>bg-dark with text only — current state</td></tr>
+  </table>
+
+  <h3 class="sub">D · Coffee Drying — Optimized</h3>
+  <table>
+    <tr><td>Final filename</td><td><code>coffee-drying.webp</code></td></tr>
+    <tr><td>Type</td><td>Image (optimized re-export of existing asset)</td></tr>
+    <tr><td>Purpose</td><td>Processing section pan image</td></tr>
+    <tr><td>Ideal dimensions</td><td>2400×800 (wide for horizontal pan effect)</td></tr>
+    <tr><td>File size target</td><td>≤250KB WebP</td></tr>
+    <tr><td>Tool</td><td>Squoosh.app or ffmpeg</td></tr>
+    <tr><td>Source input</td><td>Existing <code>assets/origin/coffee-drying.jpeg</code> (3MB)</td></tr>
+    <tr><td>Prompt reference</td><td>N/A — format conversion only</td></tr>
+    <tr><td>Fallback</td><td>Existing JPEG (already in place)</td></tr>
+  </table>
+
+  <h3 class="sub">E · Roasting Smoke Loop</h3>
+  <table>
+    <tr><td>Final filename</td><td><code>roasting-smoke-loop.mp4</code></td></tr>
+    <tr><td>Type</td><td>Video (seamless loop)</td></tr>
+    <tr><td>Purpose</td><td>Chapter 05 roasting section atmosphere</td></tr>
+    <tr><td>Ideal dimensions</td><td>1920×1080</td></tr>
+    <tr><td>Duration</td><td>10s, seamless loop</td></tr>
+    <tr><td>File size target</td><td>≤6MB</td></tr>
+    <tr><td>Tool</td><td>Runway Gen-3 Alpha</td></tr>
+    <tr><td>Source input</td><td>Text prompt</td></tr>
+    <tr><td>Prompt reference</td><td>Section 7C</td></tr>
+    <tr><td>Fallback</td><td>coffee-basket.jpeg as poster + repaired CSS steam SVG @keyframes</td></tr>
+  </table>
+
+  <h3 class="sub">F · Grinding Particles Loop</h3>
+  <table>
+    <tr><td>Final filename</td><td><code>grinding-particles-loop.mp4</code></td></tr>
+    <tr><td>Type</td><td>Video (seamless loop)</td></tr>
+    <tr><td>Purpose</td><td>Chapter 06 grinding section atmosphere</td></tr>
+    <tr><td>Ideal dimensions</td><td>1920×1080</td></tr>
+    <tr><td>Duration</td><td>8s, seamless loop</td></tr>
+    <tr><td>File size target</td><td>≤5MB</td></tr>
+    <tr><td>Tool</td><td>After Effects + Trapcode Particular (preferred) OR Runway</td></tr>
+    <tr><td>Source input</td><td>Text prompt / AE Particular settings</td></tr>
+    <tr><td>Prompt reference</td><td>Section 7D</td></tr>
+    <tr><td>Fallback</td><td>CSS @keyframes with 3–5 absolutely-positioned circle divs animating downward in warm gold color</td></tr>
+  </table>
+
+  <h3 class="sub">G · Brewing Drip Loop</h3>
+  <table>
+    <tr><td>Final filename</td><td><code>brewing-drip-loop.mp4</code></td></tr>
+    <tr><td>Type</td><td>Video (seamless loop or ping-pong)</td></tr>
+    <tr><td>Purpose</td><td>Chapter 07 brewing section</td></tr>
+    <tr><td>Ideal dimensions</td><td>1920×1080</td></tr>
+    <tr><td>Duration</td><td>12s</td></tr>
+    <tr><td>File size target</td><td>≤8MB</td></tr>
+    <tr><td>Tool</td><td>Runway Gen-3 (slow motion mode)</td></tr>
+    <tr><td>Source input</td><td>Text prompt</td></tr>
+    <tr><td>Prompt reference</td><td>Section 7E</td></tr>
+    <tr><td>Fallback</td><td>GSAP backgroundColor tween alone (already wired and presentable)</td></tr>
+  </table>
+
+  <h3 class="sub">H · Product Assembly Loop</h3>
+  <table>
+    <tr><td>Final filename</td><td><code>product-assembly.mp4</code></td></tr>
+    <tr><td>Type</td><td>Video (ScrollTrigger scrubbed)</td></tr>
+    <tr><td>Purpose</td><td>Chapter 08 assembly reveal — the master cinematic sequence</td></tr>
+    <tr><td>Ideal dimensions</td><td>1920×1080</td></tr>
+    <tr><td>Duration</td><td>8s at 24fps = 192 frames</td></tr>
+    <tr><td>File size target</td><td>≤15MB (high-priority single-play asset)</td></tr>
+    <tr><td>Tool</td><td>After Effects (full pipeline). Runway for individual organic segments (pour, steam). Composite in Premiere.</td></tr>
+    <tr><td>Source input</td><td>Existing product PNGs for final reveal frames (real packaging only)</td></tr>
+    <tr><td>Prompt reference</td><td>Section 7F (4 sub-prompts)</td></tr>
+    <tr><td>Fallback</td><td>studio/hero.png optimized to WebP with stagger reveal</td></tr>
+  </table>
+
+  <h3 class="sub">I · Chioda Gold Transparent PNG</h3>
+  <table>
+    <tr><td>Final filename</td><td><code>chioda-gold-transparent.png</code> (remove double .png.png extension)</td></tr>
+    <tr><td>Type</td><td>Image — transparent background</td></tr>
+    <tr><td>Purpose</td><td>Product card visual</td></tr>
+    <tr><td>Ideal dimensions</td><td>800×1000px, transparent background</td></tr>
+    <tr><td>File size target</td><td>≤300KB</td></tr>
+    <tr><td>Tool</td><td>Photoroom (background removal)</td></tr>
+    <tr><td>Source input</td><td>Existing <code>chioda-gold-transparent.png.png</code> (590KB)</td></tr>
+    <tr><td>Prompt reference</td><td>N/A — background removal + rename only</td></tr>
+    <tr><td>Fallback</td><td>Existing file (rename path in HTML)</td></tr>
+  </table>
+
+  <h3 class="sub">J · Ingoma Transparent PNG</h3>
+  <table>
+    <tr><td>Final filename</td><td><code>ingoma-transparent.png</code> (remove double extension)</td></tr>
+    <tr><td>Type</td><td>Image — transparent background</td></tr>
+    <tr><td>Purpose</td><td>Product card visual</td></tr>
+    <tr><td>Ideal dimensions</td><td>800×1000px, transparent background</td></tr>
+    <tr><td>File size target</td><td>≤300KB</td></tr>
+    <tr><td>Tool</td><td>Photoroom</td></tr>
+    <tr><td>Source input</td><td>Existing <code>ingoma-transparent.png.png</code> (576KB)</td></tr>
+    <tr><td>Prompt reference</td><td>N/A — background removal + rename only</td></tr>
+    <tr><td>Fallback</td><td>Existing file (rename path in HTML)</td></tr>
+  </table>
+
+  <h3 class="sub">K · Drip Coffee Transparent PNG</h3>
+  <table>
+    <tr><td>Final filename</td><td><code>drip-coffee-transparent.png</code></td></tr>
+    <tr><td>Type</td><td>Image — transparent background</td></tr>
+    <tr><td>Purpose</td><td>Product card — replaces JPEG with background</td></tr>
+    <tr><td>Ideal dimensions</td><td>800×1000px, transparent background</td></tr>
+    <tr><td>File size target</td><td>≤200KB</td></tr>
+    <tr><td>Tool</td><td>Photoroom</td></tr>
+    <tr><td>Source input</td><td><code>assets/products/drip-coffee-boxes.jpeg</code></td></tr>
+    <tr><td>Prompt reference</td><td>N/A — background removal only</td></tr>
+    <tr><td>Fallback</td><td>Existing JPEG with object-fit:contain</td></tr>
+  </table>
+
+  <h3 class="sub">L · Product Lineup Hero Image</h3>
+  <table>
+    <tr><td>Final filename</td><td><code>product-lineup-hero.webp</code></td></tr>
+    <tr><td>Type</td><td>Image (optimized version of existing studio/hero.png)</td></tr>
+    <tr><td>Purpose</td><td>Assembly chapter fallback + product section header</td></tr>
+    <tr><td>Ideal dimensions</td><td>2400×1200px</td></tr>
+    <tr><td>File size target</td><td>≤400KB WebP</td></tr>
+    <tr><td>Tool</td><td>Squoosh.app — convert existing studio/hero.png (2.3MB) to WebP</td></tr>
+    <tr><td>Source input</td><td><code>assets/products/studio/hero.png</code></td></tr>
+    <tr><td>Prompt reference</td><td>N/A — format conversion</td></tr>
+    <tr><td>Fallback</td><td>studio/hero.png directly</td></tr>
+  </table>
+
+  <h3 class="sub">M · Café Interior Image</h3>
+  <table>
+    <tr><td>Final filename</td><td><code>cafe-interior-masaki.webp</code></td></tr>
+    <tr><td>Type</td><td>Image</td></tr>
+    <tr><td>Purpose</td><td>Café chapter right column</td></tr>
+    <tr><td>Ideal dimensions</td><td>1200×1500px (portrait for grid column)</td></tr>
+    <tr><td>File size target</td><td>≤300KB</td></tr>
+    <tr><td>Tool</td><td>Real client photograph (preferred). If unavailable: Midjourney v7.</td></tr>
+    <tr><td>Source input</td><td>Client photograph OR text prompt</td></tr>
+    <tr><td>Prompt reference</td><td>Section 7G</td></tr>
+    <tr><td>Fallback</td><td>Current gray placeholder div — acceptable for internal demo only</td></tr>
+  </table>
+  <div class="callout-warn">This image <strong>must be replaced</strong> with a real client-provided photograph before any public deployment. The Midjourney version is a demo placeholder only.</div>
+
+  <h3 class="sub">N · Steam Overlay Lottie</h3>
+  <table>
+    <tr><td>Final filename</td><td><code>steam-overlay.lottie</code></td></tr>
+    <tr><td>Type</td><td>Lottie JSON (or CSS @keyframes fix — see below)</td></tr>
+    <tr><td>Purpose</td><td>Roasting section steam animation — replaces broken CSS SVG</td></tr>
+    <tr><td>Ideal dimensions</td><td>300×400px canvas</td></tr>
+    <tr><td>Duration</td><td>4s loop, 30fps</td></tr>
+    <tr><td>File size target</td><td>≤50KB</td></tr>
+    <tr><td>Tool</td><td>After Effects + Bodymovin OR direct CSS fix (recommended first)</td></tr>
+    <tr><td>Source input</td><td>Existing SVG steam paths already in website.html</td></tr>
+    <tr><td>Prompt reference</td><td>Section 7H</td></tr>
+    <tr><td>Fallback</td><td>CSS @keyframes fix (10 lines — implement this before waiting for Lottie)</td></tr>
+  </table>
+  <div class="callout-ok">
+    <strong>Immediate CSS fix (zero dependency, zero file size):</strong> Add to cinematic.css:
+    <pre style="margin-top:10px">@keyframes steamRise {
+  0%   { stroke-dashoffset: 200; opacity: 0; }
+  15%  { opacity: 0.5; }
+  85%  { opacity: 0.4; }
+  100% { stroke-dashoffset: 0; opacity: 0; }
+}
+.steam-path {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  animation: steamRise 3.4s cubic-bezier(0.16,1,0.3,1) infinite;
+}
+.steam-path:nth-child(2) { animation-delay: 0.6s; }
+.steam-path:nth-child(3) { animation-delay: 1.1s; }</pre>
+  </div>
+
+  <h3 class="sub">O · Bean Journey Path</h3>
+  <table>
+    <tr><td>Final filename</td><td>Inline SVG (no external file needed)</td></tr>
+    <tr><td>Type</td><td>SVG stroke-dashoffset animation driven by scrollY</td></tr>
+    <tr><td>Purpose</td><td>Journey progress indicator — path draws itself from cherry to cup as user scrolls</td></tr>
+    <tr><td>Ideal dimensions</td><td>100% width × 80px height horizontal bar</td></tr>
+    <tr><td>File size target</td><td>~1KB inline SVG + 4 lines JS</td></tr>
+    <tr><td>Tool</td><td>Hand-coded SVG + JavaScript scroll listener</td></tr>
+    <tr><td>Source input</td><td>Design: horizontal wave path with 8 nodes (cherry, bean, parchment, roast, grind, brew, steam, cup)</td></tr>
+    <tr><td>Prompt reference</td><td>Section 7I</td></tr>
+    <tr><td>Fallback</td><td>None required — decorative only, does not affect content</td></tr>
+  </table>
+</div>
+
+<!-- ======================================================
+     SECTION 5 — STORYBOARD
+     ====================================================== -->
+<div class="page page-break">
+  <span class="section-num">Section 05</span>
+  <h2 class="section-title">Product Assembly <em>Storyboard</em></h2>
+  <p>8-second master sequence for Chapter 08. Each second maps to a ScrollTrigger progress range of approximately 0.125. This is the highest-impact moment in the entire scroll experience — the journey from seed to product.</p>
+
+  <div class="beat">
+    <div class="beat-time">0.0–1.0s<br><small>Progress<br>0–0.125</small></div>
+    <div class="beat-content">
+      <h5>Ripe Cherries Float In</h5>
+      <p><strong>Visual:</strong> 3–5 deep red coffee cherries drift in from screen edges, converging toward center. Pure black background. Soft golden rim light on each cherry.</p>
+      <p><strong>Camera:</strong> Static, slightly overhead. Cherries arrive from peripheral blur to sharp focus at center.</p>
+      <p><strong>Motion:</strong> <code>scale(0.7) opacity(0)</code> → <code>scale(1.0) opacity(1)</code>. Ease: <code>cubic-bezier(0.16, 1, 0.3, 1)</code>. Stagger offset per cherry: 0.08s.</p>
+      <p><strong>Lighting:</strong> Warm amber backlight. Deep shadow under each cherry. Single overhead key light, no fill.</p>
+      <p><strong>Asset needed:</strong> Individual cherry renders on black (PNG or video track).</p>
+      <p class="note"><strong>Implementation:</strong> GSAP <code>gsap.from(".cherry", { scale:0.7, opacity:0, stagger:0.08 })</code> at progress 0–0.125. Or: video segment 0–1s scrubbed via <code>video.currentTime = progress × 8</code>.</p>
+    </div>
+  </div>
+
+  <div class="beat">
+    <div class="beat-time">1.0–2.0s<br><small>Progress<br>0.125–0.25</small></div>
+    <div class="beat-content">
+      <h5>Cherries Split — Parchment Beans Reveal</h5>
+      <p><strong>Visual:</strong> Each cherry slowly splits at its seam. Cream-gold parchment bean visible inside. Outer skin peels back like petals, leaving parchment bean floating.</p>
+      <p><strong>Camera:</strong> Slight push-in (subtle zoom 1.0→1.05) during split.</p>
+      <p><strong>Motion:</strong> Cherry outer skin elements slide outward + scale. Inner bean element scales up from 0.5→1.0. Crossfade of textures.</p>
+      <p><strong>Lighting:</strong> Interior of cherry is warm ivory against dark background. Backlight intensifies slightly during reveal.</p>
+      <p><strong>Asset needed:</strong> Cherry split animation frames or Runway video segment.</p>
+      <p class="note"><strong>Prompt fragment:</strong> "Coffee cherry peeling open revealing cream parchment coffee bean inside, macro photography, black background, warm backlight, no text, cinematic split moment"</p>
+    </div>
+  </div>
+
+  <div class="beat">
+    <div class="beat-time">2.0–3.0s<br><small>Progress<br>0.25–0.375</small></div>
+    <div class="beat-content">
+      <h5>Parchment Beans → Roasted Beans</h5>
+      <p><strong>Visual:</strong> Cream parchment bean slowly shifts color — ivory → tan → warm amber brown. Surface texture changes from smooth to cracked matte. Steam wisps begin to appear.</p>
+      <p><strong>Camera:</strong> Static. Depth of field narrows: background softens further.</p>
+      <p><strong>Motion:</strong> Color crossfade (two image layers, opacity scrubbed). Scale stays constant — only color and texture change.</p>
+      <p><strong>Lighting:</strong> Color temperature warms noticeably. Amber orange tones emerge. Backlight more intense.</p>
+      <p><strong>Asset needed:</strong> Color-transformation video segment OR two static images crossfaded via GSAP opacity scrub.</p>
+      <p class="note"><strong>Implementation:</strong> <code>gsap.fromTo("#roasted", {opacity:0}, {opacity:1, scrollTrigger:{scrub:true}})</code> at progress 0.25–0.375. No video needed if using GSAP crossfade between two static PNGs.</p>
+    </div>
+  </div>
+
+  <div class="beat">
+    <div class="beat-time">3.0–4.0s<br><small>Progress<br>0.375–0.5</small></div>
+    <div class="beat-content">
+      <h5>Roasted Beans Crack / Flow into Grounds</h5>
+      <p><strong>Visual:</strong> 3–5 roasted beans crack and fracture. Fragments dissolve downward into fine ground coffee particles — a cascade of dark warm powder.</p>
+      <p><strong>Camera:</strong> Slight pull-back (1.05→1.0). Particles fill lower half of frame.</p>
+      <p><strong>Motion:</strong> Bean elements scale down. Fragment particles fly outward then fall with gravity simulation. Ease: <code>power2.in</code>.</p>
+      <p><strong>Lighting:</strong> Ground particles catch rim-light. Fine golden edges on dark cloud of powder.</p>
+      <p><strong>Asset needed:</strong> Particle explosion video segment OR After Effects Trapcode Particular export.</p>
+      <p class="note"><strong>Prompt fragment:</strong> "Coffee beans cracking apart into fine dark roasted grounds, particles cascade downward, macro scale, black background, golden rim light on particles, slow motion, no text"</p>
+    </div>
+  </div>
+
+  <div class="beat">
+    <div class="beat-time">4.0–5.0s<br><small>Progress<br>0.5–0.625</small></div>
+    <div class="beat-content">
+      <h5>Grounds Form a Drip Filter</h5>
+      <p><strong>Visual:</strong> Falling ground-coffee particles slow and begin to collect, shaping themselves into a conical drip filter form. Abstract — no branded markings, no product logos.</p>
+      <p><strong>Camera:</strong> Slow crane-up (frame lifts 20px over 1s).</p>
+      <p><strong>Motion:</strong> Particles decelerate (ease-out), organize into cone shape. Filter paper edge appears as thin bright line.</p>
+      <p><strong>Lighting:</strong> Filter/cone is rim-lit in warm gold against black background.</p>
+      <p><strong>Asset needed:</strong> Video segment — particle organization into cone form (After Effects).</p>
+      <p class="note"><strong>Prompt fragment:</strong> "Dark roasted coffee grounds gathering into a conical drip filter shape, particles slowing and collecting, abstract cinematic, warm golden rim-light, black background, no text, no brand marks"</p>
+    </div>
+  </div>
+
+  <div class="beat">
+    <div class="beat-time">5.0–6.0s<br><small>Progress<br>0.625–0.75</small></div>
+    <div class="beat-content">
+      <h5>Hot Water / Brew Stream Enters Cup</h5>
+      <p><strong>Visual:</strong> A single column of translucent amber water pours from above into the filter. Frame widens slightly to reveal a ceramic cup below. Brew color deepens as it flows. Steam begins.</p>
+      <p><strong>Camera:</strong> Wider field of view, slight tilt down.</p>
+      <p><strong>Motion:</strong> Water stream appears top-frame, constant gentle flow. Brew color in cup accumulates via opacity fill overlay.</p>
+      <p><strong>Lighting:</strong> Warm transmission lighting through the amber water. Subtle steam refraction at edges.</p>
+      <p><strong>Asset needed:</strong> Slow-motion pour video segment.</p>
+      <p class="note"><strong>Prompt fragment:</strong> "Slow motion pour-over coffee brewing, single water stream into filter, amber translucent color, ceramic cup below, steam rising, cinematic depth, no text, black background with warm amber glow"</p>
+    </div>
+  </div>
+
+  <div class="beat">
+    <div class="beat-time">6.0–7.0s<br><small>Progress<br>0.75–0.875</small></div>
+    <div class="beat-content">
+      <h5>Steam Rises — Organic Emwani Curve</h5>
+      <p><strong>Visual:</strong> Steam wisps rise from the cup and curl into an elegant ascending arc. Soft, organic, sinuous. Shape echoes Emwani's wave/mushonge heritage motif but does not spell text or form any logo mark. Pure abstract poetry.</p>
+      <p><strong>Camera:</strong> Static. Steam is the only movement.</p>
+      <p><strong>Motion:</strong> SVG path <code>stroke-dashoffset</code> draws from 0% to 100% in 1s. <code>stroke-linecap: round</code>. Multiple paths with 15-frame stagger.</p>
+      <p><strong>Lighting:</strong> Steam is near-transparent. Slight warm tint rising from cup below.</p>
+      <p><strong>Asset needed:</strong> Animated SVG (repaired existing steam paths) OR Lottie from After Effects.</p>
+      <p class="note"><strong>Implementation:</strong> At progress 0.75, trigger <code>classList.add('steam-active')</code> on steam SVG wrapper. CSS keyframe starts. No GSAP scrub needed for this beat — CSS animation runs independently once triggered.</p>
+    </div>
+  </div>
+
+  <div class="beat">
+    <div class="beat-time">7.0–8.0s<br><small>Progress<br>0.875–1.0</small></div>
+    <div class="beat-content">
+      <h5>Product Lineup Reveals</h5>
+      <p><strong>Visual:</strong> Steam clears. Three real Emwani packaging transparent PNGs glide in from below, aligning into a horizontal lineup against warm espresso-dark background. Product names appear beneath each in Syne. Soft drop shadow under each pack.</p>
+      <p><strong>Camera:</strong> Full wide. Products centered, bottom-weighted composition.</p>
+      <p><strong>Motion:</strong> Each product slides up <code>translateY(40px)→translateY(0)</code> and fades in with 150ms stagger. Faint gold gradient sweeps left-to-right like a reveal light.</p>
+      <p><strong>Lighting:</strong> Products have own packaging colors. Subtle spotlight ray from upper right on each.</p>
+      <p><strong>Asset needed:</strong> <code>chioda-gold-transparent.png</code>, <code>ingoma-transparent.png</code>, <code>drip-coffee-transparent.png</code> — real product packshots only.</p>
+      <p class="note"><strong>Implementation:</strong> <code>gsap.from(".assembly-product", { y:40, opacity:0, stagger:0.15 })</code> triggered at progress=0.875. "Shop Now →" CTA button fades in at progress=1.0. This is the conversion moment.</p>
+    </div>
+  </div>
+
+  <div class="callout-warn" style="margin-top:24px">
+    <strong>No generated imagery in Beat 7 (7.0–8.0s).</strong> The product reveal must use real Emwani packaging PNGs only. Do not use AI-generated product representations. Do not render packaging in video segments. Use the real transparent PNGs as separate HTML elements animated over the video.
+  </div>
+</div>
+
+<!-- ======================================================
+     SECTION 6 — TOOL RECOMMENDATIONS
+     ====================================================== -->
+<div class="page page-break">
+  <span class="section-num">Section 06</span>
+  <h2 class="section-title">Recommended Tool <em>Per Asset</em></h2>
+  <p>Each asset type has one best tool, one acceptable alternative, and one tool to avoid. Rationale is included so you can make judgment calls when circumstances change.</p>
+
+  <h3 class="sub">Hero Wide Cinematic Image</h3>
+  <div class="tool-rec"><div class="tool-tier best">Best</div><div class="tool-content"><strong>Midjourney v7</strong>Unmatched photorealism for landscape + atmospheric mood. Use <code>--style raw</code> + <code>--cref</code> for consistent color grade. Run twice, pick strongest atmospheric depth.</div></div>
+  <div class="tool-rec"><div class="tool-tier ok">OK</div><div class="tool-content"><strong>Adobe Firefly 3</strong>Good for editorial photography style. Less consistent landscape depth and atmospheric haze compared to MJ v7.</div></div>
+  <div class="tool-rec"><div class="tool-tier avoid">Avoid</div><div class="tool-content"><strong>Gemini Veo</strong>Veo is video-native. Still frames have lower resolution ceiling and less precise art-direction control for a 2560px hero image.</div></div>
+
+  <h3 class="sub">Cherry-to-Bean Animation</h3>
+  <div class="tool-rec"><div class="tool-tier best">Best</div><div class="tool-content"><strong>After Effects + Bodymovin + LottieFiles</strong>Full control over organic split motion, timing curves, and color shift. Produces ≤80KB Lottie JSON. Scrubs with ScrollTrigger via <code>lottie.goToAndStop(progress * totalFrames, true)</code>.</div></div>
+  <div class="tool-rec"><div class="tool-tier ok">OK</div><div class="tool-content"><strong>Rive (rive.app)</strong>Real-time interactive, smaller than Lottie, but steep learning curve for shape morphing on organic forms.</div></div>
+  <div class="tool-rec"><div class="tool-tier avoid">Avoid</div><div class="tool-content"><strong>Runway / Kling</strong>Would produce a video 5–15× larger file for the same visual. Video cannot be frame-accurately scrubbed at low scroll speeds.</div></div>
+
+  <h3 class="sub">Roasting Smoke Loop</h3>
+  <div class="tool-rec"><div class="tool-tier best">Best</div><div class="tool-content"><strong>Runway Gen-3 Alpha</strong>Best fluid smoke simulation from text prompt. Loop mode stabilizes seamlessly. Enable slow-motion + 1080p output.</div></div>
+  <div class="tool-rec"><div class="tool-tier ok">OK</div><div class="tool-content"><strong>Kling 1.6</strong>Strong motion quality. Slightly less reliable loop seam — may need 0.5s crossfade trim in AE.</div></div>
+  <div class="tool-rec"><div class="tool-tier avoid">Avoid</div><div class="tool-content"><strong>Pika 1.5</strong>Pika 1.5 struggles with abstract particle and fluid generation. Produces over-stylized, cartoon-adjacent smoke. Better suited for character motion.</div></div>
+
+  <h3 class="sub">Grinding Particles Loop</h3>
+  <div class="tool-rec"><div class="tool-tier best">Best</div><div class="tool-content"><strong>After Effects + Trapcode Particular</strong>Precise physical simulation of dry particle behavior. Renders to transparent background for compositing over any dark section. Full control over gravity, turbulence, and color randomization.</div></div>
+  <div class="tool-rec"><div class="tool-tier ok">OK</div><div class="tool-content"><strong>Runway Gen-3</strong>Faster. Prompt-driven. Less precise particle physics but acceptable for atmosphere-only use where exact grain size doesn't matter.</div></div>
+  <div class="tool-rec"><div class="tool-tier avoid">Avoid</div><div class="tool-content"><strong>Spline</strong>Spline particles are 3D interactive WebGL — not film-quality 2D particle renders. Adds ~500KB runtime overhead for a background loop.</div></div>
+
+  <h3 class="sub">Brewing Drip Loop</h3>
+  <div class="tool-rec"><div class="tool-tier best">Best</div><div class="tool-content"><strong>Runway Gen-3 (slow motion)</strong>Outstanding fluid dynamics for liquid pour. Slow-motion mode produces the cinematic drip quality needed. Set camera motion to locked static.</div></div>
+  <div class="tool-rec"><div class="tool-tier ok">OK</div><div class="tool-content"><strong>Kling 1.6</strong>Good fluid dynamics but slightly more stylized. May require color correction to match Emwani's warm amber palette.</div></div>
+  <div class="tool-rec"><div class="tool-tier avoid">Avoid</div><div class="tool-content"><strong>Gemini Veo</strong>Capable model but less proven specifically for macro liquid physics at slow-motion quality. Use for landscapes, not pour-overs.</div></div>
+
+  <h3 class="sub">Product Assembly Loop (Master Sequence)</h3>
+  <div class="tool-rec"><div class="tool-tier best">Best</div><div class="tool-content"><strong>After Effects (full pipeline)</strong>Only tool that gives complete control over all 8 distinct beats, timing, and the product reveal at the end. Individual organic segments (pour, steam) can be generated in Runway and composited in AE or Premiere.</div></div>
+  <div class="tool-rec"><div class="tool-tier ok">OK</div><div class="tool-content"><strong>After Effects segments + Runway for organic moments</strong>Hybrid approach: AE for structure and timing, Runway for the pour and steam segments specifically. Composite in Premiere Pro.</div></div>
+  <div class="tool-rec"><div class="tool-tier avoid">Avoid</div><div class="tool-content"><strong>Blender</strong>Overkill. No 3D asset modeling is required. Blender would add production delay without quality gain for this 2D-compositing job.</div></div>
+
+  <h3 class="sub">Steam Overlay SVG / Lottie</h3>
+  <div class="tool-rec"><div class="tool-tier best">Best</div><div class="tool-content"><strong>CSS @keyframes fix (immediate)</strong>10 lines of CSS. Zero dependencies. Uses the exact SVG paths already in website.html. Fix this before anything else — it unblocks the roasting section entirely.</div></div>
+  <div class="tool-rec"><div class="tool-tier ok">OK</div><div class="tool-content"><strong>After Effects + Bodymovin</strong>Produces path-based Lottie from existing SVG shapes. File stays tiny (≤50KB). Use if the Lottie needs to be progress-scrubbed (not time-based).</div></div>
+  <div class="tool-rec"><div class="tool-tier avoid">Avoid</div><div class="tool-content"><strong>Spline</strong>Steam is a 2D path animation. Spline WebGL adds ~500KB runtime overhead for a 300px overlay. Disproportionate cost for this task.</div></div>
+
+  <h3 class="sub">Bean Journey Path Progress Indicator</h3>
+  <div class="tool-rec"><div class="tool-tier best">Best</div><div class="tool-content"><strong>Inline SVG + stroke-dashoffset JS</strong>Zero external dependency. ~1KB inline SVG + 4 lines of JavaScript. Scrubs perfectly with scrollY. No Lottie player, no GSAP MotionPath license needed.</div></div>
+  <div class="tool-rec"><div class="tool-tier ok">OK</div><div class="tool-content"><strong>LottieFiles + lottie-player scrub API</strong>Works well but adds 60KB lottie-player.js. Only worth it if you already have a Lottie player loaded for other animations on the page.</div></div>
+  <div class="tool-rec"><div class="tool-tier avoid">Avoid</div><div class="tool-content"><strong>GSAP MotionPath</strong>Requires Club GreenSock membership for commercial use. Do not use unlicensed.</div></div>
+
+  <h3 class="sub">Background Removal (Product PNGs)</h3>
+  <div class="tool-rec"><div class="tool-tier best">Best</div><div class="tool-content"><strong>Photoroom</strong>Purpose-built for product packshots. Correctly handles reflective packaging surfaces, metallic foil edges, and curved pouches. Web-based, no installation.</div></div>
+  <div class="tool-rec"><div class="tool-tier ok">OK</div><div class="tool-content"><strong>Adobe Photoshop AI Remove Background</strong>Good but requires manual cleanup on metallic packaging edges. Output quality is excellent if you have the time to refine.</div></div>
+  <div class="tool-rec"><div class="tool-tier avoid">Avoid</div><div class="tool-content"><strong>Remove.bg free tier</strong>Low resolution output cap (625×400px). Not suitable for 800×1000px product assets. Use paid tier minimum if Photoroom is unavailable.</div></div>
+
+  <h3 class="sub">Café Interior Image</h3>
+  <div class="tool-rec"><div class="tool-tier best">Best</div><div class="tool-content"><strong>Real client photograph</strong>Non-negotiable if this site goes public. The Masaki / Dar es Salaam specificity cannot be faked with stock or AI at a level that survives scrutiny.</div></div>
+  <div class="tool-rec"><div class="tool-tier ok">OK</div><div class="tool-content"><strong>Midjourney v7 (demo placeholder)</strong>Convincing Afro-contemporary interior with warm afternoon light. Use <code>--ar 4:5</code> for portrait column fit. Clearly label as placeholder in client notes.</div></div>
+  <div class="tool-rec"><div class="tool-tier avoid">Avoid</div><div class="tool-content"><strong>Stock photo sites</strong>Generic café images break the "Masaki, Dar es Salaam" specificity that defines this section's commercial purpose.</div></div>
+</div>
+
+<!-- ======================================================
+     SECTION 7 — ASSET PROMPTS
+     ====================================================== -->
+<div class="page page-break">
+  <span class="section-num">Section 07</span>
+  <h2 class="section-title">Ready-to-Use <em>Asset Prompts</em></h2>
+  <p>Copy these prompts directly into the tools specified. No modifications needed unless noted. Rules: no text inside videos or images, no fake logos, no invented packaging, no watermarks, preserve real packaging if used, premium African coffee heritage mood throughout.</p>
+
+  <h3 class="sub">7A · Hero Wide Image — Midjourney v7</h3>
+  <div class="prompt-block">
+    <span class="prompt-label">Paste into Midjourney /imagine</span>
+    Cinematic aerial photograph of Tanzanian highland coffee plantation at golden hour, rows of arabica coffee plants on volcanic hillside, Mbinga region, warm amber and deep green tones, morning mist in valleys, no people, no text, no watermarks, no logos, ultra-wide 16:9 composition, film grain, Kodak Portra 400 color grade, depth of field showing middle distance sharp and foreground soft, luxury editorial photography --ar 16:9 --style raw --v 7
+  </div>
+  <p style="font-size:12px;color:var(--muted)">Run twice. Pick the frame with strongest atmospheric depth. Reject any frame with visible infrastructure (power lines, buildings). Export at maximum resolution.</p>
+
+  <h3 class="sub">7B · Cherry-to-Bean Style Reference — Midjourney v7</h3>
+  <div class="prompt-block">
+    <span class="prompt-label">Use for AE style reference only — not the final animation asset</span>
+    Single ripe red arabica coffee cherry splitting open to reveal cream ivory parchment coffee bean inside, macro photography, pure black background, warm golden backlight, no text, no watermarks, highly detailed, shallow depth of field, cinematic, symmetrical composition --ar 1:1 --style raw --v 7
+  </div>
+  <p style="font-size:12px;color:var(--muted)">Use this as a reference frame when building the After Effects shape-layer morph animation. The actual deliverable is a Lottie JSON, not this image.</p>
+
+  <h3 class="sub">7C · Roasting Smoke Loop — Runway Gen-3 Alpha</h3>
+  <div class="prompt-block">
+    <span class="prompt-label">Paste into Runway Gen-3 Alpha text-to-video</span>
+    Slow drifting white and silver smoke wisps rising from below frame, isolated against pure black background, no color in smoke, highly translucent, volumetric, soft edges, no hard shapes, no objects, no text, no logos, cinematic film quality, looping seamlessly, duration 10 seconds
+  </div>
+  <p style="font-size:12px;color:var(--muted)">Settings: Style: cinematic. Motion: slow. Resolution: 1080p. Loop: enabled. Generate twice. Use the take with most organic, non-mechanical drift. Reject any frame where smoke forms recognizable letters or shapes.</p>
+
+  <h3 class="sub">7D · Grinding Loop — After Effects Particular Settings</h3>
+  <div class="prompt-block">
+    <span class="prompt-label">After Effects Trapcode Particular configuration</span>
+    Particle type: Sphere · Size: 1–3px · Opacity: 40–80% random
+    Color: gradient #C9A86A → #5A3621, randomized per particle
+    Physics: Gravity 150 · Turbulence 30 · Bounce 0
+    Emitter: Line emitter at y:0 · Width: 1920px
+    Life: 3–4s · Rate: 800 particles/second at peak
+    Background: #0A0807 (var --char-1000)
+    Export: H.264 · transparent background via alpha channel · 8s loop
+  </div>
+  <p style="font-size:12px;color:var(--muted)">If Trapcode Particular is unavailable, use Runway with prompt: "Fine dark roasted coffee grounds falling slowly through air in golden light, macro photography, pure black background, dust particles catching amber light, no text, no containers, isolated coffee powder, cinematic --ar 16:9"</p>
+
+  <h3 class="sub">7E · Brewing Drip Loop — Runway Gen-3</h3>
+  <div class="prompt-block">
+    <span class="prompt-label">Paste into Runway Gen-3 slow motion mode</span>
+    Extreme slow motion close-up of water dripping through dark roasted coffee grounds, single amber-translucent drip stream descending, warm espresso liquid accumulating in white ceramic cup below, steam rising softly, black background with warm amber glow from liquid, no text, no logos, no brand markings, ultra macro, cinematic, 12 second loop
+  </div>
+  <p style="font-size:12px;color:var(--muted)">Settings: Duration 12s. Resolution 1080p. Slow motion 4×. Camera motion: locked static. If loop seam is visible, trim and crossfade last/first 0.5s in After Effects.</p>
+
+  <h3 class="sub">7F · Product Assembly — 4 Sub-Prompts</h3>
+  <p style="font-size:13px;margin-bottom:12px">The assembly video is composed of 4 segments. Generate each separately, then composite in After Effects or Premiere Pro.</p>
+
+  <div class="prompt-block">
+    <span class="prompt-label">Segment 1 (0–3s): Cherries to Roasted Beans — Runway</span>
+    Ripe red arabica coffee cherries transforming into dark roasted coffee beans, organic transformation sequence, macro close-up, pure black background, warm amber backlight, slow motion, cinematic, no text, no logos
+  </div>
+
+  <div class="prompt-block">
+    <span class="prompt-label">Segment 2 (3–5s): Beans to Grounds to Filter — After Effects + Particular</span>
+    AE setup: Bean PNG (from Midjourney 7B) shatters via CC Pixel Polly effect → Trapcode Particular emitter picks up fragments → Particles decelerate and gather into cone shape. Background: #0A0807. Duration: 2s.
+  </div>
+
+  <div class="prompt-block">
+    <span class="prompt-label">Segment 3 (5–7s): Pour and Steam — Runway</span>
+    Slow motion pour over coffee brewing sequence, water stream entering filter, amber liquid dripping into cup, steam rising, black background, no text, no logos, macro cinematic, 3 seconds
+  </div>
+
+  <div class="prompt-block">
+    <span class="prompt-label">Segment 4 (7–8s): Product Reveal — After Effects ONLY</span>
+    No AI generation. Use real transparent product PNGs: chioda-gold-transparent.png, ingoma-transparent.png, drip-coffee-transparent.png. AE: 3 layers animate translateY(40)→0 + opacity 0→1 with 0.15s stagger. Background: var(--coffee-900). Export segment and composite into master.
+  </div>
+
+  <p style="font-size:12px;color:var(--muted);margin-top:8px">Final composite: Match color grade across all segments — warm amber tones, deep shadows, no blown highlights. Export H.264 baseline profile with faststart flag enabled. Target ≤15MB total.</p>
+
+  <h3 class="sub">7G · Café Interior Placeholder — Midjourney v7</h3>
+  <div class="prompt-block">
+    <span class="prompt-label">Paste into Midjourney /imagine — demo placeholder only</span>
+    Interior of a premium Afro-contemporary café in Dar es Salaam Tanzania, warm afternoon light through large windows, exposed wood and concrete, coffee bar counter with pour-over equipment visible, African textile accents in warm ochre and deep green, no people, no text, no brand logos, editorial interior photography, shallow depth of field, golden hour, warm espresso and bone cream tones --ar 4:5 --style raw --v 7
+  </div>
+  <div class="callout-warn">This image is a demo placeholder only. Must be replaced with client-provided photograph before any public deployment. Note this clearly in all client communications.</div>
+
+  <h3 class="sub">7H · Steam Overlay — CSS Fix (Implement Immediately)</h3>
+  <div class="prompt-block">
+    <span class="prompt-label">Add to assets/css/cinematic.css — no tool needed</span>
+    @keyframes steamRise {
+      0%   { stroke-dashoffset: 200; opacity: 0; }
+      15%  { opacity: 0.5; }
+      85%  { opacity: 0.4; }
+      100% { stroke-dashoffset: 0; opacity: 0; }
+    }
+    .steam-path {
+      stroke-dasharray: 200;
+      stroke-dashoffset: 200;
+      animation: steamRise 3.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+    }
+    .steam-path:nth-child(2) { animation-delay: 0.6s; }
+    .steam-path:nth-child(3) { animation-delay: 1.1s; }
+  </div>
+
+  <h3 class="sub">7I · Bean Journey Path — Inline SVG + JavaScript</h3>
+  <div class="prompt-block">
+    <span class="prompt-label">Add inline to website.html (sticky nav or section-top position)</span>
+    SVG structure:
+    &lt;svg id="journey-path-svg" viewBox="0 0 1200 80" style="width:100%;height:80px;position:fixed;top:60px;left:0;z-index:40;pointer-events:none;opacity:0.5"&gt;
+      &lt;path id="journey-path" d="M60,40 C200,10 300,70 400,40 C500,10 600,70 700,40 C800,10 900,70 1000,40 C1100,10 1140,40 1140,40"
+        stroke="#C9A86A" stroke-width="1" fill="none" /&gt;
+    &lt;/svg&gt;
+
+    JavaScript (add to cinematic.js inside DOMContentLoaded):
+    const jPath = document.getElementById('journey-path');
+    if (jPath) {
+      const len = jPath.getTotalLength();
+      jPath.style.strokeDasharray = len;
+      jPath.style.strokeDashoffset = len;
+      window.addEventListener('scroll', () => {
+        const scrolled = window.scrollY;
+        const total = document.body.scrollHeight - window.innerHeight;
+        const progress = Math.min(scrolled / total, 1);
+        jPath.style.strokeDashoffset = len * (1 - progress);
+      }, { passive: true });
+    }
+  </div>
+  <p style="font-size:12px;color:var(--muted)">This is purely decorative. Hide on mobile: add <code>@media(max-width:768px){#journey-path-svg{display:none}}</code> to cinematic.css.</p>
+</div>
+
+<!-- ======================================================
+     SECTION 8 — GEMINI CLI PROMPT
+     ====================================================== -->
+<div class="page page-break">
+  <span class="section-num">Section 08</span>
+  <h2 class="section-title">Gemini CLI <em>Implementation Prompt</em></h2>
+  <p>Copy this entire block into Gemini CLI after all assets are created and placed in their correct paths. Gemini CLI will implement all changes into website.html only.</p>
+
+  <div class="disclaimer">
+    <strong>Prerequisites Before Running</strong>
+    All asset files must be created and placed at their target paths before running this prompt. Gemini CLI will check for file existence before adding any references. Running this prompt with missing assets is safe — it will use fallbacks. Do not run this on prototype.html or index.html.
+  </div>
+
+  <pre>You are implementing the final production scroll animation for the Emwani Coffee cinematic website.
+The file you must edit is: website.html
+Do not create new files. Do not edit prototype.html or index.html.
+
+PHASE 0 — PREREQUISITES (read before touching anything):
+1. Read website.html completely.
+2. Read assets/tokens.css completely.
+3. Read assets/css/cinematic.css completely.
+4. Read assets/js/cinematic.js completely.
+5. Verify these files exist before referencing them:
+   - assets/logos/real-emwani-logo.jpg
+   - assets/logos/real-emwani-cafe-logo.png
+   - assets/products/studio/chioda-gold-transparent.png
+   - assets/products/studio/ingoma-transparent.png
+   - assets/products/drip-coffee-transparent.png
+   - assets/extracted/selected/founder-leodger.jpeg
+
+PHASE 1 — CRITICAL FIXES (do these first):
+
+1. Fix steam animation. In assets/css/cinematic.css add:
+   @keyframes steamRise {
+     0%   { stroke-dashoffset: 200; opacity: 0; }
+     15%  { opacity: 0.5; }
+     85%  { opacity: 0.4; }
+     100% { stroke-dashoffset: 0; opacity: 0; }
+   }
+   .steam-path {
+     stroke-dasharray: 200; stroke-dashoffset: 200;
+     animation: steamRise 3.4s cubic-bezier(0.16,1,0.3,1) infinite;
+   }
+   .steam-path:nth-child(2) { animation-delay: 0.6s; }
+   .steam-path:nth-child(3) { animation-delay: 1.1s; }
+
+2. Add to assets/css/cinematic.css:
+   .product-image { width:100%; height:320px; object-fit:contain; display:block; }
+   .product-card-visual { text-align:center; padding:var(--space-8) var(--space-6); }
+
+3. Fix the "Four products / 3 shown" mismatch:
+   Option A (default): Change headline to "Three products. One vocabulary."
+   Option B: Add a fourth Dark Roast product card — only if a fourth transparent PNG exists on disk.
+   Choose Option A unless you have confirmed the fourth product PNG exists.
+
+4. Add loading="lazy" to all img tags EXCEPT the nav logo img.
+
+5. Add GSAP fallback guard to assets/js/cinematic.js at top of DOMContentLoaded:
+   if (typeof gsap === 'undefined') {
+     document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+     return;
+   }
+
+PHASE 2 — SECTION ADDITIONS:
+
+6. Add #assembly section between #brewing and #products:
+   &lt;section id="assembly" class="bg-dark"&gt;
+     &lt;div class="container text-center"&gt;
+       &lt;span class="chapter-label"&gt;Chapter 08 · The Reveal&lt;/span&gt;
+       &lt;h2 class="cinematic-headline"&gt;From seed to &lt;em&gt;ceremony&lt;/em&gt;.&lt;/h2&gt;
+     &lt;/div&gt;
+     [If assets/products/studio/product-assembly.mp4 exists: add video element with poster]
+     [If it does NOT exist: add img src="assets/products/studio/hero.png" loading="lazy"]
+   &lt;/section&gt;
+   Update contact section chapter label from "Chapter 10" to "Chapter 12 · Connection".
+
+PHASE 3 — HERO IMAGE:
+
+7. Only if assets/hero-cinematic-wide.webp exists:
+   &lt;picture&gt;
+     &lt;source srcset="assets/hero-cinematic-wide.webp" type="image/webp"&gt;
+     &lt;img src="assets/hero-cinematic-wide.jpg" alt="" aria-hidden="true"
+          style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+                 z-index:0;opacity:0.6;" fetchpriority="high"&gt;
+   &lt;/picture&gt;
+   Keep the existing radial-gradient as a ::before pseudo-element overlay.
+   If the file does NOT exist, leave the gradient as-is.
+
+PHASE 4 — VIDEO LAZY LOADING:
+
+8. For each section, only add video IF corresponding file exists on disk:
+   - #roasting: check assets/origin/roasting-smoke-loop.mp4
+   - #grinding: check assets/origin/grinding-particles-loop.mp4
+   - #brewing: check assets/origin/brewing-drip-loop.mp4
+   - #assembly: check assets/products/studio/product-assembly.mp4
+
+   Video pattern for each:
+   &lt;video class="section-video" poster="[poster.jpg]"
+          muted loop playsinline preload="none" aria-hidden="true"
+          style="position:absolute;inset:0;width:100%;height:100%;
+                 object-fit:cover;z-index:0;opacity:0.7;pointer-events:none;"&gt;
+     &lt;source src="[path.mp4]" type="video/mp4"&gt;
+   &lt;/video&gt;
+
+   Add to cinematic.js:
+   const videoObserver = new IntersectionObserver((entries) => {
+     entries.forEach(e => { e.isIntersecting ? e.target.play() : e.target.pause(); });
+   }, { threshold: 0.3 });
+   document.querySelectorAll('.section-video').forEach(v => videoObserver.observe(v));
+
+PHASE 5 — SCROLL TIMING (update cinematic.js GSAP block):
+
+9. Update pin end values:
+   #harvest: end: "+=180%"
+   #roasting: end: "+=200%"
+   Add new pin for #grinding: end: "+=160%"
+   #brewing: end: "+=180%"
+   Add new pin for #assembly: end: "+=240%"
+
+   Assembly video scrub (only if product-assembly.mp4 exists):
+   const assemblyVideo = document.querySelector('#assembly video');
+   if (assemblyVideo) {
+     assemblyVideo.addEventListener('loadedmetadata', () => {
+       ScrollTrigger.create({
+         trigger: '#assembly', start: 'top top', end: '+=240%', scrub: true,
+         onUpdate: (self) => {
+           assemblyVideo.currentTime = self.progress * assemblyVideo.duration;
+         }
+       });
+     });
+   }
+   Wrap ALL GSAP code in existing !isMobile && !reduce guard.
+
+PHASE 6 — CAFE SECTION:
+
+10. Only if assets/origin/cafe-interior-masaki.webp exists, replace placeholder div:
+    &lt;img src="assets/origin/cafe-interior-masaki.webp"
+         alt="Emwani Café interior, Masaki, Dar es Salaam"
+         width="600" height="750" loading="lazy"
+         style="width:100%;height:600px;object-fit:cover;
+                border-radius:var(--r-lg);box-shadow:var(--shadow-cinema);"&gt;
+    If file does NOT exist, leave placeholder div as-is.
+
+PHASE 7 — REDUCED MOTION:
+
+11. Add to cinematic.js:
+    window.matchMedia('(prefers-reduced-motion: reduce)')
+      .addEventListener('change', e => {
+        if (e.matches) ScrollTrigger.getAll().forEach(t => t.kill());
+      });
+
+PHASE 8 — META TAGS:
+
+12. Add before &lt;/head&gt; in website.html:
+    &lt;meta name="description" content="Emwani Coffee — Tanzanian specialty coffee from Mbinga, Mbozi, and Karagwe. Hand-picked. Ceremony-roasted. Returned to the world's table."&gt;
+    &lt;meta property="og:title" content="Emwani Coffee — Cinematic Brand System"&gt;
+    &lt;meta property="og:description" content="From volcanic slopes to the cup in your hand."&gt;
+    &lt;meta name="theme-color" content="#0A0807"&gt;
+
+IMMOVABLE RULES — do not break these under any circumstance:
+- DO NOT remove or change the footer disclaimer text:
+  "Unofficial demo concept prepared by Nextec Corp for presentation purposes.
+   Final public deployment requires client approval of all trademarks, copy, and imagery."
+- DO NOT replace assets/logos/real-emwani-logo.jpg with any SVG, crest, or placeholder.
+- DO NOT use real-emwani-cafe-logo.png in any section except #cafe.
+- DO NOT recolor or apply CSS filter to any logo image.
+- DO NOT add any text, logos, or product names inside generated video elements.
+- DO NOT install npm packages or modify any package.json.
+- DO NOT create new HTML files.
+- website.html is the ONLY HTML file to edit.
+- Keep all GSAP animations inside the !isMobile && !reduce conditional guard.
+- After all phases complete, read website.html one final time and confirm:
+  (1) footer disclaimer present and unchanged
+  (2) real logo paths intact — real-emwani-logo.jpg in nav and footer
+  (3) no 404 paths introduced
+  (4) no fake SVG crests added anywhere</pre>
+</div>
+
+<!-- ======================================================
+     SECTION 9 — QA CHECKLIST
+     ====================================================== -->
+<div class="page page-break">
+  <span class="section-num">Section 09</span>
+  <h2 class="section-title">Final QA <em>Checklist</em></h2>
+  <p>Complete this checklist before any client presentation or deployment. All items must pass. Items marked with ★ are blocking — do not present if they fail.</p>
+
+  <h3 class="sub">Desktop Scroll ★</h3>
+  <ul class="checklist">
+    <li>Hero loads in under 2s on standard broadband. No layout shift on load.</li>
+    <li>Hero gradient visible immediately (fallback if no hero image).</li>
+    <li>★ Hero image (if added) does not cause LCP &gt; 2.5s.</li>
+    <li>Each .reveal element fires exactly once. Does not re-fire on scroll-back.</li>
+    <li>GSAP pins insert spacers at correct viewport heights without visual jump.</li>
+    <li>#harvest pin holds for 180vh before releasing scroll.</li>
+    <li>#roasting pin holds for 200vh.</li>
+    <li>#brewing background transitions dark→cream smoothly with no snap or jump.</li>
+    <li>#processing pan image moves right-to-left at correct speed (not too fast or janky).</li>
+    <li>#assembly scrub video (if present) advances smoothly — no dropped frames.</li>
+    <li>Product cards stagger in correctly at 75% viewport entry.</li>
+    <li>Steam animation runs continuously in #roasting section.</li>
+    <li>No horizontal scroll at any viewport width ≥ 1024px.</li>
+    <li>No z-index collisions between nav (z:50) and pinned section elements.</li>
+  </ul>
+
+  <h3 class="sub">Mobile Scroll ★</h3>
+  <ul class="checklist">
+    <li>★ All GSAP pins are disabled on mobile. No pin spacers inserted. Page height is normal.</li>
+    <li>All .reveal elements trigger via IntersectionObserver correctly on mobile scroll.</li>
+    <li>Mobile sticky CTA bar appears when hero scrolls out of view.</li>
+    <li>Mobile sticky CTA bar disappears when hero scrolls back into view.</li>
+    <li>WhatsApp CTA link is tappable. 44px minimum touch target confirmed.</li>
+    <li>.cinematic-headline renders at var(--fs-h3) (3rem) on screens ≤768px.</li>
+    <li>.grid-2 collapses to single column at 980px.</li>
+    <li>★ No videos autoplay on mobile (all wrapped in !isMobile guard).</li>
+    <li>No content overflows viewport on iPhone SE (375px width).</li>
+    <li>Steam SVG does not overflow #roasting section bounds on narrow screens.</li>
+  </ul>
+
+  <h3 class="sub">Reduced Motion ★</h3>
+  <ul class="checklist">
+    <li>★ prefers-reduced-motion: reduce disables all GSAP animations at load.</li>
+    <li>★ All .reveal elements are instantly visible (opacity 1, transform none) under reduced motion.</li>
+    <li>Steam CSS keyframes are paused under reduced motion (animation: none !important).</li>
+    <li>Runtime toggle of prefers-reduced-motion kills active ScrollTriggers.</li>
+    <li>No ARIA-labelled animations continue looping under reduced motion.</li>
+  </ul>
+
+  <h3 class="sub">Asset Loading</h3>
+  <ul class="checklist">
+    <li>All images except nav logo have loading="lazy".</li>
+    <li>Nav logo has NO loading="lazy" (must load immediately on page open).</li>
+    <li>Hero image (if present) has fetchpriority="high".</li>
+    <li>All &lt;video&gt; elements have preload="none" and a poster attribute.</li>
+    <li>IntersectionObserver play()/pause() is wired for every .section-video.</li>
+    <li>&lt;picture&gt; elements serve .webp with .jpg fallback where applicable.</li>
+    <li>No image loads above 500KB without being in WebP format.</li>
+  </ul>
+
+  <h3 class="sub">No Broken Paths ★</h3>
+  <ul class="checklist">
+    <li>★ assets/logos/real-emwani-logo.jpg returns HTTP 200 (verify in Network tab).</li>
+    <li>★ assets/logos/real-emwani-cafe-logo.png returns HTTP 200.</li>
+    <li>assets/farmers/farmer-cherries.jpeg returns HTTP 200.</li>
+    <li>assets/origin/coffee-drying.jpeg (or .webp) returns HTTP 200.</li>
+    <li>assets/origin/coffee-basket.jpeg returns HTTP 200.</li>
+    <li>assets/products/studio/chioda-gold-transparent.png returns HTTP 200 (renamed — no double extension).</li>
+    <li>assets/products/studio/ingoma-transparent.png returns HTTP 200 (renamed).</li>
+    <li>assets/products/drip-coffee-transparent.png or drip-coffee-boxes.jpeg returns HTTP 200.</li>
+    <li>assets/extracted/selected/founder-leodger.jpeg returns HTTP 200.</li>
+    <li>★ Zero 404 errors in browser Network tab on full page scroll.</li>
+  </ul>
+
+  <h3 class="sub">Logo Accuracy ★</h3>
+  <ul class="checklist">
+    <li>★ Nav logo is assets/logos/real-emwani-logo.jpg — not SVG, not generated crest.</li>
+    <li>★ Footer logo is assets/logos/real-emwani-logo.jpg.</li>
+    <li>★ Café logo is assets/logos/real-emwani-cafe-logo.png in #cafe section only.</li>
+    <li>★ Café logo does NOT appear in nav, hero, footer, or any other section.</li>
+    <li>★ No #crest SVG symbol from prototype.html appears in website.html.</li>
+    <li>★ No AI-generated SVG crest or coat-of-arms appears anywhere in the page.</li>
+    <li>No CSS filter or hue-rotate applied to any logo image element.</li>
+  </ul>
+
+  <h3 class="sub">Product Paths Fixed ★</h3>
+  <ul class="checklist">
+    <li>★ chioda-gold-transparent.png.png renamed to chioda-gold-transparent.png.</li>
+    <li>★ ingoma-transparent.png.png renamed to ingoma-transparent.png.</li>
+    <li>★ src attributes in website.html updated to match renamed files.</li>
+    <li>.product-image CSS class defined (height: 320px, object-fit: contain).</li>
+    <li>.product-card-visual CSS class defined.</li>
+    <li>Product headline matches actual number of products shown.</li>
+    <li>All products have visible images on load.</li>
+  </ul>
+
+  <h3 class="sub">Video File Size</h3>
+  <ul class="checklist">
+    <li>roasting-smoke-loop.mp4 ≤ 6MB.</li>
+    <li>grinding-particles-loop.mp4 ≤ 5MB.</li>
+    <li>brewing-drip-loop.mp4 ≤ 8MB.</li>
+    <li>product-assembly.mp4 ≤ 15MB.</li>
+    <li>All videos are H.264 baseline profile with faststart moov atom (streams before full download).</li>
+    <li>No video served without a poster attribute (prevents blank frame flash on load).</li>
+  </ul>
+
+  <h3 class="sub">Performance</h3>
+  <ul class="checklist">
+    <li>Lighthouse Performance score ≥ 85 on desktop.</li>
+    <li>Lighthouse Performance score ≥ 70 on mobile (video-heavy — acceptable lower threshold).</li>
+    <li>CLS (Cumulative Layout Shift) &lt; 0.1 — images have explicit width and height attributes.</li>
+    <li>LCP &lt; 2.5s on desktop.</li>
+    <li>Total page weight without videos &lt; 2MB.</li>
+    <li>coffee-drying.jpeg replaced with WebP ≤ 250KB.</li>
+    <li>heritage-line-art.jpeg replaced with WebP ≤ 150KB (used at 10% opacity — high quality is wasted).</li>
+    <li>coffee-basket.jpeg replaced with WebP ≤ 200KB.</li>
+    <li>No render-blocking resources (GSAP and cinematic.js both have defer — confirmed).</li>
+    <li>Google Fonts preconnect tags present in &lt;head&gt; — confirmed in website.html.</li>
+  </ul>
+
+  <h3 class="sub">Footer Disclaimer ★</h3>
+  <ul class="checklist">
+    <li>★ Footer contains exactly: "Unofficial demo concept prepared by Nextec Corp for presentation purposes. Final public deployment requires client approval of all trademarks, copy, and imagery."</li>
+    <li>★ Disclaimer is visible — not hidden by CSS, not at zero opacity.</li>
+    <li>"© 2026 Emwani Coffee Ltd. All rights reserved." present immediately before or after disclaimer.</li>
+    <li>Disclaimer is in the &lt;footer&gt; element, not inside a &lt;section&gt;.</li>
+    <li>★ Disclaimer survives any minification step — not inside a conditional comment.</li>
+  </ul>
+
+  <h3 class="sub">Field Presentation Readiness ★</h3>
+  <ul class="checklist">
+    <li>★ Website opens in full-screen browser without visible scrollbars or overflow.</li>
+    <li>Nav is fixed and readable against all section backgrounds at every scroll position.</li>
+    <li>Zero console errors on load — check DevTools console before presenting.</li>
+    <li>GSAP CDN reachable from presentation venue network OR fallback guard fires gracefully.</li>
+    <li>All Google Fonts load (test with DevTools throttled to Fast 3G minimum).</li>
+    <li>Page scrolls at 60fps on current MacBook or Windows laptop — no jank.</li>
+    <li>Mobile sticky CTA is hidden on desktop until hero scrolls out.</li>
+    <li>Product cards legible on conference room projector (text ≥ 14px, contrast ≥ 4.5:1).</li>
+    <li>★ No placeholder text visible in any section during presentation ("Masaki Interior View", "TODO ASSET", etc.).</li>
+    <li>Founder quote attribution spells correctly: "Leodger L. Kachebonaho · CEO &amp; Founder".</li>
+    <li>★ WhatsApp link +255 774 411 090 is live and tested before presentation.</li>
+    <li>Page title reads: "Emwani Coffee — Cinematic Brand System" — confirmed in &lt;title&gt; tag.</li>
+    <li>★ Footer disclaimer visible and correct at bottom of page.</li>
+  </ul>
+</div>
+
+<!-- ======================================================
+     BACK COVER
+     ====================================================== -->
+<div class="cover page-break" style="min-height:50vh;padding:60px 40px;">
+  <div style="max-width:600px;text-align:center;">
+    <div class="cover-logo" style="margin-bottom:32px;">Emwani Coffee Ltd</div>
+    <div class="cover-rule"></div>
+    <p style="color:rgba(246,239,221,0.5);font-size:13px;line-height:1.9;font-style:italic;margin-bottom:32px;">
+      "Coffee, for our people, has always been a ritual of welcome.<br>
+      We are simply returning that ritual — and the word <span style="color:var(--gold-light)">Emwani</span> —<br>
+      to the world's table."
+    </p>
+    <p style="color:rgba(246,239,221,0.3);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;font-family:'Helvetica Neue',Arial,sans-serif;">Leodger L. Kachebonaho · CEO &amp; Founder</p>
+    <div class="cover-rule"></div>
+    <p style="color:rgba(246,239,221,0.25);font-size:11px;line-height:1.7;font-family:'Helvetica Neue',Arial,sans-serif;margin-top:32px;">
+      Unofficial demo concept prepared by Nextec Corp for presentation purposes.<br>
+      Final public deployment requires client approval of copy, images, trademarks, and product information.<br><br>
+      Blueprint v1.0 · 2026-05-12 · nextecorptz@gmail.com
+    </p>
+  </div>
+</div>
+
+</body>
+</html>

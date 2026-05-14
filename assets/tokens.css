@@ -1,0 +1,171 @@
+/* ============================================================
+   EMWANI COFFEE — CINEMATIC BRAND SYSTEM
+   Design Tokens
+   ------------------------------------------------------------
+   Source: emwani_profile_v2 (4 PDF parts) + design notes.
+   Author note: hex values are derived to evoke the heritage
+   palette described in the profile (Emwani green, heritage red,
+   coffee cream/gold, coffee brown, charcoal, warm off-white).
+   Treat as the canonical token sheet — do not redefine inline.
+   ============================================================ */
+
+:root {
+  /* ---------- COLOR — heritage core ---------- */
+  --emwani-green-900: #0C2A1C;   /* deep forest, primary dark BG */
+  --emwani-green-800: #103821;
+  --emwani-green-700: #1A4A30;   /* heritage green, mid surfaces */
+  --emwani-green-500: #2F6B4A;   /* fresh leaf, accent */
+  --emwani-green-300: #6FA084;   /* misted leaf, dividers */
+
+  --heritage-red-900: #5E150E;
+  --heritage-red-700: #8A211A;
+  --heritage-red-500: #A52A1E;   /* ribbon / wave / signature red */
+  --heritage-red-300: #D26C5F;
+
+  --gold-900: #6E5320;
+  --gold-700: #9C7A36;
+  --gold-500: #C9A86A;           /* coffee cream / muted gold */
+  --gold-300: #E6D2A8;           /* warm cream highlight */
+
+  --coffee-900: #2A1A10;
+  --coffee-700: #4A2D1B;
+  --coffee-500: #5A3621;          /* coffee brown */
+  --coffee-300: #8A5E3F;
+
+  --char-1000: #0A0807;            /* near-black, cinematic BG */
+  --char-900:  #14110E;            /* charcoal, deep surface */
+  --char-700:  #2A2521;
+
+  --bone-100: #F6EFDD;            /* warm off-white, primary cream */
+  --bone-200: #EFE5CB;            /* cream surface */
+  --bone-300: #E4D6B2;            /* cream border */
+  --bone-50:  #FBF7EC;
+
+  /* ---------- SEMANTIC — usage roles ---------- */
+  --bg-primary-dark:    var(--char-1000);   /* cinematic film bed */
+  --bg-primary-cream:   var(--bone-100);    /* editorial layouts */
+  --bg-primary-green:   var(--emwani-green-900);
+  --surface-dark:       var(--char-900);
+  --surface-cream:      var(--bone-200);
+  --surface-green:      var(--emwani-green-700);
+
+  --ink-on-dark:        var(--bone-100);
+  --ink-on-dark-muted:  rgba(246, 239, 221, 0.62);
+  --ink-on-cream:       var(--char-900);
+  --ink-on-cream-muted: rgba(20, 17, 14, 0.62);
+
+  --headline-cream:     var(--bone-50);
+  --headline-ink:       var(--char-1000);
+
+  --cta-primary:        var(--heritage-red-500);
+  --cta-primary-hover:  var(--heritage-red-700);
+  --cta-secondary:      var(--gold-500);
+  --cta-secondary-ink:  var(--char-1000);
+  --cta-ghost-border:   rgba(246, 239, 221, 0.32);
+
+  --accent-gold:        var(--gold-500);
+  --accent-leaf:        var(--emwani-green-500);
+  --accent-red:         var(--heritage-red-500);
+
+  --border-dark:        rgba(246, 239, 221, 0.14);
+  --border-cream:       rgba(20, 17, 14, 0.10);
+  --border-gold:        rgba(201, 168, 106, 0.45);
+
+  /* ---------- TYPOGRAPHY ---------- */
+  --font-editorial: "Cormorant Garamond", "EB Garamond", Georgia, serif;
+  --font-display:   "Syne", "Cormorant Garamond", serif;
+  --font-body:      "Manrope", "Helvetica Neue", system-ui, sans-serif;
+  --font-mono:      "JetBrains Mono", ui-monospace, monospace;
+
+  /* Type scale — cinematic 1.333 (perfect fourth), augmented at top */
+  --fs-overline: 0.75rem;     /* 12px label/eyebrow */
+  --fs-body-s:   0.875rem;    /* 14px caption */
+  --fs-body:     1.0625rem;   /* 17px paragraph (mobile-readable) */
+  --fs-body-l:   1.25rem;     /* 20px lede */
+  --fs-h6:       1.375rem;
+  --fs-h5:       1.75rem;
+  --fs-h4:       2.25rem;
+  --fs-h3:       3rem;
+  --fs-h2:       4.25rem;
+  --fs-h1:       5.75rem;
+  --fs-cinematic: clamp(3.5rem, 9vw, 8.5rem);  /* hero scale */
+
+  --lh-tight: 0.98;
+  --lh-snug:  1.12;
+  --lh-body:  1.55;
+  --lh-loose: 1.7;
+
+  --ls-display: -0.02em;
+  --ls-editorial: -0.005em;
+  --ls-overline: 0.18em;
+
+  /* ---------- SPACING & RHYTHM ---------- */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-7:  48px;
+  --space-8:  64px;
+  --space-9:  96px;
+  --space-10: 144px;
+  --space-11: 192px;
+
+  --section-y:        clamp(64px, 12vw, 160px);
+  --container:        min(1320px, 92vw);
+  --container-narrow: min(880px, 88vw);
+  --container-prose:  min(640px, 86vw);
+
+  /* ---------- RADIUS — restrained, premium ---------- */
+  --r-xs: 2px;
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 18px;
+  --r-xl: 28px;
+  --r-pill: 999px;
+
+  /* ---------- SHADOW — soft, never gimmicky ---------- */
+  --shadow-soft:    0 2px 4px rgba(10,8,7,0.04), 0 12px 28px rgba(10,8,7,0.08);
+  --shadow-card:    0 1px 2px rgba(10,8,7,0.06), 0 22px 48px -16px rgba(10,8,7,0.28);
+  --shadow-cinema:  0 40px 120px -40px rgba(10,8,7,0.7), 0 8px 22px -10px rgba(10,8,7,0.4);
+  --shadow-inset-dark: inset 0 1px 0 rgba(246,239,221,0.04), inset 0 0 0 1px rgba(246,239,221,0.06);
+
+  /* ---------- MOTION — slow, cinematic ---------- */
+  --ease-cinema:  cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-steam:   cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-grind:   cubic-bezier(0.65, 0, 0.35, 1);
+  --t-fast:   220ms;
+  --t-mid:    480ms;
+  --t-slow:   900ms;
+  --t-reveal: 1400ms;
+}
+
+/* ===== Type defaults bound to tokens ===== */
+.t-overline {
+  font-family: var(--font-body);
+  font-size: var(--fs-overline);
+  letter-spacing: var(--ls-overline);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.t-cinematic {
+  font-family: var(--font-editorial);
+  font-weight: 400;
+  font-size: var(--fs-cinematic);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-editorial);
+}
+.t-cinematic em {
+  font-style: italic;
+  font-family: var(--font-editorial);
+}
+.t-h1 { font-family: var(--font-editorial); font-weight: 400; font-size: var(--fs-h1); line-height: var(--lh-tight); letter-spacing: var(--ls-editorial); }
+.t-h2 { font-family: var(--font-editorial); font-weight: 400; font-size: var(--fs-h2); line-height: var(--lh-tight); letter-spacing: var(--ls-editorial); }
+.t-h3 { font-family: var(--font-editorial); font-weight: 500; font-size: var(--fs-h3); line-height: var(--lh-snug); }
+.t-h4 { font-family: var(--font-body); font-weight: 600; font-size: var(--fs-h4); line-height: var(--lh-snug); letter-spacing: -0.01em; }
+.t-h5 { font-family: var(--font-body); font-weight: 600; font-size: var(--fs-h5); line-height: var(--lh-snug); }
+.t-display { font-family: var(--font-display); font-weight: 700; letter-spacing: var(--ls-display); text-transform: uppercase; }
+.t-body  { font-family: var(--font-body); font-size: var(--fs-body); line-height: var(--lh-body); font-weight: 400; }
+.t-body-l { font-family: var(--font-body); font-size: var(--fs-body-l); line-height: var(--lh-loose); font-weight: 300; }
+.t-caption { font-family: var(--font-body); font-size: var(--fs-body-s); line-height: var(--lh-body); }

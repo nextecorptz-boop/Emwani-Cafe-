@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Emwani Coffee — Cinematic Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Manrope:wght@300;400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/tokens.css">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--font-body);background:var(--char-1000);color:var(--bone-100);-webkit-font-smoothing:antialiased}
+  img,svg{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+  em{font-style:italic}
+
+  .nav{position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:50;background:rgba(20,17,14,0.7);backdrop-filter:blur(14px);border:1px solid var(--border-dark);border-radius:var(--r-pill);padding:8px 8px 8px 22px;display:flex;align-items:center;gap:var(--space-3);font-size:.8rem;color:var(--bone-100)}
+  .nav .brand{display:inline-flex;align-items:center;background:var(--bone-100);padding:4px 10px;border-radius:6px}
+  .nav .brand svg{width:24px;height:auto;display:block}
+  .nav a{padding:8px 12px;border-radius:var(--r-pill);color:rgba(246,239,221,.7);font-size:.78rem}
+  .nav a:hover{color:var(--bone-50)}
+  .nav .cta{background:var(--heritage-red-500);color:var(--bone-50);padding:8px 18px;font-family:var(--font-body);font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:.72rem}
+  @media (max-width:760px){.nav a:not(.cta){display:none}}
+
+  .container{width:min(1280px,92vw);margin-inline:auto}
+
+  /* ========== HERO ========== */
+  .hero{min-height:100vh;position:relative;overflow:hidden;background:radial-gradient(ellipse at 30% 110%,var(--emwani-green-800) 0%,var(--char-1000) 70%);display:grid;grid-template-rows:1fr auto;padding-top:140px}
+  .hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(246,239,221,.04) 1px,transparent 1px);background-size:3px 3px;pointer-events:none;opacity:.6}
+  .hero .mushonge-bg{position:absolute;inset:0;opacity:.07;color:var(--gold-500);pointer-events:none}
+  .hero-inner{position:relative;display:grid;grid-template-columns:1.2fr .8fr;gap:var(--space-9);align-items:center;padding:0 0 var(--space-9)}
+  @media(max-width:980px){.hero-inner{grid-template-columns:1fr}}
+  .eyebrow{display:inline-flex;align-items:center;gap:var(--space-3);font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;font-weight:600;color:var(--gold-500)}
+  .eyebrow::before{content:"";width:32px;height:1px;background:currentColor;opacity:.6}
+  .hero h1{font-family:var(--font-editorial);font-weight:300;font-size:clamp(3.2rem,8vw,7.5rem);line-height:.96;letter-spacing:-.01em;margin-top:var(--space-5);text-wrap:balance}
+  .hero h1 em{font-style:italic;color:var(--gold-300)}
+  .hero .lede{margin-top:var(--space-6);font-size:1.15rem;line-height:1.7;color:rgba(246,239,221,.74);max-width:48ch;font-weight:300}
+  .hero .ctas{display:flex;gap:var(--space-3);margin-top:var(--space-7);flex-wrap:wrap}
+  .btn{font-family:var(--font-body);font-weight:600;font-size:.875rem;letter-spacing:.06em;text-transform:uppercase;padding:16px 30px;border-radius:var(--r-pill);border:1px solid transparent;display:inline-flex;align-items:center;gap:10px;cursor:pointer;transition:transform .22s var(--ease-cinema),background .22s var(--ease-cinema)}
+  .btn-primary{background:var(--heritage-red-500);color:var(--bone-50)}
+  .btn-primary:hover{background:var(--heritage-red-700);transform:translateY(-1px)}
+  .btn-ghost{background:transparent;color:var(--bone-100);border-color:rgba(246,239,221,.32)}
+  .btn-ghost:hover{background:rgba(246,239,221,.06)}
+  .hero-art{position:relative;display:grid;place-items:center;min-height:520px}
+  .hero-art .crest{width:min(420px,80%);color:var(--gold-500);filter:drop-shadow(0 30px 80px rgba(201,168,106,.18))}
+  .hero-art .ring{position:absolute;inset:0;border:1px solid var(--border-dark);border-radius:50%;animation:slowSpin 60s linear infinite}
+  .hero-art .ring.b{transform:scale(.78);animation-duration:80s;animation-direction:reverse}
+  .hero-art .ring.c{transform:scale(1.08);border-color:rgba(201,168,106,.18)}
+  @keyframes slowSpin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+  .hero-meta{position:relative;display:flex;justify-content:space-between;padding:var(--space-5) 0;border-top:1px solid var(--border-dark);font-size:.75rem;color:rgba(246,239,221,.5);letter-spacing:.12em;text-transform:uppercase}
+  @media(max-width:760px){.hero-meta{flex-direction:column;gap:8px}}
+
+  /* ========== ORIGIN CHAPTER ========== */
+  .origin{padding:var(--section-y) 0;background:var(--coffee-900);color:var(--bone-100);position:relative;overflow:hidden}
+  .origin::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(246,239,221,.03) 1px,transparent 1px);background-size:6px 6px;pointer-events:none}
+  .origin .num-strip{font-family:var(--font-display);font-size:.75rem;letter-spacing:.3em;color:var(--gold-500)}
+  .origin h2{font-family:var(--font-editorial);font-weight:300;font-size:clamp(2.5rem,5.5vw,4.4rem);line-height:1.02;letter-spacing:-.01em;margin-top:var(--space-5);max-width:18ch;text-wrap:balance}
+  .origin h2 em{font-style:italic;color:var(--gold-300)}
+  .chapters{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-7);margin-top:var(--space-9);position:relative}
+  @media(max-width:900px){.chapters{grid-template-columns:1fr}}
+  .chapter{position:relative;padding-top:var(--space-6);border-top:1px solid var(--border-dark)}
+  .chapter .step{font-family:var(--font-editorial);font-size:3rem;color:var(--heritage-red-300);line-height:1;font-weight:300}
+  .chapter .where{font-family:var(--font-display);font-size:.7rem;letter-spacing:.22em;color:var(--gold-500);margin-top:var(--space-5);text-transform:uppercase}
+  .chapter h3{font-family:var(--font-editorial);font-weight:500;font-size:1.75rem;margin-top:var(--space-3);line-height:1.15}
+  .chapter p{font-size:.95rem;line-height:1.7;color:rgba(246,239,221,.7);margin-top:var(--space-4);max-width:38ch}
+
+  /* ========== PRODUCT SHOWCASE ========== */
+  .catalog{padding:var(--section-y) 0;background:var(--bone-100);color:var(--char-1000)}
+  .catalog .head{display:flex;justify-content:space-between;align-items:end;gap:var(--space-7);margin-bottom:var(--space-9);flex-wrap:wrap}
+  .catalog .head h2{font-family:var(--font-editorial);font-weight:400;font-size:clamp(2.4rem,5vw,3.6rem);line-height:1.02;max-width:20ch}
+  .catalog .head h2 em{color:var(--heritage-red-500)}
+  .catalog .head .eyebrow{color:var(--heritage-red-500)}
+  .pack-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-5)}
+  @media(max-width:1100px){.pack-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.pack-grid{grid-template-columns:1fr}}
+  .pack{border-radius:var(--r-lg);padding:var(--space-6) var(--space-5) var(--space-6);min-height:480px;display:flex;flex-direction:column;justify-content:space-between;color:var(--bone-50);position:relative;overflow:hidden;transition:transform .6s var(--ease-cinema)}
+  .pack:hover{transform:translateY(-6px)}
+  .pack.gold{background:linear-gradient(180deg,var(--gold-700) 0%,var(--coffee-900) 100%)}
+  .pack.red{background:linear-gradient(180deg,var(--heritage-red-700) 0%,var(--coffee-900) 100%)}
+  .pack.ink{background:linear-gradient(180deg,var(--char-900) 0%,var(--coffee-900) 100%)}
+  .pack.cream{background:linear-gradient(180deg,var(--bone-200) 0%,var(--bone-300) 100%);color:var(--char-1000)}
+  .pack .head-row{display:flex;justify-content:space-between;align-items:start;font-family:var(--font-body);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;opacity:.7}
+  .pack .crest-sm{width:26px;height:auto;color:currentColor;opacity:.85}
+  .pack .art{display:grid;place-items:center;padding:var(--space-5) 0;flex:1}
+  .pack .art svg{width:80%;filter:drop-shadow(0 20px 40px rgba(0,0,0,.45));transition:transform .6s var(--ease-cinema)}
+  .pack:hover .art svg{transform:rotateY(8deg)}
+  .pack .meta-row{display:flex;justify-content:space-between;align-items:end;gap:8px}
+  .pack .name{font-family:var(--font-display);font-weight:800;text-transform:uppercase;letter-spacing:.04em;font-size:1.35rem;line-height:1}
+  .pack .sub{font-family:var(--font-editorial);font-style:italic;font-size:.95rem;opacity:.75;margin-top:6px}
+  .pack .sizes{display:flex;gap:6px;margin-top:var(--space-4)}
+  .pack .size{font-family:var(--font-display);font-weight:700;font-size:.65rem;letter-spacing:.1em;padding:5px 10px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18)}
+  .pack.cream .size{background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.15)}
+
+  /* ========== QUOTE / FOUNDER ========== */
+  .founder{padding:var(--section-y) 0;background:var(--emwani-green-900);color:var(--bone-100);position:relative;overflow:hidden}
+  .founder::before{content:"";position:absolute;inset:0;color:var(--gold-500);opacity:.06;background-image:radial-gradient(circle at 1px 1px,currentColor 1px,transparent 1px);background-size:36px 36px}
+  .founder-inner{position:relative;display:grid;grid-template-columns:1fr 1.2fr;gap:var(--space-9);align-items:center}
+  @media(max-width:980px){.founder-inner{grid-template-columns:1fr}}
+  .portrait{aspect-ratio:4/5;background:linear-gradient(180deg,var(--coffee-700) 0%,var(--coffee-900) 100%);border-radius:var(--r-lg);position:relative;overflow:hidden;display:grid;place-items:center}
+  .portrait::after{content:"PLACEHOLDER · FOUNDER PORTRAIT";position:absolute;bottom:18px;left:18px;font-family:var(--font-display);font-size:.6rem;letter-spacing:.2em;color:rgba(246,239,221,.5);background:rgba(0,0,0,.4);padding:6px 10px;border-radius:999px}
+  .portrait svg{width:50%;color:rgba(246,239,221,.18)}
+  .quote-text{font-family:var(--font-editorial);font-weight:300;font-size:clamp(2rem,4vw,3rem);line-height:1.18;font-style:italic;border-left:3px solid var(--heritage-red-500);padding-left:var(--space-6);text-wrap:balance}
+  .quote-text em{color:var(--gold-300);font-style:italic}
+  .quote-attrib{margin-top:var(--space-6);padding-left:var(--space-6);font-family:var(--font-display);font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-500)}
+
+  /* ========== FARMER IMPACT ========== */
+  .impact{padding:var(--section-y) 0;background:var(--bone-100);color:var(--char-1000)}
+  .impact .head h2{font-family:var(--font-editorial);font-weight:400;font-size:clamp(2.4rem,5vw,3.6rem);line-height:1.02;max-width:18ch;margin-top:var(--space-4)}
+  .impact .head .eyebrow{color:var(--heritage-red-500)}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-5);margin-top:var(--space-9);border-top:1px solid var(--border-cream);border-bottom:1px solid var(--border-cream)}
+  @media(max-width:900px){.stats{grid-template-columns:repeat(2,1fr)}}
+  .stat{padding:var(--space-7) var(--space-5);border-right:1px solid var(--border-cream)}
+  .stat:last-child{border-right:0}
+  @media(max-width:900px){.stat{border-right:0;border-bottom:1px solid var(--border-cream)}}
+  .stat .n{font-family:var(--font-editorial);font-weight:300;font-size:clamp(3rem,5vw,4.5rem);line-height:1;color:var(--heritage-red-500)}
+  .stat .l{font-family:var(--font-display);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(20,17,14,.6);margin-top:var(--space-3)}
+  .stat .d{font-size:.9rem;color:rgba(20,17,14,.65);margin-top:var(--space-3);line-height:1.6}
+
+  /* ========== CAFE ========== */
+  .cafe{padding:var(--section-y) 0;background:var(--char-1000);position:relative;overflow:hidden}
+  .cafe::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 80% 0%,rgba(165,42,30,.18),transparent 60%)}
+  .cafe-inner{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:var(--space-9);align-items:center}
+  @media(max-width:980px){.cafe-inner{grid-template-columns:1fr}}
+  .cafe h2{font-family:var(--font-editorial);font-weight:300;font-size:clamp(2.4rem,5vw,3.8rem);line-height:1.02;margin-top:var(--space-5);max-width:16ch;text-wrap:balance}
+  .cafe h2 em{color:var(--heritage-red-300);font-style:italic}
+  .cafe p{font-size:1.05rem;line-height:1.7;color:rgba(246,239,221,.72);margin-top:var(--space-5);max-width:40ch}
+  .cafe .ctas{display:flex;gap:var(--space-3);margin-top:var(--space-7)}
+  .cafe-visual{aspect-ratio:4/5;border-radius:var(--r-lg);background:linear-gradient(180deg,var(--coffee-700) 0%,var(--char-900) 100%);position:relative;overflow:hidden;display:grid;place-items:center;border:1px solid var(--border-dark)}
+  .cafe-visual::before{content:"";position:absolute;inset:0;color:var(--gold-500);opacity:.16;background-image:repeating-linear-gradient(45deg,transparent 0 20px,currentColor 20px 21px)}
+  .cafe-visual::after{content:"PLACEHOLDER · CAFÉ INTERIOR";position:absolute;bottom:18px;left:18px;font-family:var(--font-display);font-size:.6rem;letter-spacing:.2em;color:rgba(246,239,221,.5);background:rgba(0,0,0,.5);padding:6px 10px;border-radius:999px}
+  .steam-mark{position:relative;width:140px;height:180px}
+  .steam-mark .cup{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:120px;height:80px;background:var(--coffee-700);border-radius:0 0 60px 60px / 0 0 32px 32px;border:2px solid var(--gold-500)}
+  @keyframes steamRise{0%{transform:translateX(-50%) translateY(20px);opacity:0}20%{opacity:1}100%{transform:translateX(-50%) translateY(-30px);opacity:0}}
+  .steam-mark svg{position:absolute;left:50%;bottom:80px;transform:translateX(-50%);width:72px;color:var(--bone-100);animation:steamRise 3.4s var(--ease-steam) infinite}
+
+  /* ========== CONTACT / FOOTER ========== */
+  .closer{padding:var(--space-9) 0 var(--space-5);background:var(--char-1000);color:var(--bone-100);border-top:1px solid var(--border-dark)}
+  .closer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:var(--space-7)}
+  @media(max-width:900px){.closer-grid{grid-template-columns:1fr}}
+  .closer .crest-mark{width:72px;color:var(--gold-500);margin-bottom:var(--space-5)}
+  .closer .mark{font-family:var(--font-display);font-weight:800;letter-spacing:.22em;font-size:.95rem}
+  .closer .tagline{font-family:var(--font-editorial);font-style:italic;font-size:1.1rem;margin-top:var(--space-3);color:var(--gold-300);max-width:30ch}
+  .closer h5{font-family:var(--font-display);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-500);margin-bottom:var(--space-4)}
+  .closer ul{list-style:none}
+  .closer li{padding:6px 0;color:rgba(246,239,221,.62);font-size:.9rem;line-height:1.5}
+  .legal{margin-top:var(--space-7);padding:var(--space-5) 0;border-top:1px solid var(--border-dark);display:flex;justify-content:space-between;font-size:.75rem;color:rgba(246,239,221,.4);flex-wrap:wrap;gap:12px}
+
+  /* mobile sticky */
+  .sticky-cta{display:none;position:fixed;bottom:14px;left:14px;right:14px;background:var(--heritage-red-500);color:var(--bone-50);padding:16px;border-radius:var(--r-pill);text-align:center;font-family:var(--font-body);font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:.78rem;z-index:40;box-shadow:0 14px 32px rgba(0,0,0,.4)}
+  @media(max-width:760px){.sticky-cta{display:block}}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity 1.2s var(--ease-cinema),transform 1.2s var(--ease-cinema)}
+  .reveal.in{opacity:1;transform:none}
+
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ SVG DEFS ============ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="crest" viewBox="0 0 280 320">
+      <circle cx="140" cy="160" r="138" fill="none" stroke="currentColor" stroke-width="1.4" opacity=".35"/>
+      <circle cx="140" cy="160" r="128" fill="none" stroke="currentColor" stroke-width=".7" opacity=".55"/>
+      <g transform="translate(140 32)">
+        <path d="M-60 26 L-44 -4 L-28 26 Z" fill="currentColor"/>
+        <path d="M-22 26 L-6 -14 L 10 26 Z" fill="currentColor"/>
+        <path d="M 16 26 L 32  -4 L 48 26 Z" fill="currentColor"/>
+        <path d="M-66 28 L 66 28" stroke="currentColor" stroke-width="2.4"/>
+        <circle cx="-6" cy="-22" r="3" fill="currentColor"/>
+      </g>
+      <g transform="translate(140 170)">
+        <g transform="translate(-78 -20) rotate(-32)"><path d="M0 0 C -10 22 -10 56 0 80 C 10 56 10 22 0 0 Z" fill="currentColor"/><path d="M0 4 L0 76" stroke="rgba(0,0,0,.35)" stroke-width=".8"/></g>
+        <g transform="translate(78 -20) rotate(32)"><path d="M0 0 C -10 22 -10 56 0 80 C 10 56 10 22 0 0 Z" fill="currentColor"/><path d="M0 4 L0 76" stroke="rgba(0,0,0,.35)" stroke-width=".8"/></g>
+      </g>
+      <g transform="translate(140 110)" stroke="currentColor" stroke-width="6" stroke-linecap="square" fill="none">
+        <path d="M-22 -22 L-22 28"/><path d="M-22 -22 L 18 -22"/><path d="M-22 3   L 12 3"/><path d="M-22 28  L 18 28"/>
+      </g>
+      <g transform="translate(140 170)">
+        <ellipse cx="0" cy="36" rx="16" ry="26" fill="currentColor"/>
+        <path d="M0 14 C -5 30 -5 50 0 60" stroke="rgba(0,0,0,.4)" stroke-width="2" fill="none"/>
+      </g>
+      <g transform="translate(140 240)" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
+        <path d="M-78 36 Q 0 -50  78 36"/><path d="M-62 36 Q 0 -28  62 36"/><path d="M-46 36 Q 0  -6  46 36"/><path d="M-82 38 L 82 38"/>
+      </g>
+      <g transform="translate(140 296)" fill="currentColor"><path d="M-40 0 L 40 0 L 32 12 L -32 12 Z"/></g>
+    </symbol>
+    <symbol id="pack-pouch" viewBox="0 0 200 280">
+      <path d="M30 26 Q30 18 38 18 L162 18 Q170 18 170 26 L172 248 Q172 264 158 264 L42 264 Q28 264 28 248 Z" fill="currentColor"/>
+      <path d="M28 24 L172 24 L168 38 L32 38 Z" fill="rgba(0,0,0,.18)"/>
+      <ellipse cx="100" cy="266" rx="68" ry="6" fill="rgba(0,0,0,.25)"/>
+    </symbol>
+    <symbol id="pack-drip" viewBox="0 0 220 280">
+      <path d="M40 30 L180 30 L180 230 Q180 250 160 254 L60 254 Q40 250 40 230 Z" fill="currentColor"/>
+      <path d="M40 30 L180 30 L175 44 L45 44 Z" fill="rgba(0,0,0,.18)"/>
+    </symbol>
+    <symbol id="steam" viewBox="0 0 100 160">
+      <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".85">
+        <path d="M30 150 C 22 120 50 100 42 70 C 36 48 56 36 50 12"/>
+        <path d="M58 150 C 66 122 42 102 52 76 C 60 56 44 40 56 18"/>
+        <path d="M44 150 C 48 130 40 116 46 96"/>
+      </g>
+    </symbol>
+    <pattern id="mush" x="0" y="0" width="180" height="160" patternUnits="userSpaceOnUse">
+      <g fill="none" stroke="currentColor" stroke-width=".9" stroke-linecap="round">
+        <path d="M30 130 Q90 10 150 130"/><path d="M40 130 Q90 30 140 130"/><path d="M52 130 Q90 50 128 130"/>
+        <path d="M64 130 Q90 70 116 130"/><path d="M76 130 Q90 90 104 130"/><line x1="20" y1="132" x2="160" y2="132"/>
+      </g>
+    </pattern>
+  </defs>
+</svg>
+
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <span class="brand" aria-label="Emwani"><svg viewBox="0 0 240 360"><use href="#logo-primary"/></svg></span>
+  <a href="#origin">Origin</a>
+  <a href="#catalog">Coffee</a>
+  <a href="#founder">Story</a>
+  <a href="#cafe">Café</a>
+  <a href="#contact" class="cta">Order Beans</a>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <svg class="mushonge-bg" width="100%" height="100%"><rect width="100%" height="100%" fill="url(#mush)"/></svg>
+  <div class="container hero-inner">
+    <div class="reveal">
+      <span class="eyebrow">— Vol. 01 · Bean-to-cup, since Karagwe</span>
+      <h1>The seed remembers<br>every <em>hand</em><br>it has known.</h1>
+      <p class="lede">Emwani means coffee in the Haya language. From the highlands of Mbinga, Mbozi, and Karagwe — a Tanzanian house, returning African coffee to its rightful place at the world's table.</p>
+      <div class="ctas">
+        <button class="btn btn-primary">Order Beans →</button>
+        <button class="btn btn-ghost">Watch the harvest</button>
+      </div>
+    </div>
+    <div class="hero-art reveal">
+      <div class="ring c"></div>
+      <div class="ring"></div>
+      <div class="ring b"></div>
+      <div style="background:var(--bone-100);padding:18px 24px;border-radius:10px;box-shadow:0 30px 80px rgba(0,0,0,0.4);"><svg viewBox="0 0 240 360" style="width:170px;display:block;"><use href="#logo-primary"/></svg></div>
+    </div>
+  </div>
+  <div class="container hero-meta">
+    <span>VOL. 01 · CINEMATIC</span>
+    <span>MBINGA · MBOZI · KARAGWE</span>
+    <span>DAR ES SALAAM · 22ND FLOOR, PSPF</span>
+  </div>
+</section>
+
+<!-- ============ ORIGIN CHAPTER ============ -->
+<section class="origin" id="origin">
+  <div class="container">
+    <div class="reveal">
+      <span class="eyebrow">— Chapter 01 · Origin</span>
+      <h2>From the slopes of <em>Mbinga</em>,<br>to the cup in your hand.</h2>
+    </div>
+    <div class="chapters">
+      <div class="chapter reveal">
+        <div class="step">01</div>
+        <div class="where">Mbinga · Cherry</div>
+        <h3>Hand-picked at peak</h3>
+        <p>Smallholder cooperatives harvest only the ripest cherries. Each lot is named, dated, and traced back to the farm.</p>
+      </div>
+      <div class="chapter reveal">
+        <div class="step">02</div>
+        <div class="where">Karagwe · Mill</div>
+        <h3>Wet-processed &amp; sun-dried</h3>
+        <p>The Kachebonaho-built mills strip, wash, and slow-dry each parchment on raised beds — the way the elders kept it.</p>
+      </div>
+      <div class="chapter reveal">
+        <div class="step">03</div>
+        <div class="where">Dar es Salaam · Roast</div>
+        <h3>Slow, ceremony-led roast</h3>
+        <p>Small batches. Profiles named for the ceremonies they honour — Chioda for harvest, Ingoma for the warrior.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CATALOG ============ -->
+<section class="catalog" id="catalog">
+  <div class="container">
+    <div class="head reveal">
+      <div>
+        <span class="eyebrow">— The Emwani catalog</span>
+        <h2>Four products.<br>One <em>vocabulary</em>.</h2>
+      </div>
+      <p style="max-width:36ch;font-size:.95rem;line-height:1.7;color:rgba(20,17,14,.65)">Highland Arabica from named regions. Roasted in small batches in Dar es Salaam. Packed in biodegradable pouches by hand.</p>
+    </div>
+
+    <div class="pack-grid">
+      <article class="pack gold reveal">
+        <div class="head-row"><span>Mbinga · Arabica</span><svg class="crest-sm" viewBox="0 0 240 280"><use href="#crest"/></svg></div>
+        <div class="art"><svg viewBox="0 0 200 280" style="color:var(--gold-300)"><use href="#pack-pouch"/></svg></div>
+        <div>
+          <div class="meta-row"><div class="name">Chioda Gold</div></div>
+          <div class="sub">The harvest dance, in a cup.</div>
+          <div class="sizes"><span class="size">1 KG</span><span class="size">500 G</span><span class="size">250 G</span></div>
+        </div>
+      </article>
+      <article class="pack red reveal">
+        <div class="head-row"><span>Mbozi · Arabica</span><svg class="crest-sm" viewBox="0 0 240 280"><use href="#crest"/></svg></div>
+        <div class="art"><svg viewBox="0 0 200 280" style="color:var(--heritage-red-900)"><use href="#pack-pouch"/></svg></div>
+        <div>
+          <div class="meta-row"><div class="name">Ingoma</div></div>
+          <div class="sub">The Warrior — bold, deep, grounded.</div>
+          <div class="sizes"><span class="size">1 KG</span><span class="size">500 G</span><span class="size">250 G</span></div>
+        </div>
+      </article>
+      <article class="pack ink reveal">
+        <div class="head-row"><span>Variety 01</span><svg class="crest-sm" viewBox="0 0 240 280"><use href="#crest"/></svg></div>
+        <div class="art"><svg viewBox="0 0 200 280" style="color:var(--char-700)"><use href="#pack-pouch"/></svg></div>
+        <div>
+          <div class="meta-row"><div class="name">Dark Roast</div></div>
+          <div class="sub">Heavy body. Dark cocoa. Smoky finish.</div>
+          <div class="sizes"><span class="size">1 KG</span><span class="size">500 G</span><span class="size">250 G</span></div>
+        </div>
+      </article>
+      <article class="pack cream reveal">
+        <div class="head-row"><span>Variety 02</span><svg class="crest-sm" viewBox="0 0 240 280"><use href="#crest"/></svg></div>
+        <div class="art"><svg viewBox="0 0 220 280" style="color:var(--bone-100)"><use href="#pack-drip"/></svg></div>
+        <div>
+          <div class="meta-row"><div class="name">Drip Coffee</div></div>
+          <div class="sub">Pre-portioned, ready in two minutes.</div>
+          <div class="sizes"><span class="size">10 PACK</span><span class="size">5 PACK</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOUNDER ============ -->
+<section class="founder" id="founder">
+  <div class="container founder-inner">
+    <div class="portrait reveal" style="background:var(--bone-100);">
+      <svg viewBox="0 0 240 360" style="width:60%;"><use href="#logo-primary"/></svg>
+    </div>
+    <div class="reveal">
+      <span class="eyebrow">— Founder · Leodger Kachebonaho</span>
+      <p class="quote-text" style="margin-top:var(--space-5);">"Coffee, for our people, has always been a ritual of welcome. We are simply returning that ritual — and the word <em>Emwani</em> — to the world's table."</p>
+      <div class="quote-attrib">CEO &amp; Founder · Emwani Coffee Ltd · Born, Karagwe</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ IMPACT ============ -->
+<section class="impact" id="impact">
+  <div class="container">
+    <div class="head reveal">
+      <span class="eyebrow">— Impact</span>
+      <h2>A coffee house, owned by the <em>continent</em> it grows in.</h2>
+    </div>
+    <div class="stats">
+      <div class="stat reveal"><div class="n">2,400+</div><div class="l">Smallholder farms</div><div class="d">Across Mbinga, Mbozi, and Karagwe — directly sourced, trained, paid above market.</div></div>
+      <div class="stat reveal"><div class="n">3</div><div class="l">Sourcing regions</div><div class="d">Each region with its own ceremony, ceremony with its own roast.</div></div>
+      <div class="stat reveal"><div class="n">100%</div><div class="l">Biodegradable pack</div><div class="d">Every pouch and drip sachet, fully compostable within 12 months.</div></div>
+      <div class="stat reveal"><div class="n">01</div><div class="l">Café · Mission St</div><div class="d">Dar es Salaam · culture hub, incubator, showroom for beans &amp; blends.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CAFE ============ -->
+<section class="cafe" id="cafe">
+  <div class="container cafe-inner">
+    <div class="reveal">
+      <span class="eyebrow">— Emwani Café · Dar es Salaam</span>
+      <h2>A culture hub.<br>Not a <em>coffee shop</em>.</h2>
+      <p>Youth empowerment space. Business incubator. Showroom for beans and blends. The café is where the cup meets the city — and where the city remembers where the cup came from.</p>
+      <div class="ctas">
+        <button class="btn btn-primary">Find a café</button>
+        <button class="btn btn-ghost">Reserve a tasting</button>
+      </div>
+    </div>
+    <div class="cafe-visual reveal">
+      <div class="steam-mark">
+        <svg viewBox="0 0 100 160"><use href="#steam"/></svg>
+        <div class="cup"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CLOSER ============ -->
+<footer class="closer" id="contact">
+  <div class="container">
+    <div class="closer-grid">
+      <div class="reveal">
+        <div style="background:var(--bone-100);display:inline-block;padding:18px 24px;border-radius:10px;margin-bottom:var(--space-5);"><svg viewBox="0 0 240 360" style="width:90px;display:block;"><use href="#logo-primary"/></svg></div>
+        <div class="mark">EMWANI COFFEE LTD</div>
+        <div class="tagline">— Tanzanian coffee heritage, returned to the world's table.</div>
+      </div>
+      <div>
+        <h5>Visit</h5>
+        <ul>
+          <li>22nd Floor, PSPF Tower</li>
+          <li>Mission St, Ilala CBD</li>
+          <li>Dar es Salaam, Tanzania</li>
+        </ul>
+      </div>
+      <div>
+        <h5>Contact</h5>
+        <ul>
+          <li>+255 748 787 981</li>
+          <li>leodger@emwanicoffee.co.tz</li>
+          <li>www.emwanicoffee.co.tz</li>
+        </ul>
+      </div>
+    </div>
+    <div class="legal">
+      <span>© 2026 Emwani Coffee Ltd. All rights reserved.</span>
+      <span>Cinematic Brand System v01 · Cultural motifs used with consent.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- mobile sticky -->
+<a class="sticky-cta" href="#catalog">Order Beans →</a>
+
+<script>
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
