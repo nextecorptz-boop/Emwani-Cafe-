@@ -3,67 +3,9 @@
    ============================================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
-    // --- GSAP Fallback Guard ---
-    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
-        document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
-        return;
-    }
-
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
-    // --- GSAP ScrollTrigger ---
-    if (!reduce && !isMobile) {
-        gsap.registerPlugin(ScrollTrigger);
-
-        // Pinning Sections
-        ["#harvest", "#roasting", "#brewing"].forEach(id => {
-            ScrollTrigger.create({
-                trigger: id,
-                start: "top top",
-                end: "+=120%",
-                pin: true,
-                anticipatePin: 1
-            });
-        });
-
-        // Background Tween Brewing
-        gsap.to("#brewing", {
-            backgroundColor: "#F6EFDD", 
-            scrollTrigger: {
-                trigger: "#brewing",
-                start: "top center",
-                end: "bottom center",
-                scrub: true
-            }
-        });
-
-        // Horizontal Pan Processing
-        gsap.to("#processing .pan-img", {
-            xPercent: -10,
-            ease: "none",
-            scrollTrigger: {
-                trigger: "#processing",
-                start: "top bottom",
-                end: "bottom top",
-                scrub: true
-            }
-        });
-
-        // Product stagger
-        gsap.from("#products .pack", {
-            y: 40,
-            opacity: 0,
-            duration: 0.8,
-            stagger: 0.12,
-            scrollTrigger: {
-                trigger: "#products",
-                start: "top 85%"
-            }
-        });
-    }
-
-    // --- Intersection Observer ---
+    // --- Intersection Observer for varied reveal pacing ---
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -71,9 +13,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 revealObserver.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.15 });
+    }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
 
-    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+    // Observe all variants
+    document.querySelectorAll('.reveal, .reveal-slow, .reveal-stagger').forEach(el => {
+        if (reduce) {
+            el.classList.add('in');
+        } else {
+            revealObserver.observe(el);
+        }
+    });
 
     // --- Cinematic Video Control ---
     const videos = document.querySelectorAll('.cinematic-video');
