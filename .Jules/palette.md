@@ -1,0 +1,3 @@
+## 2024-05-16 - [Cinematic UX Redesign]
+**Learning:** Removing excessive UI layers (like glassmorphism) and reducing animation scales (`translateY(30px)` to `translateY(16px)`) drastically improves the perception of luxury and accessibility (less motion sickness). Adding subtle `.immersive-layer` wrappers for sections allows content to dictate the emotional rhythm instead of rigid, stacked component structures.
+**Action:** When asked for "premium" or "cinematic" UX, lean toward restraint: fewer outlines, more breathing room, slower and smaller transitions, and grounding textures like film grain rather than vibrant hover effects.

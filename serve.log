@@ -1,0 +1,33 @@
+ INFO  Accepting connections at http://localhost:3000
+ HTTP  5/16/2026 9:24:08 AM ::1 GET /website.html
+ HTTP  5/16/2026 9:24:08 AM ::1 Returned 301 in 360 ms
+ HTTP  5/16/2026 9:24:08 AM ::1 GET /website
+ HTTP  5/16/2026 9:24:08 AM ::1 Returned 200 in 11 ms
+ HTTP  5/16/2026 9:24:08 AM ::1 GET /assets/tokens.css
+ HTTP  5/16/2026 9:24:08 AM ::1 Returned 200 in 5 ms
+ HTTP  5/16/2026 9:24:08 AM ::1 GET /assets/system.css
+ HTTP  5/16/2026 9:24:08 AM ::1 GET /assets/css/cinematic.css
+ HTTP  5/16/2026 9:24:08 AM ::1 GET /assets/logos/real-emwani-logo.jpg
+ HTTP  5/16/2026 9:24:08 AM ::1 GET /assets/story/hero-cinematic-wide.webp
+ HTTP  5/16/2026 9:24:08 AM ::1 GET /assets/story/posters/brewing-pour-poster.webp
+ HTTP  5/16/2026 9:24:08 AM ::1 GET /assets/js/cinematic.js
+ HTTP  5/16/2026 9:24:08 AM ::1 Returned 200 in 21 ms
+ HTTP  5/16/2026 9:24:08 AM ::1 Returned 200 in 21 ms
+ HTTP  5/16/2026 9:24:08 AM ::1 Returned 200 in 18 ms
+ HTTP  5/16/2026 9:24:08 AM ::1 Returned 200 in 18 ms
+ HTTP  5/16/2026 9:24:08 AM ::1 Returned 200 in 22 ms
+ HTTP  5/16/2026 9:24:08 AM ::1 Returned 200 in 34 ms
+ HTTP  5/16/2026 9:24:09 AM ::1 GET /assets/story/video/brewing-pour-loop.mp4
+ HTTP  5/16/2026 9:24:09 AM ::1 Returned 206 in 14 ms
+ HTTP  5/16/2026 9:24:09 AM ::1 GET /assets/story/heritage-line-art-premium.webp
+ HTTP  5/16/2026 9:24:09 AM ::1 Returned 200 in 4 ms
+ HTTP  5/16/2026 9:24:09 AM ::1 GET /assets/story/farmer-cherries-portrait-premium.webp
+ HTTP  5/16/2026 9:24:09 AM ::1 GET /assets/story/cherry-selection-closeup.webp
+ HTTP  5/16/2026 9:24:09 AM ::1 Returned 200 in 10 ms
+ HTTP  5/16/2026 9:24:09 AM ::1 Returned 200 in 17 ms
+ HTTP  5/16/2026 9:24:13 AM ::1 GET /assets/story/coffee-drying-premium.webp
+ HTTP  5/16/2026 9:24:13 AM ::1 Returned 200 in 2 ms
+ HTTP  5/16/2026 9:24:15 AM ::1 GET /assets/story/roasting-basket-premium.webp
+ HTTP  5/16/2026 9:24:15 AM ::1 Returned 200 in 2 ms
+ HTTP  5/16/2026 9:24:16 AM ::1 GET /assets/story/posters/grinding-assembly-poster.webp
+ HTTP  5/16/2026 9:24:16 AM ::1 Returned 200 in 5 ms
