@@ -5,7 +5,12 @@
       "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\wise_gtr\\\\Desktop\\\\Emwani Coffee — Cinematic Brand System\" -Force)",
       "Bash(Select-Object Mode, Name, Length, LastWriteTime)",
       "Bash(Format-Table -AutoSize)",
-      "PowerShell(Start-Process \"C:\\\\Users\\\\wise_gtr\\\\Desktop\\\\Emwani Coffee — Cinematic Brand System\\\\EMWANI_BLUEPRINT.html\")"
+      "PowerShell(Start-Process \"C:\\\\Users\\\\wise_gtr\\\\Desktop\\\\Emwani Coffee — Cinematic Brand System\\\\EMWANI_BLUEPRINT.html\")",
+      "Bash(npm list *)",
+      "Bash(npm install *)",
+      "Bash(Get-Content *)",
+      "Bash(npm run *)",
+      "Bash(npx tsc *)"
     ]
   }
 }

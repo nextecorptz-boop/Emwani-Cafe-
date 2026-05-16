@@ -1,0 +1,59 @@
+/* ─────────────────────────────────────────────────────
+   Emwani M1 — Cinematic Animation Helpers
+   ───────────────────────────────────────────────────── */
+
+/*
+  GSAP reveal targets.
+  Use visibility:hidden NOT opacity:0 as initial state.
+  GSAP sets visibility:visible before animating opacity.
+  This prevents flash-of-invisible-content on first paint.
+*/
+.gsap-hidden {
+  visibility: hidden;
+}
+
+/* Fade-in reveal targets (initial state for scroll-triggered) */
+.fade-in-target {
+  opacity: 0;
+  transform: translateY(40px);
+  will-change: opacity, transform;
+}
+
+/* Pin spacer override */
+.pin-spacer {
+  will-change: auto;
+}
+
+/* Smooth transform performance */
+.smooth-transform {
+  will-change: transform;
+  transform-origin: center center;
+}
+
+/* GPU acceleration */
+.gpu-accelerate {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Reduced motion override */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .gsap-hidden {
+    visibility: visible;
+  }
+
+  .fade-in-target {
+    opacity: 1;
+    transform: none;
+  }
+}
