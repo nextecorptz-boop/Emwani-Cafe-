@@ -94,40 +94,28 @@ section {
   box-shadow: var(--shadow-cinema);
 }
 
-/* --- Steam Overlay --- */
-.steam-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  opacity: 0.2;
-  mix-blend-mode: screen;
-}
 
-@keyframes steamRise {
-  0%   { stroke-dashoffset: 200; opacity: 0; }
-  15%  { opacity: 0.5; }
-  85%  { opacity: 0.4; }
-  100% { stroke-dashoffset: 0; opacity: 0; }
+/* --- Reveal Animations --- */
+.reveal, .reveal-slow, .reveal-stagger {
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 1.4s cubic-bezier(0.22, 0.61, 0.36, 1), transform 1.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+    will-change: opacity, transform;
 }
-
-.steam-path {
-  fill: none;
-  stroke: var(--bone-100);
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-dasharray: 200;
-  stroke-dashoffset: 200;
-  animation: steamRise 3.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
-  opacity: 0;
+.reveal-slow {
+    transition-duration: 2s;
+    transform: translateY(10px);
 }
-
-.steam-path:nth-child(2) { animation-delay: 0.6s; }
-.steam-path:nth-child(3) { animation-delay: 1.1s; }
+.reveal-stagger {
+    transform: translateY(20px);
+}
+.reveal.in, .reveal-slow.in, .reveal-stagger.in {
+    opacity: 1;
+    transform: translateY(0);
+}
 
 /* --- Product Display --- */
+
 .pack-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -155,14 +143,9 @@ section {
 }
 
 /* Safety Fallback & Reveal Control: Ensure products are visible or reveal early */
-#products .reveal {
-  transition-duration: 0.8s;
-}
 
-#products .reveal.in {
-  opacity: 1 !important;
-  transform: none !important;
-}
+
+
 
 .product-image-container {
   width: 100%;
@@ -250,39 +233,67 @@ section {
 
 /* --- Navigation --- */
 .nav {
-  background: rgba(10, 8, 6, 0.52);
+  position: fixed;
+  top: var(--space-4);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  background: rgba(10, 8, 7, 0.85);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(246, 239, 221, 0.12);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-  padding: 8px 10px 8px 20px;
+  padding: 12px 24px;
+  border-radius: var(--r-pill);
+  border: 1px solid rgba(246, 239, 221, 0.1);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
 }
 
 .nav .brand img {
-  height: 18px;
-  filter: brightness(1.1);
+  height: 24px;
+  display: block;
+}
+
+.nav-links {
+  display: flex;
+  gap: var(--space-5);
+  align-items: center;
 }
 
 .nav a:not(.cta) {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
   font-weight: 500;
-  letter-spacing: 0.08em;
-  opacity: 0.75;
-  transition: opacity 0.3s var(--ease-cinema);
+  letter-spacing: 0.05em;
+  color: var(--bone-100);
+  opacity: 0.7;
+  text-transform: uppercase;
+  transition: opacity 0.4s ease, color 0.4s ease;
 }
 
 .nav a:not(.cta):hover {
   opacity: 1;
-  background: rgba(246, 239, 221, 0.04);
+  color: var(--gold-300);
 }
 
 .nav .cta {
-  background: var(--heritage-red-600);
-  padding: 8px 18px;
+  background: transparent;
+  color: var(--bone-100);
+  border: 1px solid rgba(246, 239, 221, 0.3);
+  padding: 8px 20px;
   border-radius: var(--r-pill);
-  font-size: 0.7rem;
-  box-shadow: 0 4px 12px rgba(165, 42, 30, 0.2);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: background 0.4s ease, color 0.4s ease;
 }
 
+.nav .cta:hover {
+  background: var(--bone-100);
+  color: var(--char-1000);
+}
 @media (max-width: 1024px) {
   .pack-grid { grid-template-columns: repeat(2, 1fr); }
 }
@@ -291,12 +302,112 @@ section {
   .pack-grid { grid-template-columns: 1fr; }
   .cinematic-headline { font-size: var(--fs-h3); }
   .pack { min-height: 480px; }
+  .nav-links { display: none; }
+  .footer-contact-grid { grid-template-columns: 1fr 1fr; gap: var(--space-6); }
+  .founder-content { padding-left: 0; margin-top: var(--space-6); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal { transition: none !important; opacity: 1 !important; transform: none !important; }
+  .reveal, .reveal-slow, .reveal-stagger { transition: none !important; opacity: 1 !important; transform: none !important; }
   .steam-path {
     animation: none !important;
     opacity: 0.25;
   }
+}
+
+/* --- Cinematic Footer & Founder Section --- */
+.cinematic-footer {
+  padding: var(--space-10) 0;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.footer-atmosphere {
+  max-width: 600px;
+  margin-inline: auto;
+}
+
+.footer-contact-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-6);
+  text-align: left;
+}
+
+.contact-block .contact-label {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  color: var(--gold-500);
+  text-transform: uppercase;
+  margin-bottom: var(--space-3);
+}
+
+.contact-block .contact-text {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--bone-100);
+  line-height: 1.6;
+}
+
+.contact-block a {
+  transition: color 0.3s ease;
+}
+
+.contact-block a:hover {
+  color: var(--gold-300);
+}
+
+.founder-image-wrapper {
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-cinema);
+}
+
+.founder-portrait {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: grayscale(15%) contrast(1.1);
+  transition: transform 1.5s ease;
+}
+
+.founder-image-wrapper:hover .founder-portrait {
+  transform: scale(1.03);
+}
+
+.founder-content {
+  padding-left: var(--space-6);
+}
+
+.founder-quote {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.2;
+  color: var(--bone-100);
+  margin: var(--space-5) 0;
+}
+
+.founder-details {
+  margin-top: var(--space-6);
+  border-top: 1px solid rgba(246, 239, 221, 0.1);
+  padding-top: var(--space-4);
+}
+
+.founder-name {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--bone-100);
+}
+
+.founder-title {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--gold-500);
+  margin-top: var(--space-2);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
